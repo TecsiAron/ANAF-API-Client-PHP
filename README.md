@@ -1,7 +1,9 @@
 # ANAF-API-Client-PHP
-API ANAF pentru interogare CIF si upload RO-eFactura
+API ANAF pentru interogare CIF si upload RO-eFactura.
+
 Necesita guzzlehttp/guzzle si league/oauth2-client.
 Formatul pentru datele de oauth:
+
 ```
 const ANAF_OAUTH=[
     'clientId' => 'client_id_din_contul_de_dezvoltator',
