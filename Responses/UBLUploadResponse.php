@@ -60,7 +60,7 @@ class UBLUploadResponse extends ANAFAPIResponse
         else if($this->success)
         {
             $this->success=false;
-            $this->message="Eroare necunoscută, nu sa regăsit index_incarcare în răspunsul ANAF";
+            $this->message="Eroare necunoscută, nu s-a regăsit index_incarcare în răspunsul ANAF";
         }
         if(!$this->success)
         {

@@ -2,6 +2,9 @@
 
 namespace EdituraEDU\Admin\ANAF;
 
+use DOMDocument;
+use EdituraEDU\Admin\ANAF\Responses\ANAFAnswerListResponse;
+use EdituraEDU\Admin\ANAF\Responses\ANAFVerifyResponse;
 use EdituraEDU\Admin\ANAF\Responses\EntityResponse;
 use EdituraEDU\Admin\ANAF\Responses\TVAResponse;
 use EdituraEDU\Admin\ANAF\Responses\UBLUploadResponse;
@@ -14,6 +17,10 @@ use Throwable;
 
 require_once dirname(__FILE__) . "/../lib/vendor/autoload.php";
 
+/**
+ * @version 1.0.1
+ * @license MIT
+ */
 class ANAFAPIClient extends Client
 {
     private bool $Production;
@@ -96,6 +103,7 @@ class ANAFAPIClient extends Client
             return new AccessToken($token);
         } catch (Throwable $ex)
         {
+            error_log("ANAF API Failed to load token:" . $ex->getMessage()."\n".$ex->getTraceAsString());
             return null;
         }
     }
@@ -131,13 +139,14 @@ class ANAFAPIClient extends Client
         return new GenericProvider($this->OAuthConfig);
     }
 
-    private function SendANAFRequest(string $Method, ?string $body = null, array|null $queryParams=null,  bool $hasAuth=false): ResponseInterface
+    private function SendANAFRequest(string $Method, ?string $body = null, array|null $queryParams=null,  bool $hasAuth=false, $contentType="application/json"): ResponseInterface
     {
         $options = ["headers" =>
             [
-                "Content-Type" => "application/json",
+                "Content-Type" => $contentType,
                 "Accept" => "*/*",
                 "Cache-Control" => "no-cache",
+
             ]
         ];
         if($hasAuth)
@@ -184,7 +193,7 @@ class ANAFAPIClient extends Client
                 if (!$response->Parse())
                 {
                     $response->success = false;
-                    $response->message = "Eroare interpretare raspuns ANAF: " . $response->LastParseError;
+                    $response->message = "Eroare interpretare raspuns ANAF: " . $response->LastParseError. "\n" . $response->rawResspone;
                 }
                 return $response;
             }
@@ -211,7 +220,6 @@ class ANAFAPIClient extends Client
             $httpResponse = $this->SendANAFRequest($method, $ubl, $queryParams, true);
             if ($httpResponse->getStatusCode() >= 200 && $httpResponse->getStatusCode() < 300)
             {
-                //var_dump($httpResponse);
                 $content = $httpResponse->getBody()->getContents();
                 $response->rawResspone = $content;
                 if (!$response->Parse())
@@ -230,6 +238,134 @@ class ANAFAPIClient extends Client
         return $response;
     }
 
+    public function DownloadAnswer(string $id):string
+    {
+        $modeName = $this->Production ? "prod" : "test";
+        $method = "https://api.anaf.ro/$modeName/FCTEL/rest/descarcare?id=$id";
+        try
+        {
+            $httpResponse = $this->SendANAFRequest($method, null, null, true);
+            if ($httpResponse->getStatusCode() >= 200 && $httpResponse->getStatusCode() < 300)
+            {
+                //var_dump($httpResponse);
+                $content = $httpResponse->getBody()->getContents();
+                if(str_starts_with($content, "PK"))
+                {
+                    return $content;
+                }
+                return "ERROR_BAD_CONTENT";
+
+            }
+        }
+        catch (Throwable $ex)
+        {
+            error_log("ANAF API Error:\n" . $ex->getMessage()."\n".$ex->getTraceAsString());
+            return "ERROR";
+        }
+        return "ERROR_NO_RESPONSE";
+    }
+
+    public function UBL2PDF(string $ubl, string $metadata):string|false
+    {
+        if (strpos($ubl, 'xsi:schemaLocation') !== false)
+        {
+            $ubl=$this->RemoveSchemaLocationAttribute($ubl);
+        }
+        $modeName = $this->Production ? "prod" : "test";
+        $method = "https://webservicesp.anaf.ro/$modeName/FCTEL/rest/transformare/FACT1/DA";
+        try
+        {
+            $httpResponse = $this->SendANAFRequest($method, $ubl, null, false, "text/plain");
+            if ($httpResponse->getStatusCode() >= 200 && $httpResponse->getStatusCode() < 300)
+            {
+                //var_dump($httpResponse);
+                $content = $httpResponse->getBody()->getContents();
+                if(str_starts_with($content, "%PDF"))
+                {
+                    return $content;
+                }
+                error_log("Bad content format, expected PDF (UBL2PDF) - $metadata");
+                error_log($content);
+                return $content;
+
+            }
+        }
+        catch (Throwable $ex)
+        {
+            error_log("ANAF API Error:\n" . $ex->getMessage()."\n".$ex->getTraceAsString());
+            return false;
+        }
+        return false;
+    }
+
+    private function RemoveSchemaLocationAttribute($xmlString)
+    {
+        $dom = new DOMDocument();
+        $dom->loadXML($xmlString, LIBXML_NOERROR | LIBXML_NOWARNING); // Load XML with error handling
+        $rootElement = $dom->documentElement;
+        // Check if the attribute exists and remove it
+        if ($rootElement->hasAttribute('xsi:schemaLocation'))
+        {
+            $rootElement->removeAttribute('xsi:schemaLocation');
+            $xmlString = $dom->saveXML();
+        }
+
+        return $xmlString;
+    }
+
+    public function ListAnswers(int $cif, int $days=60):ANAFAnswerListResponse
+    {
+        $modeName = $this->Production ? "prod" : "test";
+        $method = "https://api.anaf.ro/$modeName/FCTEL/rest/listaMesajeFactura?zile=$days&cif=$cif";
+        try
+        {
+            $httpResponse = $this->SendANAFRequest($method, null, null, true);
+            if ($httpResponse->getStatusCode() >= 200 && $httpResponse->getStatusCode() < 300)
+            {
+                //var_dump($httpResponse);
+                $content = $httpResponse->getBody()->getContents();
+                return ANAFAnswerListResponse::CreateFromParsed(json_decode($content));
+            }
+        }
+        catch (Throwable $ex)
+        {
+            error_log("ANAF API Error:\n" . $ex->getMessage()."\n".$ex->getTraceAsString());
+            return ANAFAnswerListResponse::CreateError();
+        }
+        return ANAFAnswerListResponse::CreateError();
+    }
+
+    /**
+     * ATTENTION DOES NOT FUNCTION RELIABLY.
+     * The API randomly returns "nok" for valid invoices.
+     * @param string $ubl
+     * @return bool
+     * @deprecated Use at your own risk. Read the comment above.
+     */
+    public function VerifyXML(string $ubl):bool
+    {
+        try
+        {
+            $method = "https://webservicesp.anaf.ro/prod/FCTEL/rest/validare/FACT1";
+            $httpResponse = $this->SendANAFRequest($method, $ubl, null,false,"text/plain");
+            if ($httpResponse->getStatusCode() >= 200 && $httpResponse->getStatusCode() < 300)
+            {
+                //var_dump($httpResponse);
+                $contentString=$httpResponse->getBody()->getContents();
+                var_dump($contentString);;
+                $content = ANAFVerifyResponse::CreateFromParsed(json_decode($contentString));
+                return $content->IsOK();
+            }
+        }
+        catch (Throwable $ex)
+        {
+            error_log("ANAF API Error:\n" . $ex->getMessage()."\n".$ex->getTraceAsString());
+            return false;
+        }
+        error_log("ANAF VERIFY ERROR: NO RESPONSE OR ERROR");
+        return false;
+    }
+
     private function CallErrorCallback(string $message)
     {
         if($this->ErrorCallback!=null)
@@ -245,22 +381,34 @@ class ANAFAPIClient extends Client
             $token = $this->LoadAccessToken();
             if($token==null)
             {
+                error_log("ANAF API Token null after load(1)!");
                 return false;
             }
             $this->AccessToken=$token;
         }
+        else
+        {
+            $token = $this->AccessToken;
+        }
         try
         {
+            if(!isset($token))
+            {
+                error_log("ANAF API Token null after load!(2)");
+                return false;
+            }
             if ($token->hasExpired())
             {
                 if(!$this->RefreshToken())
                 {
+                    error_log("ANAF API Token refresh failed!");
                     return false;
                 }
             }
         }
         catch (Error $ex)
         {
+            error_log("ANAF API Token refresh failed: ".$ex->getMessage()."\n".$ex->getTraceAsString());
             return false;
         }
         return true;

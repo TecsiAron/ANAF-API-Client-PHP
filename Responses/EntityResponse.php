@@ -31,7 +31,7 @@ class EntityResponse extends ANAFAPIResponse
         if(sizeof($parsed->found)==0)
         {
             $this->success = false;
-            $this->message = "CUI invalid (Nu sa regasit in baza de date ANAF)!";
+            $this->message = "CUI invalid (nu s-a regasit in baza de date ANAF)!";
             return true;
         }
         if(sizeof($parsed->found)!=1)
