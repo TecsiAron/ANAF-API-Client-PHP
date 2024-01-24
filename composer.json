@@ -6,7 +6,8 @@
         "guzzlehttp/guzzle": "^7.0",
         "league/oauth2-client": "^2.7",
         "ext-dom": "*",
-        "ext-libxml": "*"
+        "ext-libxml": "*",
+        "php": ">=8.0"
     },
     "autoload": {
         "psr-4": {

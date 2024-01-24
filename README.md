@@ -1,5 +1,6 @@
 # ANAF-API-Client-PHP
-API ANAF pentru interogare CIF si upload RO-eFactura.
+API ANAF pentru interogare CIF si upload RO-eFactura.  
+Foloseste PHP 8+  
 
 Pentru a instala:  
 ```
