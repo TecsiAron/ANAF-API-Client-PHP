@@ -1,6 +1,6 @@
 <?php
 
-namespace EdituraEDU\Admin\ANAF\Responses;
+namespace EdituraEDU\ANAF\Responses;
 
 use stdClass;
 

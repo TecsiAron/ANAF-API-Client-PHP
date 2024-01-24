@@ -1,3 +1,8 @@
+# v1.0.2-alpha  
+Creating composer package  
+Moved classes to new namespace (EdituraEDU\ANAF)  
+Clarified extension dependencies (ext-dom and ext-libxml)  
+
 # v1.0.1  
 New dependency: php-xml(extension)  
 Cleaned up some error_log calls.  

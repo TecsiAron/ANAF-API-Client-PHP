@@ -1,5 +1,5 @@
 <?php
-use EdituraEDU\Admin\ANAF\ANAFAPIClient;
+use EdituraEDU\ANAF\ANAFAPIClient;
 $Logger= function (string $message)
 {
 	Logger::getInstance()->WriteLog("orders", Logger::ERROR, $message, true);

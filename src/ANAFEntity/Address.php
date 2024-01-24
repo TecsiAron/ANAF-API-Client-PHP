@@ -1,5 +1,5 @@
 <?php
-namespace EdituraEDU\Admin\ANAF\ANAFEntity;
+namespace EdituraEDU\ANAF\ANAFEntity;
 use stdClass;
 
 class Address

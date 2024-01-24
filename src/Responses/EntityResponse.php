@@ -1,8 +1,8 @@
 <?php
 
-namespace EdituraEDU\Admin\ANAF\Responses;
+namespace EdituraEDU\ANAF\Responses;
 
-use EdituraEDU\Admin\ANAF\ANAFEntity\Entity;
+use EdituraEDU\ANAF\ANAFEntity\Entity;
 
 class EntityResponse extends ANAFAPIResponse
 {

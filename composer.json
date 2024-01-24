@@ -1,0 +1,24 @@
+{
+    "name": "tecsiaron/anaf-api-client-php",
+    "description": "PHP API Client for ANAF API",
+    "type": "library",
+    "require": {
+        "guzzlehttp/guzzle": "^7.0",
+        "league/oauth2-client": "^2.7",
+        "ext-dom": "*",
+        "ext-libxml": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "EdituraEDU\\ANAF\\": "src/"
+        }
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tecsi Aron",
+            "email": "aron@edituraedu.ro"
+        }
+    ],
+    "minimum-stability": "alpha"
+}

@@ -1,13 +1,13 @@
 <?php
 
-namespace EdituraEDU\Admin\ANAF;
+namespace EdituraEDU\ANAF;
 
 use DOMDocument;
-use EdituraEDU\Admin\ANAF\Responses\ANAFAnswerListResponse;
-use EdituraEDU\Admin\ANAF\Responses\ANAFVerifyResponse;
-use EdituraEDU\Admin\ANAF\Responses\EntityResponse;
-use EdituraEDU\Admin\ANAF\Responses\TVAResponse;
-use EdituraEDU\Admin\ANAF\Responses\UBLUploadResponse;
+use EdituraEDU\ANAF\Responses\ANAFAnswerListResponse;
+use EdituraEDU\ANAF\Responses\ANAFVerifyResponse;
+use EdituraEDU\ANAF\Responses\EntityResponse;
+use EdituraEDU\ANAF\Responses\TVAResponse;
+use EdituraEDU\ANAF\Responses\UBLUploadResponse;
 use Error;
 use GuzzleHttp\Client;
 use League\OAuth2\Client\Provider\GenericProvider;
@@ -15,10 +15,7 @@ use League\OAuth2\Client\Token\AccessToken;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
 
-require_once dirname(__FILE__) . "/../lib/vendor/autoload.php";
-
 /**
- * @version 1.0.1
  * @license MIT
  */
 class ANAFAPIClient extends Client
