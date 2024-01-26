@@ -206,7 +206,13 @@ class ANAFAPIClient extends Client
         return $response;
     }
 
-    public function UploadEFactura(string $ubl):UBLUploadResponse
+    /**
+     * @param string $ubl UBL XML content to upload
+     * @param bool $extern If true, the invoice is marked as "extern" (not issued to a romanian company)
+     * @param bool $autoFactura If true, the invoice is marked as "autofactura" (issued by the buyer in the sellers name)
+     * @return UBLUploadResponse
+     */
+    public function UploadEFactura(string $ubl, bool $extern=false, bool $autoFactura=false):UBLUploadResponse
     {
         $response = new UBLUploadResponse();
         try
@@ -214,10 +220,20 @@ class ANAFAPIClient extends Client
             $modeName = $this->Production ? "prod" : "test";
             $method = "https://api.anaf.ro/$modeName/FCTEL/rest/upload";
             $queryParams = ["standard" => "UBL", "cif" => "22354360"];
+            if($extern)
+            {
+                $queryParams["extern"]="DA";
+            }
+            if($autoFactura)
+            {
+                $queryParams["autofactura"]="DA";
+            }
             $httpResponse = $this->SendANAFRequest($method, $ubl, $queryParams, true);
             if ($httpResponse->getStatusCode() >= 200 && $httpResponse->getStatusCode() < 300)
             {
+                //var_dump($httpResponse);
                 $content = $httpResponse->getBody()->getContents();
+                error_log($content);
                 $response->rawResspone = $content;
                 if (!$response->Parse())
                 {

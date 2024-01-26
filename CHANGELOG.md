@@ -1,3 +1,6 @@
+# v1.0.3-alpha  
+Add extern and autofactura params for UploadEFactura  
+
 # v1.0.2-alpha  
 Creating composer package  
 Moved classes to new namespace (EdituraEDU\ANAF)  
