@@ -20,6 +20,7 @@ use Throwable;
  */
 class ANAFAPIClient extends Client
 {
+    public float $Timeout = 5;
     private bool $Production;
     private ?AccessToken $AccessToken=null;
     /** @var callable|null $ErrorCallback */
@@ -100,7 +101,7 @@ class ANAFAPIClient extends Client
             return new AccessToken($token);
         } catch (Throwable $ex)
         {
-            error_log("ANAF API Failed to load token:" . $ex->getMessage()."\n".$ex->getTraceAsString());
+             error_log("ANAF API Failed to load token:" . $ex->getMessage()."\n".$ex->getTraceAsString());
             return null;
         }
     }
@@ -155,6 +156,7 @@ class ANAFAPIClient extends Client
             $options["headers"]["Authorization"]="Bearer ".$this->AccessToken->getToken();
         }
         $options["query"]=$queryParams;
+        $options["timeout"]=$this->Timeout;
         if ($body === null)
         {
             return $this->get($Method, $options);

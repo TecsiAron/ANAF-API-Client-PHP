@@ -1,3 +1,6 @@
+# v1.0.4-alpha  
+Added timeout to all outgoing requests (5s by default)  
+  
 # v1.0.3-alpha  
 Add extern and autofactura params for UploadEFactura  
 
