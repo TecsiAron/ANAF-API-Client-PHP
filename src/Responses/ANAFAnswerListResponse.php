@@ -4,6 +4,9 @@ namespace EdituraEDU\ANAF\Responses;
 
 use stdClass;
 
+/**
+ * Represents answer structure for @see \EdituraEDU\ANAF\ANAFAPIClient::ListAnswers()
+ */
 class ANAFAnswerListResponse
 {
     public string $serial;
@@ -15,6 +18,11 @@ class ANAFAnswerListResponse
      */
     public array $mesaje;
 
+    /**
+     * Similar to @see Entity::CreateFromParsed
+     * @param stdClass $parsed
+     * @return ANAFAnswerListResponse
+     */
     public static function CreateFromParsed(stdClass $parsed):ANAFAnswerListResponse
     {
         $response = new ANAFAnswerListResponse();
@@ -29,6 +37,11 @@ class ANAFAnswerListResponse
         return $response;
     }
 
+    /**
+     * Create an error response
+     * For internal use!
+     * @return ANAFAnswerListResponse
+     */
     public static function CreateError():ANAFAnswerListResponse
     {
         $response = new ANAFAnswerListResponse();

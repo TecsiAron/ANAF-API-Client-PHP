@@ -4,6 +4,9 @@ namespace EdituraEDU\ANAF\ANAFEntity;
 
 use stdClass;
 
+/**
+ * Represents the general information about a company based on the ANAF API response structure
+ */
 class GeneralInfo
 {
     public string $cui = "";
@@ -24,6 +27,11 @@ class GeneralInfo
     public string $forma_organizare="";
     public string $forma_juridica="";
 
+    /**
+     * Similar to @see Entity::CreateFromParsed
+     * @param stdClass $parsed
+     * @return GeneralInfo|null
+     */
     public static function CreateFromParsed(stdClass $parsed):?GeneralInfo
     {
         try

@@ -2,6 +2,9 @@
 namespace EdituraEDU\ANAF\ANAFEntity;
 use stdClass;
 
+/**
+ * Represents an address based on the ANAF API response structure
+ */
 class Address
 {
     public string $denumire_Strada="";
@@ -16,6 +19,11 @@ class Address
     public string $detalii_Adresa="";
     public string $cod_Postal="";
 
+    /**
+     * Similar to @see Entity::CreateFromParsed
+     * @param stdClass $parsed
+     * @return Address|null
+     */
     public static function CreateFromParsed(stdClass $parsed):?Address
     {
         try

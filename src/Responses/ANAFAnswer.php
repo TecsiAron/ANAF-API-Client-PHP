@@ -2,6 +2,9 @@
 
 namespace EdituraEDU\ANAF\Responses;
 
+/**
+ * Represents answer structure for @see ANAFAnswerListResponse::$mesaje
+ */
 class ANAFAnswer
 {
     public string $data_creare;

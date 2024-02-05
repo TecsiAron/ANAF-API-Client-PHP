@@ -4,6 +4,9 @@ namespace EdituraEDU\ANAF\Responses;
 
 use EdituraEDU\ANAF\ANAFEntity\Entity;
 
+/**
+ * Represents the response structure for @see \EdituraEDU\ANAF\ANAFAPIClient::GetEntity
+ */
 class EntityResponse extends ANAFAPIResponse
 {
     public ?Entity $Entity=null;

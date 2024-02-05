@@ -1,9 +1,9 @@
 <?php
 
 namespace EdituraEDU\ANAF\Responses;
-
-use EdituraEDU\ANAF\ANAFEntity\Entity;
-
+/**
+ * Represents the response structure for @see \EdituraEDU\ANAF\ANAFAPIClient::CheckTVAStatus()
+ */
 class TVAResponse extends EntityResponse
 {
     public bool|null $IsTVARegistered=null;
