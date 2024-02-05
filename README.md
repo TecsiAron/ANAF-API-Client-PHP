@@ -28,4 +28,5 @@ const ANAF_OAUTH=[
     'urlAccessToken' => 'https://logincert.anaf.ro/anaf-oauth2/v1/token',
     'urlResourceOwnerDetails' => 'https://logincert.anaf.ro/anaf-oauth2/v1/resource'
 ];
-```  
+```
+Documentatie: https://tecsiaron.github.io/ANAF-API-Client-PHP/
