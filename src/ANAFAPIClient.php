@@ -191,6 +191,7 @@ class ANAFAPIClient extends Client
             $tokenJson = file_get_contents($this->TokenFilePath);
             $token = new AccessToken(json_decode($tokenJson, true));
             $this->AccessToken = $token;
+
             if ($autoRefresh && $token->hasExpired()) {
                 if (!$this->RefreshAccessToken($token)) {
                     $this->CallErrorCallback("ANAF token auto-refresh failed! Will not use expired token!");
@@ -539,7 +540,7 @@ class ANAFAPIClient extends Client
      */
     public function HasAccessToken(): bool
     {
-        return $this->LoadAccessToken() != null;
+        return $this->GetAccessToken() != null;
     }
 
     /**
