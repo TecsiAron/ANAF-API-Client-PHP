@@ -261,16 +261,12 @@ class ANAFAPIClient extends Client
                 "Content-Type" => $contentType,
                 "Accept" => "*/*",
                 "Cache-Control" => "no-cache",
-
             ]
         ];
 
         if ($hasAuth) {
             if (!$this->HasAccessToken()) {
-                $token = $this->LoadAccessToken();
-                if ($token == null) {
-                    throw new Error("ANAF API Error: No token");
-                }
+                throw new Error("ANAF API Error: No token");
             }
 
             $options["headers"]["Authorization"] = "Bearer " . $this->AccessToken->getToken();
@@ -332,18 +328,19 @@ class ANAFAPIClient extends Client
 
     /**
      * @param string $ubl UBL XML content to upload
+     * @param string $cif CUI of the company which issued the invoice
      * @param bool $extern If true, the invoice is marked as "extern" (not issued to a romanian company)
      * @param bool $autoFactura If true, the invoice is marked as "autofactura" (issued by the buyer in the sellers name)
      * @return \EdituraEDU\ANAF\Responses\UBLUploadResponse
      */
-    public function UploadEFactura(string $ubl, bool $extern = false, bool $autoFactura = false): UBLUploadResponse
+    public function UploadEFactura(string $ubl, string $cif, bool $extern = false, bool $autoFactura = false): UBLUploadResponse
     {
         $response = new UBLUploadResponse();
 
         try {
             $modeName = $this->Production ? "prod" : "test";
             $method = "https://api.anaf.ro/$modeName/FCTEL/rest/upload";
-            $queryParams = ["standard" => "UBL", "cif" => "22354360"];
+            $queryParams = ["standard" => "UBL", "cif" => $cif];
 
             if ($extern) {
                 $queryParams["extern"] = "DA";
@@ -542,7 +539,7 @@ class ANAFAPIClient extends Client
      */
     public function HasAccessToken(): bool
     {
-        return $this->AccessToken != null;
+        return $this->LoadAccessToken() != null;
     }
 
     /**
