@@ -86,7 +86,7 @@ class ANAFAPIClient extends Client
     /**
      * Get company/institution data from ANAF
      * @param string $cui
-     * @return EntityResponse
+     * @return \EdituraEDU\ANAF\Responses\EntityResponse
      */
     public function GetEntity(string $cui): EntityResponse
     {
@@ -162,7 +162,8 @@ class ANAFAPIClient extends Client
     }
 
     /**
-     * Saves access token to @param AccessToken $token
+     * Saves access token to TokenFilePath
+     * @param AccessToken $token
      * @return void
      * @see ANAFAPIClient::$TokenFilePath
      */
@@ -174,13 +175,13 @@ class ANAFAPIClient extends Client
     }
 
     /**
-     * Loads access token from @return AccessToken|null
-     * @see ANAFAPIClient::$TokenFilePath will return null if the file is not found or the token is invalid
-     * Will also try to refresh the token if it has expired.
-     * Note: Method will be called automatically by @see ANAFAPIClient::SendANAFRequest() if needed (the request require authentification adn the token does not exist)
-     * @param bool $autoRefresh If true, the method will try to refresh the token if it has expired
+     * Loads the access token from the file specified in TokenFilePath
+     * @param bool $autoRefresh if true, the token will be refreshed if it has expired
+     * @return AccessToken|null
+     * @see ANAFAPIClient::$TokenFilePath
+     * Note: This will be called automatically by @see ANAFAPIClient::SendANAFRequest() if the token is not already loaded and the request requires it.
      */
-    public function LoadAccessToken(bool $autoRefresh=true): ?AccessToken
+    public function LoadAccessToken(bool $autoRefresh = true): ?AccessToken
     {
         if (file_exists($this->TokenFilePath) === false) {
             return null;
@@ -333,7 +334,7 @@ class ANAFAPIClient extends Client
      * @param string $ubl UBL XML content to upload
      * @param bool $extern If true, the invoice is marked as "extern" (not issued to a romanian company)
      * @param bool $autoFactura If true, the invoice is marked as "autofactura" (issued by the buyer in the sellers name)
-     * @return UBLUploadResponse
+     * @return \EdituraEDU\ANAF\Responses\UBLUploadResponse
      */
     public function UploadEFactura(string $ubl, bool $extern = false, bool $autoFactura = false): UBLUploadResponse
     {
@@ -375,7 +376,8 @@ class ANAFAPIClient extends Client
 
     /**
      * Download Answer from ANAF
-     * To obtain the ID, use @param string $id
+     * To obtain the ID, use ListAnswers
+     * @param string $id
      * @return string either an error message (starts with "ERROR_") or zip file content
      * @see ANAFAPIClient::ListAnswers()
      */
@@ -461,7 +463,7 @@ class ANAFAPIClient extends Client
      * Get answer list for a company (authenticated user must have access to the company!)
      * @param int $cif
      * @param int $days Number of days to look back
-     * @return ANAFAnswerListResponse
+     * @return \EdituraEDU\ANAF\Responses\ANAFAnswerListResponse
      */
     public function ListAnswers(int $cif, int $days = 60): ANAFAnswerListResponse
     {
@@ -499,7 +501,7 @@ class ANAFAPIClient extends Client
             if ($httpResponse->getStatusCode() >= 200 && $httpResponse->getStatusCode() < 300) {
                 //var_dump($httpResponse);
                 $contentString = $httpResponse->getBody()->getContents();
-                $content = ANAFVerifyResponse::CreateFromParsed(json_decode($contentString));
+                $content = \EdituraEDU\ANAF\Responses\ANAFVerifyResponse::CreateFromParsed(json_decode($contentString));
                 return $content->IsOK();
             }
         } catch (Throwable $ex) {
@@ -513,10 +515,11 @@ class ANAFAPIClient extends Client
     }
 
     /**
-     * Calls @param string $message
+     * Calls ErrorCallback with given params.
+     * @param string $message
      * @param Throwable|null $ex
      * @return void
-     * @see          ANAFAPIClient::$ErrorCallback with given message
+     * @see          ANAFAPIClient::$ErrorCallback
      * @noinspection no-use-custom-logger
      */
     private function CallErrorCallback(string $message, ?Throwable $ex = null): void
