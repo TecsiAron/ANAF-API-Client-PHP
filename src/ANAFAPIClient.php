@@ -35,14 +35,20 @@ class ANAFAPIClient extends Client
     /** @var callable|null $ErrorCallback */
     private $ErrorCallback = null;
     private array $OAuthConfig;
+    /**
+     * @var string $TokenFilePath Path to the file where the access token will be saved/loaded from
+     * Specified in @see ANAFAPIClient::__construct()
+     */
+    private string $TokenFilePath;
 
     /**
      * @param array $OAuthConfig O Auth config for authenticated requests see README.md
      * @param bool $production If true, the client will use the production API otherwise will use testing API endpoints
      * @param callable|null $errorCallback The callable should have the following signature:
      *                                     function (string $message, ?Throwable $ex = null): void
+     * @param string|null $tokenFilePath Path to the file where the access token will be saved/loaded from, if null the file will be called ANAFAccessToken.json in the same folder as this script
      */
-    public function __construct(array $OAuthConfig, bool $production, callable $errorCallback = null)
+    public function __construct(array $OAuthConfig, bool $production, callable $errorCallback = null, ?string $tokenFilePath = null)
     {
         $config['base_uri'] = 'https://webservicesp.anaf.ro';
         $config['headers'] = [
@@ -52,6 +58,11 @@ class ANAFAPIClient extends Client
         $this->Production = $production;
         $this->ErrorCallback = $errorCallback;
         $this->OAuthConfig = $OAuthConfig;
+        if ($tokenFilePath == null) {
+            $this->TokenFilePath = dirname(__FILE__) . "/ANAFAccessToken.json";
+        } else {
+            $this->TokenFilePath = $tokenFilePath;
+        }
         parent::__construct($config);
     }
 
@@ -120,45 +131,71 @@ class ANAFAPIClient extends Client
     }
 
     /**
-     * Gets the access token from ANAF
+     * Gets the access token from ANAF, should be called from the OAuth callback script
      * @param string $authCode
-     * @return AccessToken
+     * @return ?AccessToken
      * @throws \League\OAuth2\Client\Provider\Exception\IdentityProviderException
      */
-    public function GetAccessToken(string $authCode): AccessToken
+    public function ProcessOAuthCallback(string $authCode): ?AccessToken
     {
         $provider = $this->GetOAuthProvider();
-        return $provider->getAccessToken('authorization_code', ["code" => $authCode, 'token_content_type' => 'jwt']);
+        $token = $provider->getAccessToken('authorization_code', ["code" => $authCode, 'token_content_type' => 'jwt']);
+        try {
+            $this->SaveAccessToken($token);
+            return $token;
+        } catch (Throwable $ex) {
+            $this->CallErrorCallback("ANAF token save failed!", $ex);
+            return null;
+        }
     }
 
     /**
-     * Saves access token to the same directory as this script (ANAFAccessToken.json)
-     * @TODO make this configurable
-     * @param AccessToken $token
-     * @return void
+     * Gets the current access token (if it exists)
+     * @return ?AccessToken
      */
-    public function SaveAccessToken(AccessToken $token)
+    public function GetAccessToken(): ?AccessToken
+    {
+        if ($this->AccessToken == null) {
+            $this->LoadAccessToken();
+        }
+        return $this->AccessToken;
+    }
+
+    /**
+     * Saves access token to @param AccessToken $token
+     * @return void
+     * @see ANAFAPIClient::$TokenFilePath
+     */
+    private function SaveAccessToken(AccessToken $token): void
     {
         $tokenJson = json_encode($token);
-        file_put_contents(dirname(__FILE__) . "/ANAFAccessToken.json", $tokenJson);
+        file_put_contents($this->TokenFilePath, $tokenJson);
+        $this->AccessToken = $token;
     }
 
     /**
-     * Loads access token from the same directory as this script (ANAFAccessToken.json) will return null if the file is not found or the token is invalid
-     * @return AccessToken|null
+     * Loads access token from @return AccessToken|null
+     * @see ANAFAPIClient::$TokenFilePath will return null if the file is not found or the token is invalid
+     * Will also try to refresh the token if it has expired.
+     * Note: Method will be called automatically by @see ANAFAPIClient::SendANAFRequest() if needed (the request require authentification adn the token does not exist)
      */
     public function LoadAccessToken(): ?AccessToken
     {
-        $file = dirname(__FILE__) . "/ANAFAccessToken.json";
-
-        if (file_exists($file) === false) {
+        if (file_exists($this->TokenFilePath) === false) {
             return null;
         }
 
         try {
-            $tokenJson = file_get_contents($file);
-            $token = json_decode($tokenJson, true);
-            return new AccessToken($token);
+            $tokenJson = file_get_contents($this->TokenFilePath);
+            $token = new AccessToken(json_decode($tokenJson, true));
+            $this->AccessToken = $token;
+            if ($token->hasExpired()) {
+                if (!$this->RefreshToken($token)) {
+                    $this->CallErrorCallback("ANAF token auto-refresh failed! Will not use expired token!");
+                    $this->AccessToken = null;
+                }
+            }
+            return $this->AccessToken;
         } catch (Throwable $ex) {
             $this->CallErrorCallback("ANAF token load failed!", $ex);
             return null;
@@ -167,11 +204,12 @@ class ANAFAPIClient extends Client
 
     /**
      * Refresh the access token using the refresh token
+     * @param AccessToken|null $token if null the current access token @see ANAFAPIClient::$AccessToken will be used.
      * @return bool
      */
-    public function RefreshToken(): bool
+    public function RefreshToken(?AccessToken $token = null): bool
     {
-        $currentToken = $this->LoadAccessToken();
+        $currentToken = $token ?? $this->AccessToken;
 
         if ($currentToken == null) {
             $this->CallErrorCallback("ANAF token refresh failed!");
@@ -207,14 +245,14 @@ class ANAFAPIClient extends Client
     /**
      * All requests to ANAF are made through this method
      * @param string $Method The URL
-     * @param string|null $body  The request body (if this is different from null, the request will be a POST request)
+     * @param string|null $body The request body (if this is different from null, the request will be a POST request)
      * @param array|null $queryParams Query parameters (if teh value is ["ex1"=>"val"] ?ex1=val will be appended to the URL)
      * @param bool $hasAuth Should be true of the request requires authentication
      * @param string $contentType Content type header for the outgoing request
      * @return ResponseInterface
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    private function SendANAFRequest(string $Method, ?string $body = null, array|null $queryParams = null, bool $hasAuth = false, $contentType = "application/json"): ResponseInterface
+    private function SendANAFRequest(string $Method, ?string $body = null, array|null $queryParams = null, bool $hasAuth = false, string $contentType = "application/json"): ResponseInterface
     {
         $options = ["headers" =>
             [
@@ -226,8 +264,11 @@ class ANAFAPIClient extends Client
         ];
 
         if ($hasAuth) {
-            if (!$this->HasToken()) {
-                throw new Error("ANAF API Error: No token");
+            if (!$this->HasAccessToken()) {
+                $token = $this->LoadAccessToken();
+                if ($token == null) {
+                    throw new Error("ANAF API Error: No token");
+                }
             }
 
             $options["headers"]["Authorization"] = "Bearer " . $this->AccessToken->getToken();
@@ -333,9 +374,9 @@ class ANAFAPIClient extends Client
 
     /**
      * Download Answer from ANAF
-     * To obtain the ID, use @see ANAFAPIClient::ListAnswers()
-     * @param string $id
+     * To obtain the ID, use @param string $id
      * @return string either an error message (starts with "ERROR_") or zip file content
+     * @see ANAFAPIClient::ListAnswers()
      */
     public function DownloadAnswer(string $id): string
     {
@@ -365,7 +406,7 @@ class ANAFAPIClient extends Client
 
     public function UBL2PDF(string $ubl, string $metadata): string|false
     {
-        if (strpos($ubl, 'xsi:schemaLocation') !== false) {
+        if (str_contains($ubl, 'xsi:schemaLocation')) {
             $ubl = $this->RemoveSchemaLocationAttribute($ubl);
         }
 
@@ -400,7 +441,7 @@ class ANAFAPIClient extends Client
      * @param $xmlString
      * @return string
      */
-    private function RemoveSchemaLocationAttribute($xmlString):string
+    private function RemoveSchemaLocationAttribute($xmlString): string
     {
         $dom = new DOMDocument();
         $dom->loadXML($xmlString, LIBXML_NOERROR | LIBXML_NOWARNING); // Load XML with error handling
@@ -471,10 +512,11 @@ class ANAFAPIClient extends Client
     }
 
     /**
-     * Calls @see ANAFAPIClient::$ErrorCallback with given message
-     * @param string $message
+     * Calls @param string $message
      * @param Throwable|null $ex
      * @return void
+     * @see          ANAFAPIClient::$ErrorCallback with given message
+     * @noinspection no-use-custom-logger
      */
     private function CallErrorCallback(string $message, ?Throwable $ex = null): void
     {
@@ -493,44 +535,15 @@ class ANAFAPIClient extends Client
 
     /**
      * Check if the client has a valid access token.
-     * Tries to load it using @see ANAFAPIClient::LoadAccessToken() and refreshes it if it has expired.
-     * @return bool
      */
-    public function HasToken(): bool
+    public function HasAccessToken(): bool
     {
-        if ($this->AccessToken == null) {
-            $token = $this->LoadAccessToken();
-            if ($token == null) {
-                return false;
-            }
-            $this->AccessToken = $token;
-        } else {
-            $token = $this->AccessToken;
-        }
-
-        try {
-            if (!isset($token)) {
-                $this->CallErrorCallback("ANAF API Token null after load!");
-                return false;
-            }
-
-            if ($token->hasExpired()) {
-                if (!$this->RefreshToken()) {
-                    $this->CallErrorCallback("ANAF API Token refresh failed!");
-                    return false;
-                }
-            }
-        } catch (Error $ex) {
-            $this->CallErrorCallback("ANAF API Token refresh failed", $ex);
-            return false;
-        }
-
-        return true;
+        return $this->AccessToken != null;
     }
 
     /**
-     * @see ANAFAPIClient::$Production
      * @return bool
+     * @see ANAFAPIClient::$Production
      */
     public function IsProduction(): bool
     {
@@ -542,7 +555,7 @@ class ANAFAPIClient extends Client
      * @param string|false $cif
      * @return bool
      */
-    public static function ValidateCIF(string|false $cif):bool
+    public static function ValidateCIF(string|false $cif): bool
     {
         if ($cif === false) {
             return false;
