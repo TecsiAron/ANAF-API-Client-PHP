@@ -210,7 +210,7 @@ class ANAFAPIClient extends Client
      */
     public function RefreshAccessToken(?AccessToken $token = null): bool
     {
-        $currentToken = $token ?? $this->AccessToken;
+        $currentToken = $token ?? $this->LoadAccessToken(false);
 
         if ($currentToken == null) {
             $this->CallErrorCallback("ANAF token refresh failed!");
