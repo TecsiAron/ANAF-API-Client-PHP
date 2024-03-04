@@ -329,19 +329,19 @@ class ANAFAPIClient extends Client
 
     /**
      * @param string $ubl UBL XML content to upload
-     * @param string $cif CUI of the company which issued the invoice
+     * @param string $sellerCIF CUI of the company which issued the invoice
      * @param bool $extern If true, the invoice is marked as "extern" (not issued to a romanian company)
      * @param bool $autoFactura If true, the invoice is marked as "autofactura" (issued by the buyer in the sellers name)
      * @return \EdituraEDU\ANAF\Responses\UBLUploadResponse
      */
-    public function UploadEFactura(string $ubl, string $cif, bool $extern = false, bool $autoFactura = false): UBLUploadResponse
+    public function UploadEFactura(string $ubl, string $sellerCIF, bool $extern = false, bool $autoFactura = false): UBLUploadResponse
     {
         $response = new UBLUploadResponse();
 
         try {
             $modeName = $this->Production ? "prod" : "test";
             $method = "https://api.anaf.ro/$modeName/FCTEL/rest/upload";
-            $queryParams = ["standard" => "UBL", "cif" => $cif];
+            $queryParams = ["standard" => "UBL", "cif" => $sellerCIF];
 
             if ($extern) {
                 $queryParams["extern"] = "DA";
