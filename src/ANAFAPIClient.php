@@ -178,8 +178,9 @@ class ANAFAPIClient extends Client
      * @see ANAFAPIClient::$TokenFilePath will return null if the file is not found or the token is invalid
      * Will also try to refresh the token if it has expired.
      * Note: Method will be called automatically by @see ANAFAPIClient::SendANAFRequest() if needed (the request require authentification adn the token does not exist)
+     * @param bool $autoRefresh If true, the method will try to refresh the token if it has expired
      */
-    public function LoadAccessToken(): ?AccessToken
+    public function LoadAccessToken(bool $autoRefresh=true): ?AccessToken
     {
         if (file_exists($this->TokenFilePath) === false) {
             return null;
@@ -189,7 +190,7 @@ class ANAFAPIClient extends Client
             $tokenJson = file_get_contents($this->TokenFilePath);
             $token = new AccessToken(json_decode($tokenJson, true));
             $this->AccessToken = $token;
-            if ($token->hasExpired()) {
+            if ($autoRefresh && $token->hasExpired()) {
                 if (!$this->RefreshToken($token)) {
                     $this->CallErrorCallback("ANAF token auto-refresh failed! Will not use expired token!");
                     $this->AccessToken = null;
