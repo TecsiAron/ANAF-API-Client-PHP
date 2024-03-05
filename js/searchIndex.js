@@ -31,25 +31,30 @@ Search.appendIndex(
             "summary": "Helper\u0020method\u0020for\u0020the\u0020initial\u0020OAuth2\u0020login",
             "url": "classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_GetLoginURL"
         },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\ANAFAPIClient\u003A\u003AProcessOAuthCallback\u0028\u0029",
+            "name": "ProcessOAuthCallback",
+            "summary": "Gets\u0020the\u0020access\u0020token\u0020from\u0020ANAF,\u0020should\u0020be\u0020called\u0020from\u0020the\u0020OAuth\u0020callback\u0020script",
+            "url": "classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_ProcessOAuthCallback"
+        },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFAPIClient\u003A\u003AGetAccessToken\u0028\u0029",
             "name": "GetAccessToken",
-            "summary": "Gets\u0020the\u0020access\u0020token\u0020from\u0020ANAF",
+            "summary": "Gets\u0020the\u0020current\u0020access\u0020token\u0020\u0028if\u0020it\u0020exists\u0029",
             "url": "classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_GetAccessToken"
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFAPIClient\u003A\u003ASaveAccessToken\u0028\u0029",
             "name": "SaveAccessToken",
-            "summary": "Saves\u0020access\u0020token\u0020to\u0020the\u0020same\u0020directory\u0020as\u0020this\u0020script\u0020\u0028ANAFAccessToken.json\u0029",
+            "summary": "Saves\u0020access\u0020token\u0020to\u0020TokenFilePath",
             "url": "classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_SaveAccessToken"
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFAPIClient\u003A\u003ALoadAccessToken\u0028\u0029",
             "name": "LoadAccessToken",
-            "summary": "Loads\u0020access\u0020token\u0020from\u0020the\u0020same\u0020directory\u0020as\u0020this\u0020script\u0020\u0028ANAFAccessToken.json\u0029\u0020will\u0020return\u0020null\u0020if\u0020the\u0020file\u0020is\u0020not\u0020found\u0020or\u0020the\u0020token\u0020is\u0020invalid",
+            "summary": "Loads\u0020the\u0020access\u0020token\u0020from\u0020the\u0020file\u0020specified\u0020in\u0020TokenFilePath",
             "url": "classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_LoadAccessToken"
         },                {
-            "fqsen": "\\EdituraEDU\\ANAF\\ANAFAPIClient\u003A\u003ARefreshToken\u0028\u0029",
-            "name": "RefreshToken",
+            "fqsen": "\\EdituraEDU\\ANAF\\ANAFAPIClient\u003A\u003ARefreshAccessToken\u0028\u0029",
+            "name": "RefreshAccessToken",
             "summary": "Refresh\u0020the\u0020access\u0020token\u0020using\u0020the\u0020refresh\u0020token",
-            "url": "classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_RefreshToken"
+            "url": "classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_RefreshAccessToken"
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFAPIClient\u003A\u003AGetOAuthProvider\u0028\u0029",
             "name": "GetOAuthProvider",
@@ -73,12 +78,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFAPIClient\u003A\u003ADownloadAnswer\u0028\u0029",
             "name": "DownloadAnswer",
-            "summary": "Download\u0020Answer\u0020from\u0020ANAF\nTo\u0020obtain\u0020the\u0020ID,\u0020use\u0020\u0040see\u0020ANAFAPIClient\u003A\u003AListAnswers\u0028\u0029",
+            "summary": "Download\u0020Answer\u0020from\u0020ANAF\nTo\u0020obtain\u0020the\u0020ID,\u0020use\u0020ListAnswers",
             "url": "classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_DownloadAnswer"
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFAPIClient\u003A\u003AUBL2PDF\u0028\u0029",
             "name": "UBL2PDF",
-            "summary": "ANAF\u0020API\u0020method\u0020to\u0020convert\u0020xml\u0020\u0028UBL\u0029\u0020to\u0020PDF",
+            "summary": "",
             "url": "classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_UBL2PDF"
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFAPIClient\u003A\u003ARemoveSchemaLocationAttribute\u0028\u0029",
@@ -98,13 +103,13 @@ Search.appendIndex(
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFAPIClient\u003A\u003ACallErrorCallback\u0028\u0029",
             "name": "CallErrorCallback",
-            "summary": "Calls\u0020\u0040see\u0020ANAFAPIClient\u003A\u003A\u0024ErrorCallback\u0020with\u0020given\u0020message",
+            "summary": "Calls\u0020ErrorCallback\u0020with\u0020given\u0020params.",
             "url": "classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_CallErrorCallback"
         },                {
-            "fqsen": "\\EdituraEDU\\ANAF\\ANAFAPIClient\u003A\u003AHasToken\u0028\u0029",
-            "name": "HasToken",
+            "fqsen": "\\EdituraEDU\\ANAF\\ANAFAPIClient\u003A\u003AHasAccessToken\u0028\u0029",
+            "name": "HasAccessToken",
             "summary": "Check\u0020if\u0020the\u0020client\u0020has\u0020a\u0020valid\u0020access\u0020token.",
-            "url": "classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_HasToken"
+            "url": "classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_HasAccessToken"
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFAPIClient\u003A\u003AIsProduction\u0028\u0029",
             "name": "IsProduction",
@@ -140,6 +145,11 @@ Search.appendIndex(
             "name": "OAuthConfig",
             "summary": "",
             "url": "classes/EdituraEDU-ANAF-ANAFAPIClient.html#property_OAuthConfig"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\ANAFAPIClient\u003A\u003A\u0024TokenFilePath",
+            "name": "TokenFilePath",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-ANAFAPIClient.html#property_TokenFilePath"
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFEntity\\Address",
             "name": "Address",

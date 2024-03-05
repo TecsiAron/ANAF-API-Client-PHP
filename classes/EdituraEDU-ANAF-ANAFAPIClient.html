@@ -54,7 +54,7 @@
     Menu
 </label>
 <aside class="phpdocumentor-column -three phpdocumentor-sidebar">
-                    <section class="phpdocumentor-sidebar__category">
+                    <section class="phpdocumentor-sidebar__category -namespaces">
             <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="namespaces/edituraedu.html" class="">EdituraEDU</a>
@@ -67,7 +67,7 @@
             </ul>
 
                         </section>
-                <section class="phpdocumentor-sidebar__category">
+                <section class="phpdocumentor-sidebar__category -packages">
             <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="packages/Application.html" class="">Application</a>
@@ -75,14 +75,14 @@
 
                         </section>
             
-    <section class="phpdocumentor-sidebar__category">
+    <section class="phpdocumentor-sidebar__category -reports">
         <h2 class="phpdocumentor-sidebar__category-header">Reports</h2>
                 <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/deprecated.html">Deprecated</a></h3>
         <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/errors.html">Errors</a></h3>
         <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/markers.html">Markers</a></h3>
     </section>
 
-    <section class="phpdocumentor-sidebar__category">
+    <section class="phpdocumentor-sidebar__category -indices">
         <h2 class="phpdocumentor-sidebar__category-header">Indices</h2>
         <h3 class="phpdocumentor-sidebar__root-package"><a href="indices/files.html">Files</a></h3>
     </section>
@@ -121,7 +121,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="ANAFAPIClient.php"><a href="files/anafapiclient.html">ANAFAPIClient.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">23</span>
+    <span class="phpdocumentor-element-found-in__line">24</span>
 
     </aside>
 
@@ -202,6 +202,12 @@ Client for ANAF APIs:</p>
                         &nbsp;: bool            </span>
 </dt>
 
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#property_TokenFilePath">$TokenFilePath</a>
+    <span>
+                        &nbsp;: string            </span>
+</dt>
+
     </dl>
 
 <h4 id="toc-methods">
@@ -236,14 +242,14 @@ Client for ANAF APIs:</p>
                                 &nbsp;: string    </span>
 </dt>
 <dd>Download Answer from ANAF
-To obtain the ID, use @see ANAFAPIClient::ListAnswers()</dd>
+To obtain the ID, use ListAnswers</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_GetAccessToken">GetAccessToken()</a>
     <span>
-                                &nbsp;: <abbr title="\League\OAuth2\Client\Token\AccessToken">AccessToken</abbr>    </span>
+                                &nbsp;: <abbr title="\League\OAuth2\Client\Token\AccessToken">AccessToken</abbr>|null    </span>
 </dt>
-<dd>Gets the access token from ANAF</dd>
+<dd>Gets the current access token (if it exists)</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_GetEntity">GetEntity()</a>
@@ -260,7 +266,7 @@ To obtain the ID, use @see ANAFAPIClient::ListAnswers()</dd>
 <dd>Helper method for the initial OAuth2 login</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_HasToken">HasToken()</a>
+    <a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_HasAccessToken">HasAccessToken()</a>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
@@ -284,28 +290,27 @@ To obtain the ID, use @see ANAFAPIClient::ListAnswers()</dd>
     <span>
                                 &nbsp;: <abbr title="\League\OAuth2\Client\Token\AccessToken">AccessToken</abbr>|null    </span>
 </dt>
-<dd>Loads access token from the same directory as this script (ANAFAccessToken.json) will return null if the file is not found or the token is invalid</dd>
+<dd>Loads the access token from the file specified in TokenFilePath</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_RefreshToken">RefreshToken()</a>
+    <a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_ProcessOAuthCallback">ProcessOAuthCallback()</a>
+    <span>
+                                &nbsp;: <abbr title="\League\OAuth2\Client\Token\AccessToken">AccessToken</abbr>|null    </span>
+</dt>
+<dd>Gets the access token from ANAF, should be called from the OAuth callback script</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_RefreshAccessToken">RefreshAccessToken()</a>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
 <dd>Refresh the access token using the refresh token</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_SaveAccessToken">SaveAccessToken()</a>
-    <span>
-                                &nbsp;: void    </span>
-</dt>
-<dd>Saves access token to the same directory as this script (ANAFAccessToken.json)</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_UBL2PDF">UBL2PDF()</a>
     <span>
                                 &nbsp;: string|false    </span>
 </dt>
-<dd>ANAF API method to convert xml (UBL) to PDF</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_UploadEFactura">UploadEFactura()</a>
@@ -332,7 +337,7 @@ To obtain the ID, use @see ANAFAPIClient::ListAnswers()</dd>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd>Calls @see ANAFAPIClient::$ErrorCallback with given message</dd>
+<dd>Calls ErrorCallback with given params.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_GetOAuthProvider">GetOAuthProvider()</a>
@@ -356,6 +361,13 @@ To obtain the ID, use @see ANAFAPIClient::ListAnswers()</dd>
 <dd>Sanitize CUI input for most requests.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
+    <a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_SaveAccessToken">SaveAccessToken()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>Saves access token to TokenFilePath</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_SendANAFRequest">SendANAFRequest()</a>
     <span>
                                 &nbsp;: <abbr title="\Psr\Http\Message\ResponseInterface">ResponseInterface</abbr>    </span>
@@ -366,6 +378,8 @@ To obtain the ID, use @see ANAFAPIClient::ListAnswers()</dd>
 
 
 
+
+        
 
         
 
@@ -393,7 +407,7 @@ To obtain the ID, use @see ANAFAPIClient::ListAnswers()</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="ANAFAPIClient.php"><a href="files/anafapiclient.html">ANAFAPIClient.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">28</span>
+    <span class="phpdocumentor-element-found-in__line">29</span>
 
     </aside>
 
@@ -428,7 +442,7 @@ To obtain the ID, use @see ANAFAPIClient::ListAnswers()</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="ANAFAPIClient.php"><a href="files/anafapiclient.html">ANAFAPIClient.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">33</span>
+    <span class="phpdocumentor-element-found-in__line">34</span>
 
     </aside>
 
@@ -461,7 +475,7 @@ To obtain the ID, use @see ANAFAPIClient::ListAnswers()</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="ANAFAPIClient.php"><a href="files/anafapiclient.html">ANAFAPIClient.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">35</span>
+    <span class="phpdocumentor-element-found-in__line">36</span>
 
     </aside>
 
@@ -494,7 +508,7 @@ To obtain the ID, use @see ANAFAPIClient::ListAnswers()</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="ANAFAPIClient.php"><a href="files/anafapiclient.html">ANAFAPIClient.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">36</span>
+    <span class="phpdocumentor-element-found-in__line">37</span>
 
     </aside>
 
@@ -527,7 +541,7 @@ To obtain the ID, use @see ANAFAPIClient::ListAnswers()</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="ANAFAPIClient.php"><a href="files/anafapiclient.html">ANAFAPIClient.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">32</span>
+    <span class="phpdocumentor-element-found-in__line">33</span>
 
     </aside>
 
@@ -540,6 +554,42 @@ To obtain the ID, use @see ANAFAPIClient::ListAnswers()</dd>
 
     
         <section class="phpdocumentor-description"><p>If true, the client will use the production API otherwise will use testing API endpoints</p>
+</section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_TokenFilePath">
+        $TokenFilePath
+        <a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#property_TokenFilePath" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="ANAFAPIClient.php"><a href="files/anafapiclient.html">ANAFAPIClient.php</a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">42</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+        <span class="phpdocumentor-signature__type">string</span>
+    <span class="phpdocumentor-signature__name">$TokenFilePath</span>
+    </code>
+
+    
+        <section class="phpdocumentor-description"><p>Path to the file where the access token will be saved/loaded from
+Specified in @see ANAFAPIClient::__construct()</p>
 </section>
 
     
@@ -567,14 +617,14 @@ To obtain the ID, use @see ANAFAPIClient::ListAnswers()</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="ANAFAPIClient.php"><a href="files/anafapiclient.html">ANAFAPIClient.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">43</span>
+    <span class="phpdocumentor-element-found-in__line">51</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$OAuthConfig</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$production</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">callable|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$errorCallback</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$OAuthConfig</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$production</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">callable|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$errorCallback</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$tokenFilePath</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -604,7 +654,17 @@ To obtain the ID, use @see ANAFAPIClient::ListAnswers()</dd>
                 : <span class="phpdocumentor-signature__argument__return-type">callable|null</span>
                  = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>See example.php</p>
+                    <section class="phpdocumentor-description"><p>The callable should have the following signature:
+function (string $message, ?Throwable $ex = null): void</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$tokenFilePath</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Path to the file where the access token will be saved/loaded from, if null the file will be called ANAFAccessToken.json in the same folder as this script</p>
 </section>
 
             </dd>
@@ -628,7 +688,7 @@ To obtain the ID, use @see ANAFAPIClient::ListAnswers()</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="ANAFAPIClient.php"><a href="files/anafapiclient.html">ANAFAPIClient.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">61</span>
+    <span class="phpdocumentor-element-found-in__line">74</span>
 
     </aside>
 
@@ -674,7 +734,7 @@ To obtain the ID, use @see ANAFAPIClient::ListAnswers()</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="ANAFAPIClient.php"><a href="files/anafapiclient.html">ANAFAPIClient.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">245</span>
+    <span class="phpdocumentor-element-found-in__line">293</span>
 
     </aside>
 
@@ -734,12 +794,12 @@ To obtain the ID, use @see ANAFAPIClient::ListAnswers()</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="ANAFAPIClient.php"><a href="files/anafapiclient.html">ANAFAPIClient.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">333</span>
+    <span class="phpdocumentor-element-found-in__line">382</span>
 
     </aside>
 
         <p class="phpdocumentor-summary">Download Answer from ANAF
-To obtain the ID, use @see ANAFAPIClient::ListAnswers()</p>
+To obtain the ID, use ListAnswers</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -760,6 +820,21 @@ To obtain the ID, use @see ANAFAPIClient::ListAnswers()</p>
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_DownloadAnswer#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">see</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_ListAnswers"><abbr title="\EdituraEDU\ANAF\ANAFAPIClient::ListAnswers()">ANAFAPIClient::ListAnswers()</abbr></a></span>
+                                        
+                                             
+                                    </dd>
+                                            </dl>
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
@@ -785,50 +860,25 @@ To obtain the ID, use @see ANAFAPIClient::ListAnswers()</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="ANAFAPIClient.php"><a href="files/anafapiclient.html">ANAFAPIClient.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">125</span>
+    <span class="phpdocumentor-element-found-in__line">156</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Gets the access token from ANAF</p>
+        <p class="phpdocumentor-summary">Gets the current access token (if it exists)</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">GetAccessToken</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$authCode</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\League\OAuth2\Client\Token\AccessToken">AccessToken</abbr></span></code>
+                    <span class="phpdocumentor-signature__name">GetAccessToken</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\League\OAuth2\Client\Token\AccessToken">AccessToken</abbr>|null</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
     
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$authCode</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_GetAccessToken#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                <span class="phpdocumentor-tag-link"><abbr title="\League\OAuth2\Client\Provider\Exception\IdentityProviderException">IdentityProviderException</abbr></span>
-                                                            
-                                             
-                                    </dd>
-                                            </dl>
+    
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><abbr title="\League\OAuth2\Client\Token\AccessToken">AccessToken</abbr></span>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\League\OAuth2\Client\Token\AccessToken">AccessToken</abbr>|null</span>
             </section>
 
 </article>
@@ -846,7 +896,7 @@ To obtain the ID, use @see ANAFAPIClient::ListAnswers()</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="ANAFAPIClient.php"><a href="files/anafapiclient.html">ANAFAPIClient.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">78</span>
+    <span class="phpdocumentor-element-found-in__line">91</span>
 
     </aside>
 
@@ -892,7 +942,7 @@ To obtain the ID, use @see ANAFAPIClient::ListAnswers()</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="ANAFAPIClient.php"><a href="files/anafapiclient.html">ANAFAPIClient.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">113</span>
+    <span class="phpdocumentor-element-found-in__line">127</span>
 
     </aside>
 
@@ -920,15 +970,15 @@ To obtain the ID, use @see ANAFAPIClient::ListAnswers()</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_HasToken">
-        HasToken()
-        <a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_HasToken" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_HasAccessToken">
+        HasAccessToken()
+        <a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_HasAccessToken" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="ANAFAPIClient.php"><a href="files/anafapiclient.html">ANAFAPIClient.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">496</span>
+    <span class="phpdocumentor-element-found-in__line">540</span>
 
     </aside>
 
@@ -936,13 +986,11 @@ To obtain the ID, use @see ANAFAPIClient::ListAnswers()</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">HasToken</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+                    <span class="phpdocumentor-signature__name">HasAccessToken</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
-        <section class="phpdocumentor-description"><p>Tries to load it using @see ANAFAPIClient::LoadAccessToken() and refreshes it if it has expired.</p>
-</section>
-
+    
     
     
 
@@ -966,7 +1014,7 @@ To obtain the ID, use @see ANAFAPIClient::ListAnswers()</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="ANAFAPIClient.php"><a href="files/anafapiclient.html">ANAFAPIClient.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">541</span>
+    <span class="phpdocumentor-element-found-in__line">549</span>
 
     </aside>
 
@@ -1016,7 +1064,7 @@ To obtain the ID, use @see ANAFAPIClient::ListAnswers()</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="ANAFAPIClient.php"><a href="files/anafapiclient.html">ANAFAPIClient.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">425</span>
+    <span class="phpdocumentor-element-found-in__line">466</span>
 
     </aside>
 
@@ -1071,21 +1119,50 @@ To obtain the ID, use @see ANAFAPIClient::ListAnswers()</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="ANAFAPIClient.php"><a href="files/anafapiclient.html">ANAFAPIClient.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">147</span>
+    <span class="phpdocumentor-element-found-in__line">184</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Loads access token from the same directory as this script (ANAFAccessToken.json) will return null if the file is not found or the token is invalid</p>
+        <p class="phpdocumentor-summary">Loads the access token from the file specified in TokenFilePath</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">LoadAccessToken</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\League\OAuth2\Client\Token\AccessToken">AccessToken</abbr>|null</span></code>
+                    <span class="phpdocumentor-signature__name">LoadAccessToken</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$autoRefresh</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">true</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\League\OAuth2\Client\Token\AccessToken">AccessToken</abbr>|null</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
     
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$autoRefresh</span>
+                : <span class="phpdocumentor-signature__argument__return-type">bool</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">true</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>if true, the token will be refreshed if it has expired</p>
+</section>
+
+            </dd>
+            </dl>
+
     
-    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_LoadAccessToken#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">see</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#property_TokenFilePath"><abbr title="\EdituraEDU\ANAF\ANAFAPIClient::$TokenFilePath">ANAFAPIClient::$TokenFilePath</abbr></a></span>
+                                        
+                                                 <section class="phpdocumentor-description"><p>Note: This will be called automatically by @see ANAFAPIClient::SendANAFRequest() if the token is not already loaded and the request requires it.</p>
+</section>
+
+                                    </dd>
+                                            </dl>
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
@@ -1099,59 +1176,23 @@ To obtain the ID, use @see ANAFAPIClient::ListAnswers()</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_RefreshToken">
-        RefreshToken()
-        <a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_RefreshToken" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_ProcessOAuthCallback">
+        ProcessOAuthCallback()
+        <a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_ProcessOAuthCallback" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="ANAFAPIClient.php"><a href="files/anafapiclient.html">ANAFAPIClient.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">165</span>
+    <span class="phpdocumentor-element-found-in__line">139</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Refresh the access token using the refresh token</p>
+        <p class="phpdocumentor-summary">Gets the access token from ANAF, should be called from the OAuth callback script</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">RefreshToken</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">bool</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_SaveAccessToken">
-        SaveAccessToken()
-        <a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_SaveAccessToken" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="ANAFAPIClient.php"><a href="files/anafapiclient.html">ANAFAPIClient.php</a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">137</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Saves access token to the same directory as this script (ANAFAccessToken.json)</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">SaveAccessToken</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\League\OAuth2\Client\Token\AccessToken">AccessToken</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$token</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">ProcessOAuthCallback</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$authCode</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\League\OAuth2\Client\Token\AccessToken">AccessToken</abbr>|null</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -1159,8 +1200,8 @@ To obtain the ID, use @see ANAFAPIClient::ListAnswers()</p>
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$token</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\League\OAuth2\Client\Token\AccessToken">AccessToken</abbr></span>
+                <span class="phpdocumentor-signature__argument__name">$authCode</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
@@ -1170,22 +1211,73 @@ To obtain the ID, use @see ANAFAPIClient::ListAnswers()</p>
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_SaveAccessToken#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_ProcessOAuthCallback#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">TODO</span>
+                    <span class="phpdocumentor-tag__name">throws</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>make this configurable</p>
-</section>
-
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\League\OAuth2\Client\Provider\Exception\IdentityProviderException">IdentityProviderException</abbr></span>
+                                                            
+                                             
                                     </dd>
                                             </dl>
 
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\League\OAuth2\Client\Token\AccessToken">AccessToken</abbr>|null</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_RefreshAccessToken">
+        RefreshAccessToken()
+        <a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_RefreshAccessToken" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="ANAFAPIClient.php"><a href="files/anafapiclient.html">ANAFAPIClient.php</a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">213</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Refresh the access token using the refresh token</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">RefreshAccessToken</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\League\OAuth2\Client\Token\AccessToken">AccessToken</abbr>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$token</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
     
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$token</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\League\OAuth2\Client\Token\AccessToken">AccessToken</abbr>|null</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>if null the current access token @see ANAFAPIClient::$AccessToken will be used.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -1201,12 +1293,11 @@ To obtain the ID, use @see ANAFAPIClient::ListAnswers()</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="ANAFAPIClient.php"><a href="files/anafapiclient.html">ANAFAPIClient.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">366</span>
+    <span class="phpdocumentor-element-found-in__line">408</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">ANAF API method to convert xml (UBL) to PDF</p>
-
+    
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">UBL2PDF</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$ubl</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$metadata</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|false</span></code>
@@ -1221,18 +1312,14 @@ To obtain the ID, use @see ANAFAPIClient::ListAnswers()</p>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>UBL XML content</p>
-</section>
-
+                
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$metadata</span>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Metadata for the request, used for error logging only</p>
-</section>
-
+                
             </dd>
             </dl>
 
@@ -1241,10 +1328,6 @@ To obtain the ID, use @see ANAFAPIClient::ListAnswers()</p>
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">string|false</span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>false for errors, PDF content otherwise</p>
-</section>
-
             </section>
 
 </article>
@@ -1262,14 +1345,14 @@ To obtain the ID, use @see ANAFAPIClient::ListAnswers()</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="ANAFAPIClient.php"><a href="files/anafapiclient.html">ANAFAPIClient.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">288</span>
+    <span class="phpdocumentor-element-found-in__line">337</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">UploadEFactura</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$ubl</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$extern</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">false</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$autoFactura</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">false</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/EdituraEDU-ANAF-Responses-UBLUploadResponse.html"><abbr title="\EdituraEDU\ANAF\Responses\UBLUploadResponse">UBLUploadResponse</abbr></a></span></code>
+                    <span class="phpdocumentor-signature__name">UploadEFactura</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$ubl</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$sellerCIF</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$extern</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">false</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$autoFactura</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">false</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/EdituraEDU-ANAF-Responses-UBLUploadResponse.html"><abbr title="\EdituraEDU\ANAF\Responses\UBLUploadResponse">UBLUploadResponse</abbr></a></span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -1282,6 +1365,15 @@ To obtain the ID, use @see ANAFAPIClient::ListAnswers()</p>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>UBL XML content to upload</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$sellerCIF</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>CUI of the company which issued the invoice</p>
 </section>
 
             </dd>
@@ -1327,7 +1419,7 @@ To obtain the ID, use @see ANAFAPIClient::ListAnswers()</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="ANAFAPIClient.php"><a href="files/anafapiclient.html">ANAFAPIClient.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">551</span>
+    <span class="phpdocumentor-element-found-in__line">559</span>
 
     </aside>
 
@@ -1373,7 +1465,7 @@ To obtain the ID, use @see ANAFAPIClient::ListAnswers()</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="ANAFAPIClient.php"><a href="files/anafapiclient.html">ANAFAPIClient.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">454</span>
+    <span class="phpdocumentor-element-found-in__line">494</span>
 
     </aside>
 
@@ -1437,15 +1529,15 @@ To obtain the ID, use @see ANAFAPIClient::ListAnswers()</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="ANAFAPIClient.php"><a href="files/anafapiclient.html">ANAFAPIClient.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">483</span>
+    <span class="phpdocumentor-element-found-in__line">522</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Calls @see ANAFAPIClient::$ErrorCallback with given message</p>
+        <p class="phpdocumentor-summary">Calls ErrorCallback with given params.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
-                    <span class="phpdocumentor-signature__name">CallErrorCallback</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$message</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">CallErrorCallback</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$message</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Throwable">Throwable</abbr>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$ex</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -1459,9 +1551,31 @@ To obtain the ID, use @see ANAFAPIClient::ListAnswers()</p>
             <dd class="phpdocumentor-argument-list__definition">
                 
             </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$ex</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Throwable">Throwable</abbr>|null</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_CallErrorCallback#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">see</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#property_ErrorCallback"><abbr title="\EdituraEDU\ANAF\ANAFAPIClient::$ErrorCallback">ANAFAPIClient::$ErrorCallback</abbr></a></span>
+                                        
+                                             
+                                    </dd>
+                                            </dl>
 
     
 </article>
@@ -1479,7 +1593,7 @@ To obtain the ID, use @see ANAFAPIClient::ListAnswers()</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="ANAFAPIClient.php"><a href="files/anafapiclient.html">ANAFAPIClient.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">195</span>
+    <span class="phpdocumentor-element-found-in__line">243</span>
 
     </aside>
 
@@ -1515,7 +1629,7 @@ To obtain the ID, use @see ANAFAPIClient::ListAnswers()</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="ANAFAPIClient.php"><a href="files/anafapiclient.html">ANAFAPIClient.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">404</span>
+    <span class="phpdocumentor-element-found-in__line">445</span>
 
     </aside>
 
@@ -1561,7 +1675,7 @@ To obtain the ID, use @see ANAFAPIClient::ListAnswers()</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="ANAFAPIClient.php"><a href="files/anafapiclient.html">ANAFAPIClient.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">94</span>
+    <span class="phpdocumentor-element-found-in__line">107</span>
 
     </aside>
 
@@ -1606,6 +1720,63 @@ This method is case-insensitive.</p>
             -private
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_SaveAccessToken">
+        SaveAccessToken()
+        <a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_SaveAccessToken" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="ANAFAPIClient.php"><a href="files/anafapiclient.html">ANAFAPIClient.php</a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">170</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Saves access token to TokenFilePath</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+                    <span class="phpdocumentor-signature__name">SaveAccessToken</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\League\OAuth2\Client\Token\AccessToken">AccessToken</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$token</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$token</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\League\OAuth2\Client\Token\AccessToken">AccessToken</abbr></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_SaveAccessToken#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">see</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#property_TokenFilePath"><abbr title="\EdituraEDU\ANAF\ANAFAPIClient::$TokenFilePath">ANAFAPIClient::$TokenFilePath</abbr></a></span>
+                                        
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -private
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_SendANAFRequest">
         SendANAFRequest()
         <a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_SendANAFRequest" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1614,7 +1785,7 @@ This method is case-insensitive.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="ANAFAPIClient.php"><a href="files/anafapiclient.html">ANAFAPIClient.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">210</span>
+    <span class="phpdocumentor-element-found-in__line">258</span>
 
     </aside>
 
@@ -1817,6 +1988,7 @@ This method is case-insensitive.</p>
                                                     <li><a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#property_ErrorCallback">$ErrorCallback<a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html"></li>
                                                     <li><a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#property_OAuthConfig">$OAuthConfig<a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html"></li>
                                                     <li><a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#property_Production">$Production<a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html"></li>
+                                                    <li><a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#property_TokenFilePath">$TokenFilePath<a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html"></li>
                                             </ul>
                 </li>
             
@@ -1830,12 +2002,12 @@ This method is case-insensitive.</p>
                                             <li><a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_GetAccessToken">GetAccessToken()</a></li>
                                             <li><a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_GetEntity">GetEntity()</a></li>
                                             <li><a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_GetLoginURL">GetLoginURL()</a></li>
-                                            <li><a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_HasToken">HasToken()</a></li>
+                                            <li><a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_HasAccessToken">HasAccessToken()</a></li>
                                             <li><a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_IsProduction">IsProduction()</a></li>
                                             <li><a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_ListAnswers">ListAnswers()</a></li>
                                             <li><a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_LoadAccessToken">LoadAccessToken()</a></li>
-                                            <li><a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_RefreshToken">RefreshToken()</a></li>
-                                            <li><a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_SaveAccessToken">SaveAccessToken()</a></li>
+                                            <li><a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_ProcessOAuthCallback">ProcessOAuthCallback()</a></li>
+                                            <li><a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_RefreshAccessToken">RefreshAccessToken()</a></li>
                                             <li><a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_UBL2PDF">UBL2PDF()</a></li>
                                             <li><a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_UploadEFactura">UploadEFactura()</a></li>
                                             <li><a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_ValidateCIF">ValidateCIF()</a></li>
@@ -1844,6 +2016,7 @@ This method is case-insensitive.</p>
                                             <li><a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_GetOAuthProvider">GetOAuthProvider()</a></li>
                                             <li><a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_RemoveSchemaLocationAttribute">RemoveSchemaLocationAttribute()</a></li>
                                             <li><a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_SanitizeCUI">SanitizeCUI()</a></li>
+                                            <li><a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_SaveAccessToken">SaveAccessToken()</a></li>
                                             <li><a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_SendANAFRequest">SendANAFRequest()</a></li>
                                     </ul>
             </li>
