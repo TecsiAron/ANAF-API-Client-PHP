@@ -150,7 +150,7 @@ class ANAFAPIClient extends Client
     }
 
     /**
-     * Gets the current access token (if it exists)
+     * Gets the current access token (if it exists), tries to load it from the file if necessary
      * @return ?AccessToken
      */
     public function GetAccessToken(): ?AccessToken
