@@ -38,7 +38,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFAPIClient\u003A\u003AGetAccessToken\u0028\u0029",
             "name": "GetAccessToken",
-            "summary": "Gets\u0020the\u0020current\u0020access\u0020token\u0020\u0028if\u0020it\u0020exists\u0029",
+            "summary": "Gets\u0020the\u0020current\u0020access\u0020token\u0020\u0028if\u0020it\u0020exists\u0029,\u0020tries\u0020to\u0020load\u0020it\u0020from\u0020the\u0020file\u0020if\u0020necessary",
             "url": "classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_GetAccessToken"
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFAPIClient\u003A\u003ASaveAccessToken\u0028\u0029",
