@@ -86,7 +86,7 @@ class ANAFAPIClient extends Client
     /**
      * Get company/institution data from ANAF
      * @param string $cui
-     * @return \EdituraEDU\ANAF\Responses\EntityResponse
+     * @return EntityResponse
      */
     public function GetEntity(string $cui): EntityResponse
     {
@@ -332,7 +332,7 @@ class ANAFAPIClient extends Client
      * @param string $sellerCIF CUI of the company which issued the invoice
      * @param bool $extern If true, the invoice is marked as "extern" (not issued to a romanian company)
      * @param bool $autoFactura If true, the invoice is marked as "autofactura" (issued by the buyer in the sellers name)
-     * @return \EdituraEDU\ANAF\Responses\UBLUploadResponse
+     * @return UBLUploadResponse
      */
     public function UploadEFactura(string $ubl, string $sellerCIF, bool $extern = false, bool $autoFactura = false): UBLUploadResponse
     {
@@ -461,7 +461,7 @@ class ANAFAPIClient extends Client
      * Get answer list for a company (authenticated user must have access to the company!)
      * @param int $cif
      * @param int $days Number of days to look back
-     * @return \EdituraEDU\ANAF\Responses\ANAFAnswerListResponse
+     * @return ANAFAnswerListResponse
      */
     public function ListAnswers(int $cif, int $days = 60): ANAFAnswerListResponse
     {
@@ -499,7 +499,7 @@ class ANAFAPIClient extends Client
             if ($httpResponse->getStatusCode() >= 200 && $httpResponse->getStatusCode() < 300) {
                 //var_dump($httpResponse);
                 $contentString = $httpResponse->getBody()->getContents();
-                $content = \EdituraEDU\ANAF\Responses\ANAFVerifyResponse::CreateFromParsed(json_decode($contentString));
+                $content = ANAFVerifyResponse::CreateFromParsed(json_decode($contentString));
                 return $content->IsOK();
             }
         } catch (Throwable $ex) {
@@ -518,7 +518,6 @@ class ANAFAPIClient extends Client
      * @param Throwable|null $ex
      * @return void
      * @see          ANAFAPIClient::$ErrorCallback
-     * @noinspection no-use-custom-logger
      */
     private function CallErrorCallback(string $message, ?Throwable $ex = null): void
     {
