@@ -1,3 +1,22 @@
+# v1.1.0-alpha  
+- LoadAccessToken() no longer causes unhandled exception when file does not exist.  
+- Location of the token file is now configurable. (Check $TokenFilePath and ANAFAPIClient::__construct())  
+- Moved token load/refresh logic from HasAccessToken() to LoadAccessToken() and RefreshAccessToken().  
+- Added optional parameter to LoadAccessToken() to enable/disable automatic token refresh.  
+- HasAccessToken() now calls LoadAccessToken() with automatic refresh enabled. (logic moved)  
+- The error callback method now has a second, optional, parameter: ?Throwable $ex = null.  
+- Removed some unnecessary error_log calls.  
+- General code cleanup.
+
+BREAKING CHANGES:  
+=================  
+- HasToken() renamed to HasAccessToken(). (for consistency)  
+- GetAccessToken() no longer has a parameter and serves as a getter for $AccessToken instead of loading the token from ANAF. Functionality as it was moved to a new method (ProcessOAuthCallback).  
+- RefreshToken() renamed to RefreshAccessToken(). (for consistency)  
+- SaveAccessToken() is now private (called automatically by ProcessOAuthCallback and RefreshAccessToken).  
+- UploadEFactura() added a new (required) parameter: $sellerCIF (previously the CIF was hardcoded)  
+
+
 # v1.0.4-alpha  
 Added timeout to all outgoing requests (5s by default)  
   
