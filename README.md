@@ -34,3 +34,11 @@ const ANAF_OAUTH=[
 ];
 ```
 Documentatie: https://tecsiaron.github.io/ANAF-API-Client-PHP/
+# Functii:
+- Accesarea registrului de inregistrari in scopuri de TVA  
+- Autentificare OAuth  
+- Incarcarea unei facturi UBL in sistemul RO e-Factura  
+- Validare UBL prin API ANAF (API instabil)  
+- Conversie UBL in PDF prin API ANAF  
+- Listare raspunsuri din SPV  
+- Descarcare raspuns din SPV   
