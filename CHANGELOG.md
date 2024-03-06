@@ -1,5 +1,7 @@
 # v1.1.1-alpha  
-- RemoveSchemaLocationAttribute no longer uses DOMDocument to strip xsi:schemaLocation attribute. Uses regex instead! (DOMDocument caused side effects with special characters that could cause UBL2PDF to fail).  
+- RemoveSchemaLocationAttribute no longer uses DOMDocument to strip xsi:schemaLocation attribute. Uses regex instead! (DOMDocument caused side effects with special characters that could cause UBL2PDF to fail).
+- Removed, now unnecessary, dependencies (ext-dom and ex-libxml)
+  
 # v1.1.0-alpha  
 - LoadAccessToken() no longer causes unhandled exception when file does not exist.  
 - Location of the token file is now configurable. (Check $TokenFilePath and ANAFAPIClient::__construct())  
