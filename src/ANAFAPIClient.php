@@ -442,18 +442,10 @@ class ANAFAPIClient extends Client
      * @param $xmlString
      * @return string
      */
-    private function RemoveSchemaLocationAttribute($xmlString): string
-    {
-        $dom = new DOMDocument();
-        $dom->loadXML($xmlString, LIBXML_NOERROR | LIBXML_NOWARNING); // Load XML with error handling
-        $rootElement = $dom->documentElement;
-
-        // Check if the attribute exists and remove it
-        if ($rootElement->hasAttribute('xsi:schemaLocation')) {
-            $rootElement->removeAttribute('xsi:schemaLocation');
-            $xmlString = $dom->saveXML();
-        }
-
+    private function RemoveSchemaLocationAttribute($xmlString): string {
+        $pattern = '/(xsi:schemaLocation\s*=\s*["\'][^"\']*["\'])/i';
+        $xmlString = preg_replace($pattern, '', $xmlString, -1, $count);
+        $xmlString = preg_replace('/\s{2,}/', ' ', $xmlString);
         return $xmlString;
     }
 
