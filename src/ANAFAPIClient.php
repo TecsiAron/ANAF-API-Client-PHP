@@ -470,7 +470,7 @@ class ANAFAPIClient extends Client
             }
         } catch (Throwable $ex) {
             $this->CallErrorCallback("ANAF API Error", $ex);
-            return ANAFAnswerListResponse::CreateError();
+            return ANAFAnswerListResponse::CreateError($ex->getMessage());
         }
 
         return ANAFAnswerListResponse::CreateError();
