@@ -13,6 +13,7 @@ class ANAFAnswerListResponse
     public string $cui;
     public bool $success=true;
     public string $titlu;
+    public string $eroare = '';
     /**
      * @var ANAFAnswer[]
      */
@@ -25,6 +26,10 @@ class ANAFAnswerListResponse
      */
     public static function CreateFromParsed(stdClass $parsed):ANAFAnswerListResponse
     {
+        if (isset($parsed->eroare)) {
+            return self::CreateError($parsed->eroare);
+        }
+
         $response = new ANAFAnswerListResponse();
         $response->serial = $parsed->serial;
         $response->cui = $parsed->cui;
@@ -40,12 +45,14 @@ class ANAFAnswerListResponse
     /**
      * Create an error response
      * For internal use!
+     * @param string $error optional error message
      * @return ANAFAnswerListResponse
      */
-    public static function CreateError():ANAFAnswerListResponse
+    public static function CreateError(string $error = ''):ANAFAnswerListResponse
     {
         $response = new ANAFAnswerListResponse();
         $response->success = false;
+        $response->eroare = $error;
         return $response;
     }
 }
