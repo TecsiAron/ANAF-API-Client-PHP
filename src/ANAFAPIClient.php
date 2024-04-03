@@ -346,15 +346,11 @@ class ANAFAPIClient extends Client
                 //var_dump($httpResponse);
                 $content = $httpResponse->getBody()->getContents();
                 $response->rawResspone = $content;
+                $response->Parse();
 
-                if (!$response->Parse()) {
-                    $response->success = false;
-                    $response->message = "Eroare interpretare raspuns ANAF: " . $response->LastParseError;
-                }
             }
         } catch (Throwable $ex) {
-            $response->success = false;
-            $response->message = "Eroare ANAF: " . $ex->getMessage();
+            $response->LastError = $ex;
             $this->CallErrorCallback("ANAF API Error", $ex);
         }
 
