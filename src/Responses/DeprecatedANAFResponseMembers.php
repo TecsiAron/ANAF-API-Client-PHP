@@ -2,8 +2,8 @@
 
 namespace EdituraEDU\ANAF\Responses;
 /**
- *  class or trait for the {@mixin} annotation
- *
+ * Used to properly mark deprecated members of ANAFResponse
+ * Will be removed on next major version
  */
 trait DeprecatedANAFResponseMembers
 {
