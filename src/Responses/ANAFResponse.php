@@ -3,6 +3,7 @@
 namespace EdituraEDU\ANAF\Responses;
 
 use InvalidArgumentException;
+use stdClass;
 use Throwable;
 
 /**
@@ -30,5 +31,21 @@ abstract class ANAFResponse
     protected function CreateError(string $message, int $code= ANAFException::UNKNOWN_ERROR): void
     {
         $this->LastError = new ANAFException($message);
+    }
+
+    protected function CommonParseJSON(string|null $response): stdClass|array|null
+    {
+        if(empty($response))
+        {
+            $this->CreateError("No response to parse", ANAFException::EMPTY_RAW_RESPONSE);
+            return null;
+        }
+        $parsed = json_decode($response);
+        $parseError = json_last_error();
+        if ($parseError !== JSON_ERROR_NONE) {
+            $this->CreateError("JSON parse error:" . $parseError, ANAFException::JSON_PARSE_ERROR);
+            return null;
+        }
+        return $parsed;
     }
 }
