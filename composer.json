@@ -5,7 +5,8 @@
     "require": {
         "guzzlehttp/guzzle": "^7.0",
         "league/oauth2-client": "^2.7",
-        "php": ">=8.0"
+        "php": ">=8.0",
+        "ext-simplexml": "*"
     },
     "autoload": {
         "psr-4": {
