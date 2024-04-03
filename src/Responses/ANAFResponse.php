@@ -30,15 +30,14 @@ abstract class ANAFResponse
      * @param Throwable|null $previous
      * @return void
      */
-    protected function InternalCreateError(string $message, int $code= ANAFException::UNKNOWN_ERROR, ?Throwable $previous=null): void
+    protected function InternalCreateError(string $message, int $code = ANAFException::UNKNOWN_ERROR, ?Throwable $previous = null): void
     {
         $this->LastError = new ANAFException($message, $code, $previous);
     }
 
     protected function CommonParseJSON(string|null $response): stdClass|array|null
     {
-        if(empty($response))
-        {
+        if (empty($response)) {
             $this->InternalCreateError("No response to parse", ANAFException::EMPTY_RAW_RESPONSE);
             return null;
         }

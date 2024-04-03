@@ -16,10 +16,8 @@ class EntityResponse extends ANAFResponse
     {
         try {
             $parsed = $this->CommonParseJSON($this->rawResponse);
-            if($parsed==null)
-            {
-                if(!$this->HasError())
-                {
+            if ($parsed == null) {
+                if (!$this->HasError()) {
                     $this->InternalCreateError("Internal error parsing response", ANAFException::UNKNOWN_ERROR);
                 }
                 return false;

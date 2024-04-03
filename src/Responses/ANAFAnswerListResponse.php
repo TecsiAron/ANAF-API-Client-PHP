@@ -12,7 +12,7 @@ class ANAFAnswerListResponse extends ANAFResponse
 {
     public string $serial;
     public string $cui;
-    public bool $success=true;
+    public bool $success = true;
     public string $titlu;
     public string $eroare = '';
     /**
@@ -21,11 +21,11 @@ class ANAFAnswerListResponse extends ANAFResponse
     public array $mesaje;
 
     /**
-     * Similar to @see Entity::CreateFromParsed
-     * @param stdClass $parsed
+     * Similar to @param stdClass $parsed
      * @return ANAFAnswerListResponse
+     * @see Entity::CreateFromParsed
      */
-    private function CopyFromParsed(stdClass $parsed):void
+    private function CopyFromParsed(stdClass $parsed): void
     {
         if (isset($parsed->eroare)) {
             $this->InternalCreateError($parsed->eroare, ANAFException::REMOTE_EXCEPTION);
@@ -36,8 +36,7 @@ class ANAFAnswerListResponse extends ANAFResponse
         $this->cui = $parsed->cui;
         $this->titlu = $parsed->titlu;
         $this->mesaje = [];
-        foreach ($parsed->mesaje as $mesaj)
-        {
+        foreach ($parsed->mesaje as $mesaj) {
             $this->mesaje[] = ANAFAnswer::CreateFromParsed($mesaj);
         }
     }
@@ -48,7 +47,7 @@ class ANAFAnswerListResponse extends ANAFResponse
      * @param Throwable $error
      * @return ANAFAnswerListResponse
      */
-    public static function CreateError(Throwable $error):ANAFAnswerListResponse
+    public static function CreateError(Throwable $error): ANAFAnswerListResponse
     {
         $result = new ANAFAnswerListResponse();
         $result->LastError = $error;
@@ -65,9 +64,7 @@ class ANAFAnswerListResponse extends ANAFResponse
             }
             $this->CopyFromParsed($parsed);
             return true;
-        }
-        catch (\Throwable $ex)
-        {
+        } catch (\Throwable $ex) {
             $this->LastError = $ex;
             return false;
         }

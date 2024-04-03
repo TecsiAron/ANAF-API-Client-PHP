@@ -480,8 +480,7 @@ class ANAFAPIClient extends Client
                 $contentString = $httpResponse->getBody()->getContents();
                 return ANAFVerifyResponse::Create($contentString);
             }
-        } catch (Throwable $ex)
-        {
+        } catch (Throwable $ex) {
             return ANAFVerifyResponse::CreateError($ex);
         }
 
