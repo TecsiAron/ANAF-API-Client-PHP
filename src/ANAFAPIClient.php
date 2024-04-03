@@ -469,7 +469,7 @@ class ANAFAPIClient extends Client
      * @return bool
      * @deprecated Use at your own risk. Read the comment above.
      */
-    public function VerifyXML(string $ubl): bool
+    public function VerifyXML(string $ubl): ANAFVerifyResponse
     {
         try {
             $method = "https://webservicesp.anaf.ro/prod/FCTEL/rest/validare/FACT1";
@@ -477,17 +477,15 @@ class ANAFAPIClient extends Client
             if ($httpResponse->getStatusCode() >= 200 && $httpResponse->getStatusCode() < 300) {
                 //var_dump($httpResponse);
                 $contentString = $httpResponse->getBody()->getContents();
-                $content = ANAFVerifyResponse::CreateFromParsed(json_decode($contentString));
-                return $content->IsOK();
+                return ANAFVerifyResponse::Create($contentString);
             }
-        } catch (Throwable $ex) {
-            $this->CallErrorCallback("ANAF API Error", $ex);
-            return false;
+        } catch (Throwable $ex)
+        {
+            return ANAFVerifyResponse::CreateError($ex);
         }
 
         $this->CallErrorCallback("ANAF VERIFY ERROR: NO RESPONSE OR ERROR");
-
-        return false;
+        return ANAFVerifyResponse::CreateError(new ANAFException("No response or error", ANAFException::UNKNOWN_ERROR));
     }
 
     /**
