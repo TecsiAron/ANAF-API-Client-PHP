@@ -9,7 +9,7 @@ use EdituraEDU\ANAF\Responses\ANAFVerifyResponse;
 use EdituraEDU\ANAF\Responses\EntityResponse;
 use EdituraEDU\ANAF\Responses\TVAResponse;
 use EdituraEDU\ANAF\Responses\UBLUploadResponse;
-use Error;
+use Exception;
 use GuzzleHttp\Client;
 use League\OAuth2\Client\Provider\GenericProvider;
 use League\OAuth2\Client\Token\AccessToken;
@@ -268,7 +268,7 @@ class ANAFAPIClient extends Client
 
         if ($hasAuth) {
             if (!$this->HasAccessToken()) {
-                throw new Error("ANAF API Error: No token");
+                throw new Exception("ANAF API Error: No token");
             }
 
             $options["headers"]["Authorization"] = "Bearer " . $this->AccessToken->getToken();
@@ -432,7 +432,8 @@ class ANAFAPIClient extends Client
      * @param $xmlString
      * @return string
      */
-    private function RemoveSchemaLocationAttribute($xmlString): string {
+    private function RemoveSchemaLocationAttribute($xmlString): string
+    {
         $pattern = '/(xsi:schemaLocation\s*=\s*["\'][^"\']*["\'])/i';
         $xmlString = preg_replace($pattern, '', $xmlString, -1, $count);
         $xmlString = preg_replace('/\s{2,}/', ' ', $xmlString);
