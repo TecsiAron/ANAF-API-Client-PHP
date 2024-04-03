@@ -7,7 +7,8 @@ use Throwable;
 
 class ANAFException extends  Exception
 {
-    public function __construct(string $message, int $code, ?Throwable $previous = null)
+    const UNKNOWN_ERROR = 0;
+    public function __construct(string $message="Unknown error", int $code = self::UNKNOWN_ERROR, ?Throwable $previous = null)
     {
         parent::__construct($message, $code, $previous);
     }
