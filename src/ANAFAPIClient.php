@@ -10,6 +10,7 @@ use EdituraEDU\ANAF\Responses\TVAResponse;
 use EdituraEDU\ANAF\Responses\UBLUploadResponse;
 use Exception;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use League\OAuth2\Client\Provider\GenericProvider;
 use League\OAuth2\Client\Token\AccessToken;
 use Psr\Http\Message\ResponseInterface;
@@ -253,7 +254,7 @@ class ANAFAPIClient extends Client
      * @param bool $hasAuth Should be true of the request requires authentication
      * @param string $contentType Content type header for the outgoing request
      * @return ResponseInterface
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
     private function SendANAFRequest(string $Method, ?string $body = null, array|null $queryParams = null, bool $hasAuth = false, string $contentType = "application/json"): ResponseInterface
     {
@@ -466,7 +467,7 @@ class ANAFAPIClient extends Client
      * ATTENTION DOES NOT FUNCTION RELIABLY.
      * The API randomly returns "nok" for valid invoices.
      * @param string $ubl
-     * @return bool
+     * @return ANAFVerifyResponse
      * @deprecated Use at your own risk. Read the comment above.
      */
     public function VerifyXML(string $ubl): ANAFVerifyResponse
@@ -539,7 +540,7 @@ class ANAFAPIClient extends Client
         }
         if (!is_int($cif)) {
             $cif = strtoupper($cif);
-            if (strpos($cif, 'RO') === 0) {
+            if (str_starts_with($cif, 'RO')) {
                 $cif = substr($cif, 2);
             }
             $cif = (int)trim($cif);
