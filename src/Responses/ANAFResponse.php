@@ -28,9 +28,9 @@ abstract class ANAFResponse
      * @param int $code
      * @return void
      */
-    protected function CreateError(string $message, int $code= ANAFException::UNKNOWN_ERROR): void
+    protected function CreateError(string $message, int $code= ANAFException::UNKNOWN_ERROR, ?Throwable $previous=null): void
     {
-        $this->LastError = new ANAFException($message);
+        $this->LastError = new ANAFException($message, $code, $previous);
     }
 
     protected function CommonParseJSON(string|null $response): stdClass|array|null
