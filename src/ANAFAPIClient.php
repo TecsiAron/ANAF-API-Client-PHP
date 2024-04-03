@@ -453,14 +453,14 @@ class ANAFAPIClient extends Client
             if ($httpResponse->getStatusCode() >= 200 && $httpResponse->getStatusCode() < 300) {
                 //var_dump($httpResponse);
                 $content = $httpResponse->getBody()->getContents();
-                return ANAFAnswerListResponse::CreateFromParsed(json_decode($content));
+                return ANAFAnswerListResponse::Create($content);
             }
         } catch (Throwable $ex) {
             $this->CallErrorCallback("ANAF API Error", $ex);
-            return ANAFAnswerListResponse::CreateError($ex->getMessage());
+            return ANAFAnswerListResponse::CreateError($ex);
         }
 
-        return ANAFAnswerListResponse::CreateError();
+        return ANAFAnswerListResponse::CreateError(new ANAFException("No response or error", ANAFException::UNKNOWN_ERROR));
     }
 
     /**
