@@ -11,6 +11,7 @@ use EdituraEDU\ANAF\Responses\UBLUploadResponse;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Provider\GenericProvider;
 use League\OAuth2\Client\Token\AccessToken;
 use Psr\Http\Message\ResponseInterface;
@@ -77,11 +78,12 @@ class ANAFAPIClient extends Client
         $cui = trim($cui);
         /**
          * @var TVAResponse $response
+         * @noinspection PhpRedundantVariableDocTypeInspection
          */
         $response = new TVAResponse();
         $sanitizedCUI = $this->SanitizeCUI($cui);
         /** @noinspection PhpIncompatibleReturnTypeInspection */
-        return $this->DoEntityFetch($sanitizedCUI, $response, $cui);
+        return $this->DoEntityFetch($sanitizedCUI, $response);
     }
 
     /**
@@ -135,7 +137,7 @@ class ANAFAPIClient extends Client
      * Gets the access token from ANAF, should be called from the OAuth callback script
      * @param string $authCode
      * @return ?AccessToken
-     * @throws \League\OAuth2\Client\Provider\Exception\IdentityProviderException
+     * @throws IdentityProviderException
      */
     public function ProcessOAuthCallback(string $authCode): ?AccessToken
     {
@@ -288,7 +290,6 @@ class ANAFAPIClient extends Client
      * Base method for fetching company/institution data from ANAF
      * @param false|string $sanitizedCUI
      * @param EntityResponse $response
-     * @param string $cui
      * @return EntityResponse
      */
     public function DoEntityFetch(false|string $sanitizedCUI, EntityResponse $response): EntityResponse
@@ -431,9 +432,8 @@ class ANAFAPIClient extends Client
     private function RemoveSchemaLocationAttribute($xmlString): string
     {
         $pattern = '/(xsi:schemaLocation\s*=\s*["\'][^"\']*["\'])/i';
-        $xmlString = preg_replace($pattern, '', $xmlString, -1, $count);
-        $xmlString = preg_replace('/\s{2,}/', ' ', $xmlString);
-        return $xmlString;
+        $xmlString = preg_replace($pattern, '', $xmlString, -1);
+        return preg_replace('/\s{2,}/', ' ', $xmlString);
     }
 
     /**
