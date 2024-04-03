@@ -7,6 +7,7 @@ use Throwable;
 
 /**
  * Represents the base structure for some ANAF API responses
+ * @mixin DeprecatedANAFResponseMembers
  * @TODO make *Response classes extend this class
  * @property bool $success
  * @property string $message
