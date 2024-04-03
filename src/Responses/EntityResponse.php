@@ -7,7 +7,7 @@ use EdituraEDU\ANAF\ANAFEntity\Entity;
 /**
  * Represents the response structure for @see \EdituraEDU\ANAF\ANAFAPIClient::GetEntity
  */
-class EntityResponse extends ANAFAPIResponse
+class EntityResponse extends ANAFResponse
 {
     public ?Entity $Entity=null;
     public function Parse(): bool

@@ -6,7 +6,7 @@ namespace EdituraEDU\ANAF\Responses;
  * Represents the base structure for some ANAF API responses
  * @TODO make *Response classes extend this class
  */
-abstract class ANAFAPIResponse
+abstract class ANAFResponse
 {
     public bool|null $success=null;
     public string|null $message=null;

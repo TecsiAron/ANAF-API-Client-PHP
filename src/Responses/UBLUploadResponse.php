@@ -6,7 +6,7 @@ use Error;
 /**
  * Represents the response structure for @see \EdituraEDU\ANAF\ANAFAPIClient::UploadEFactura()
  */
-class UBLUploadResponse extends ANAFAPIResponse
+class UBLUploadResponse extends ANAFResponse
 {
     public ?int $ResponseTimestamp = null;
     public function Parse():bool
