@@ -13,12 +13,12 @@ class UBLUploadResponse extends ANAFResponse
     {
         if($this->rawResponse===null)
         {
-            $this->CreateError("No response to parse", ANAFException::EMPTY_RAW_RESPONSE);
+            $this->InternalCreateError("No response to parse", ANAFException::EMPTY_RAW_RESPONSE);
             return false;
         }
         if($this->isErrorResponse($this->rawResponse))
         {
-            $this->CreateError("API returned an error", ANAFException::REMOTE_EXCEPTION);
+            $this->InternalCreateError("API returned an error", ANAFException::REMOTE_EXCEPTION);
             return false;
         }
         try
@@ -78,17 +78,17 @@ class UBLUploadResponse extends ANAFResponse
         }
         else if($success)
         {
-            $this->CreateError("Eroare necunoscută, nu s-a regăsit index_incarcare în răspunsul ANAF", ANAFException::INCOMPLETE_RESPONSE);
+            $this->InternalCreateError("Eroare necunoscută, nu s-a regăsit index_incarcare în răspunsul ANAF", ANAFException::INCOMPLETE_RESPONSE);
         }
         if(!$success)
         {
             if($xml->Errors && isset($xml->Errors['errorMessage']))
             {
-                $this->CreateError((string)$xml->Errors['errorMessage'], ANAFException::REMOTE_EXCEPTION);
+                $this->InternalCreateError((string)$xml->Errors['errorMessage'], ANAFException::REMOTE_EXCEPTION);
             }
             else
             {
-                $this->CreateError("Eroare necunoscută: ".$this->rawResponse, ANAFException::INCOMPLETE_RESPONSE);
+                $this->InternalCreateError("Eroare necunoscută: ".$this->rawResponse, ANAFException::INCOMPLETE_RESPONSE);
             }
         }
     }
@@ -110,7 +110,7 @@ class UBLUploadResponse extends ANAFResponse
         if (isset($json->error) && isset($json->message)) {
             $message = $json->error . ": " . $json->message;
         }
-        $this->CreateError($message, ANAFException::REMOTE_EXCEPTION);
+        $this->InternalCreateError($message, ANAFException::REMOTE_EXCEPTION);
     }
 
     /**

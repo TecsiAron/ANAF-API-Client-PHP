@@ -20,20 +20,20 @@ class EntityResponse extends ANAFResponse
             {
                 if(!$this->HasError())
                 {
-                    $this->CreateError("Internal error parsing response", ANAFException::UNKNOWN_ERROR);
+                    $this->InternalCreateError("Internal error parsing response", ANAFException::UNKNOWN_ERROR);
                 }
                 return false;
             }
         } catch (Throwable $ex) {
-            $this->CreateError($ex->getMessage(), ANAFException::JSON_UNKNOWN_ERROR, $this->LastError);
+            $this->InternalCreateError($ex->getMessage(), ANAFException::JSON_UNKNOWN_ERROR, $this->LastError);
             return false;
         }
         if (!isset($parsed->found) || !is_countable($parsed->found)) {
-            $this->CreateError("Missing/invalid found array, bad response structure?", ANAFException::UNEXPECTED_RESPONSE_STRUCTURE);
+            $this->InternalCreateError("Missing/invalid found array, bad response structure?", ANAFException::UNEXPECTED_RESPONSE_STRUCTURE);
             return false;
         }
         if (sizeof($parsed->found) == 0) {
-            $this->CreateError("CUI invalid (nu s-a regasit in baza de date ANAF)!", ANAFException::RESULT_NOT_FOUND);
+            $this->InternalCreateError("CUI invalid (nu s-a regasit in baza de date ANAF)!", ANAFException::RESULT_NOT_FOUND);
             return true;
         }
         if (sizeof($parsed->found) != 1) {
@@ -41,11 +41,11 @@ class EntityResponse extends ANAFResponse
             return false;
         }
         if (!isset($parsed->found[0]->date_generale) || !isset($parsed->found[0]->inregistrare_scop_Tva)) {
-            $this->CreateError("Missing/invalid date_generale or inregistrare_scop_Tva, bad response structure?", ANAFException::INCOMPLETE_RESPONSE);
+            $this->InternalCreateError("Missing/invalid date_generale or inregistrare_scop_Tva, bad response structure?", ANAFException::INCOMPLETE_RESPONSE);
             return false;
         }
         if (!isset($parsed->found[0]->inregistrare_scop_Tva->scpTVA) || !is_bool($parsed->found[0]->inregistrare_scop_Tva->scpTVA)) {
-            $this->CreateError("Missing/invalid scpTVA, bad response structure?", ANAFException::INCOMPLETE_RESPONSE);
+            $this->InternalCreateError("Missing/invalid scpTVA, bad response structure?", ANAFException::INCOMPLETE_RESPONSE);
             return false;
         }
         $this->Entity = Entity::CreateFromParsed($parsed->found[0]);
