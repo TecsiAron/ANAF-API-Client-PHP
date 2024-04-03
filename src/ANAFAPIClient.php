@@ -2,7 +2,6 @@
 
 namespace EdituraEDU\ANAF;
 
-use DOMDocument;
 use EdituraEDU\ANAF\Responses\ANAFAnswerListResponse;
 use EdituraEDU\ANAF\Responses\ANAFVerifyResponse;
 use EdituraEDU\ANAF\Responses\EntityResponse;
