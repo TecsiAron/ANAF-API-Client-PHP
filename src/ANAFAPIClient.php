@@ -4,6 +4,7 @@ namespace EdituraEDU\ANAF;
 
 use DOMDocument;
 use EdituraEDU\ANAF\Responses\ANAFAnswerListResponse;
+use EdituraEDU\ANAF\Responses\ANAFException;
 use EdituraEDU\ANAF\Responses\ANAFVerifyResponse;
 use EdituraEDU\ANAF\Responses\EntityResponse;
 use EdituraEDU\ANAF\Responses\TVAResponse;
@@ -294,9 +295,7 @@ class ANAFAPIClient extends Client
     {
         try {
             if ($sanitizedCUI === false || !self::ValidateCIF($sanitizedCUI)) {
-                $response->success = false;
-                $response->message = "CUI Invalid: $cui";
-
+                $response->LastError = new ANAFException("CUI invalid", ANAFException::INVALID_INPUT);
                 return $response;
             }
 
@@ -304,26 +303,17 @@ class ANAFAPIClient extends Client
             $httpResponse = $this->SendANAFRequest("PlatitorTvaRest/api/v8/ws/tva", json_encode($requestBody));
 
             if ($httpResponse->getStatusCode() >= 200 && $httpResponse->getStatusCode() < 300) {
-                $response->success = true;
                 $content = $httpResponse->getBody()->getContents();
                 //var_dump($content);
                 $response->rawResspone = $content;
-
-                if (!$response->Parse()) {
-                    $response->success = false;
-                    $response->message = "Eroare interpretare raspuns ANAF: " . $response->LastParseError . "\n" . $response->rawResspone;
-                }
-
+                $response->Parse();
                 return $response;
             }
-            $response->success = false;
-            $response->message = "HTTP Error: " . $httpResponse->getStatusCode();
+            $response->LastError = new ANAFException("HTTP Error: " . $httpResponse->getStatusCode(), ANAFException::HTTP_ERROR);
         } catch (Throwable $ex) {
-            $response->success = false;
-            $response->message = "Eroare ANAF: " . $ex->getMessage();
+            $response->LastError = $ex;
             $this->CallErrorCallback("ANAF API Error", $ex);
         }
-
         return $response;
     }
 
