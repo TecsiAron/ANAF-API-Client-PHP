@@ -26,7 +26,6 @@ abstract class ANAFResponse
     private string|null $message = null;
     public Throwable|null $LastError = null;
     public string|null $rawResspone = null;
-    public string $LastParseError = "";
 
     public abstract function Parse(): bool;
 
