@@ -11,22 +11,22 @@ class UBLUploadResponse extends ANAFResponse
     public string|null $IndexIncarcare = null;
     public function Parse():bool
     {
-        if($this->rawResspone===null)
+        if($this->rawResponse===null)
         {
             $this->CreateError("No response to parse", ANAFException::EMPTY_RAW_RESPONSE);
             return false;
         }
-        if($this->isErrorResponse($this->rawResspone))
+        if($this->isErrorResponse($this->rawResponse))
         {
             $this->CreateError("API returned an error", ANAFException::REMOTE_EXCEPTION);
             return false;
         }
         try
         {
-            if ($this->isJson($this->rawResspone)) {
-                $this->parseJSON($this->rawResspone);
+            if ($this->isJson($this->rawResponse)) {
+                $this->parseJSON($this->rawResponse);
             } else {
-                $this->parseXML($this->rawResspone);
+                $this->parseXML($this->rawResponse);
             }
         }
         catch (\Throwable $ex)
@@ -88,7 +88,7 @@ class UBLUploadResponse extends ANAFResponse
             }
             else
             {
-                $this->CreateError("Eroare necunoscută: ".$this->rawResspone, ANAFException::INCOMPLETE_RESPONSE);
+                $this->CreateError("Eroare necunoscută: ".$this->rawResponse, ANAFException::INCOMPLETE_RESPONSE);
             }
         }
     }

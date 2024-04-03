@@ -14,12 +14,12 @@ class EntityResponse extends ANAFResponse
 
     public function Parse(): bool
     {
-        if ($this->rawResspone === null) {
+        if ($this->rawResponse === null) {
             $this->CreateError("No response to parse", ANAFException::EMPTY_RAW_RESPONSE);
             return false;
         }
         try {
-            $parsed = json_decode($this->rawResspone);
+            $parsed = json_decode($this->rawResponse);
             $parseError = json_last_error();
             if ($parseError !== JSON_ERROR_NONE) {
                 $this->CreateError("JSON parse error:" . $parseError, ANAFException::JSON_PARSE_ERROR);

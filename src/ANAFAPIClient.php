@@ -304,7 +304,7 @@ class ANAFAPIClient extends Client
             if ($httpResponse->getStatusCode() >= 200 && $httpResponse->getStatusCode() < 300) {
                 $content = $httpResponse->getBody()->getContents();
                 //var_dump($content);
-                $response->rawResspone = $content;
+                $response->rawResponse = $content;
                 $response->Parse();
                 return $response;
             }
@@ -345,7 +345,7 @@ class ANAFAPIClient extends Client
             if ($httpResponse->getStatusCode() >= 200 && $httpResponse->getStatusCode() < 300) {
                 //var_dump($httpResponse);
                 $content = $httpResponse->getBody()->getContents();
-                $response->rawResspone = $content;
+                $response->rawResponse = $content;
                 $response->Parse();
 
             }

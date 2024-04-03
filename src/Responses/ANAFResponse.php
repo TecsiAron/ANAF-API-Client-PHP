@@ -12,7 +12,7 @@ use Throwable;
 abstract class ANAFResponse
 {
     public Throwable|null $LastError = null;
-    public string|null $rawResspone = null;
+    public string|null $rawResponse = null;
 
     public abstract function Parse(): bool;
 
