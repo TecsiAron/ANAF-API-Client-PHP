@@ -95,7 +95,7 @@ class ANAFAPIClient extends Client
         $sanitizedCUI = $this->SanitizeCUI($cui);
         $response = new EntityResponse();
 
-        return $this->DoEntityFetch($sanitizedCUI, $response, $cui);
+        return $this->DoEntityFetch($sanitizedCUI, $response);
     }
 
     /**
@@ -291,7 +291,7 @@ class ANAFAPIClient extends Client
      * @param string $cui
      * @return EntityResponse
      */
-    public function DoEntityFetch(false|string $sanitizedCUI, EntityResponse $response, string $cui): EntityResponse
+    public function DoEntityFetch(false|string $sanitizedCUI, EntityResponse $response): EntityResponse
     {
         try {
             if ($sanitizedCUI === false || !self::ValidateCIF($sanitizedCUI)) {
