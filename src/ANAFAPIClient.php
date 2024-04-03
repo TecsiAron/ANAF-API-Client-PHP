@@ -2,7 +2,6 @@
 
 namespace EdituraEDU\ANAF;
 
-use DOMDocument;
 use EdituraEDU\ANAF\Responses\ANAFAnswerListResponse;
 use EdituraEDU\ANAF\Responses\ANAFException;
 use EdituraEDU\ANAF\Responses\ANAFVerifyResponse;
