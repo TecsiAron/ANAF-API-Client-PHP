@@ -16,6 +16,8 @@ abstract class ANAFResponse
 
     public abstract function Parse(): bool;
 
+    public static abstract function CreateError(Throwable $error): ANAFResponse;
+
     public function HasError(): bool
     {
         return $this->LastError != null;

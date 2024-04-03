@@ -1,6 +1,7 @@
 <?php
 namespace EdituraEDU\ANAF\Responses;
 use DateTime;
+use Throwable;
 
 /**
  * Represents the response structure for @see \EdituraEDU\ANAF\ANAFAPIClient::UploadEFactura()
@@ -122,5 +123,12 @@ class UBLUploadResponse extends ANAFResponse
     private function convertToTimestamp(string $dateStr, string $format): int {
         $date = DateTime::createFromFormat($format, $dateStr);
         return $date->getTimestamp();
+    }
+
+    public static function CreateError(Throwable $error): UBLUploadResponse
+    {
+        $result = new UBLUploadResponse();
+        $result->LastError = $error;
+        return $result;
     }
 }

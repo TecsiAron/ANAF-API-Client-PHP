@@ -51,4 +51,11 @@ class EntityResponse extends ANAFResponse
         $this->Entity = Entity::CreateFromParsed($parsed->found[0]);
         return true;
     }
+
+    public static function CreateError(Throwable $error): EntityResponse
+    {
+        $result = new EntityResponse();
+        $result->LastError = $error;
+        return $result;
+    }
 }

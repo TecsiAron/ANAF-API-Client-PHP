@@ -71,10 +71,10 @@ class ANAFVerifyResponse extends ANAFResponse
         return $response;
     }
 
-    public static function CreateError(Throwable $ex): ANAFVerifyResponse
+    public static function CreateError(Throwable $error): ANAFVerifyResponse
     {
         $response = new ANAFVerifyResponse();
-        $response->LastError = $ex;
+        $response->LastError = $error;
         return $response;
     }
 }
