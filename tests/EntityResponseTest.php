@@ -4,7 +4,7 @@ use EdituraEDU\ANAF\Responses\ANAFException;
 use EdituraEDU\ANAF\Responses\EntityResponse;
 use PHPUnit\Framework\TestCase;
 
-class EntityTest extends TestCase
+class EntityResponseTest extends TestCase
 {
     public function testParseNoError(): void
     {
