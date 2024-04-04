@@ -20,5 +20,8 @@
             "email": "aron@edituraedu.ro"
         }
     ],
-    "minimum-stability": "alpha"
+    "minimum-stability": "alpha",
+    "require-dev": {
+        "phpunit/phpunit": "11"
+    }
 }
