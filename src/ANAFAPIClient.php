@@ -255,10 +255,11 @@ class ANAFAPIClient extends Client
      * @param array|null $queryParams Query parameters (if teh value is ["ex1"=>"val"] ?ex1=val will be appended to the URL)
      * @param bool $hasAuth Should be true of the request requires authentication
      * @param string $contentType Content type header for the outgoing request
+     * @param float|null $timeoutOverride if set, will override the default timeout (ANAFAPIClient::$Timeout)
      * @return ResponseInterface
      * @throws GuzzleException
      */
-    private function SendANAFRequest(string $Method, ?string $body = null, array|null $queryParams = null, bool $hasAuth = false, string $contentType = "application/json"): ResponseInterface
+    private function SendANAFRequest(string $Method, ?string $body = null, array|null $queryParams = null, bool $hasAuth = false, string $contentType = "application/json", float|null $timeoutOverride = null): ResponseInterface
     {
         $options = ["headers" =>
             [
@@ -276,7 +277,7 @@ class ANAFAPIClient extends Client
             $options["headers"]["Authorization"] = "Bearer " . $this->AccessToken->getToken();
         }
         $options["query"] = $queryParams;
-        $options["timeout"] = $this->Timeout;
+        $options["timeout"] = $timeoutOverride === null ? $this->Timeout : $timeoutOverride;
 
         if ($body === null) {
             return $this->get($Method, $options);
