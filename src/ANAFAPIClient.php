@@ -394,10 +394,9 @@ class ANAFAPIClient extends Client
     }
 
     /**
-     * Converts a UBL XML to a PDF, using the ANAF API, without validation.
-     * Currently seems to fail if not in production mode.
-     * @param string $ubl UBL XML content
-     * @param string $metadata used for logging ONLY (helps identify the request in logs
+     * Convert UBL XML to PDF using the ANAF API
+     * @param string $ubl
+     * @param string $metadata
      * @param float|null $timeoutOverride if set, will override the default timeout (ANAFAPIClient::$Timeout)
      * @return string|false
      */
@@ -408,14 +407,14 @@ class ANAFAPIClient extends Client
         }
 
         $modeName = $this->Production ? "prod" : "test";
-        $method = "https://webservicesp.anaf.ro/$modeName/FCTEL/rest/transformare/FACT1/DA";
+        $method = "https://webservicesp.anaf.ro/prod/FCTEL/rest/transformare/FACT1";
 
         try {
             $timeoutOverride = $timeoutOverride ?? $this->Timeout;
             $httpResponse = $this->SendANAFRequest($method, $ubl, null, false, "text/plain", $timeoutOverride);
 
             if ($httpResponse->getStatusCode() >= 200 && $httpResponse->getStatusCode() < 300) {
-                //var_dump($httpResponse);
+                var_dump($httpResponse);
                 $content = $httpResponse->getBody()->getContents();
                 if (str_starts_with($content, "%PDF")) {
                     return $content;
