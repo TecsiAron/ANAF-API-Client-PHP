@@ -418,8 +418,7 @@ class ANAFAPIClient
         $method = "/prod/FCTEL/rest/transformare/FACT1/DA";
         try {
             $timeoutOverride = $timeoutOverride ?? $this->Timeout;
-            $httpResponse = $this->SendANAFRequest($method, $ubl, null, false, "text/plain", $timeoutOverride);
-
+            $httpResponse = $this->SendANAFRequest($method, $ubl, null, $authenticated, "text/plain", $timeoutOverride);
             if ($httpResponse->getStatusCode() >= 200 && $httpResponse->getStatusCode() < 300) {
                 $content = $httpResponse->getBody()->getContents();
                 if (str_starts_with($content, "%PDF")) {
@@ -443,7 +442,7 @@ class ANAFAPIClient
      * @param $xmlString
      * @return string
      */
-    private function RemoveSchemaLocationAttribute($xmlString): string
+    public static function RemoveSchemaLocationAttribute($xmlString): string
     {
         $pattern = '/(xsi:schemaLocation\s*=\s*["\'][^"\']*["\'])/i';
         $xmlString = preg_replace($pattern, '', $xmlString, -1);
