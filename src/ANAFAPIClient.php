@@ -265,7 +265,6 @@ class ANAFAPIClient
      * @param array|null $queryParams Query parameters (if teh value is ["ex1"=>"val"] ?ex1=val will be appended to the URL)
      * @param bool $hasAuth Should be true of the request requires authentication
      * @param string $contentType Content type header for the outgoing request
-     * @param float|null $timeoutOverride if set, will override the default timeout (ANAFAPIClient::$Timeout)
      * @return ResponseInterface
      * @throws GuzzleException
      */
