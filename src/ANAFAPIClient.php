@@ -410,10 +410,10 @@ class ANAFAPIClient
      * @param float|null $timeoutOverride if set, will override the default timeout (ANAFAPIClient::$Timeout)
      * @return string|false
      */
-    public function UBL2PDF(string $ubl, string $metadata, float|null $timeoutOverride = null): string|false
+    public function UBL2PDF(string $ubl, string $metadata, bool $authenticated = true, float|null $timeoutOverride = null): string|false
     {
         if (str_contains($ubl, 'xsi:schemaLocation')) {
-            $ubl = $this->RemoveSchemaLocationAttribute($ubl);
+            $ubl = self::RemoveSchemaLocationAttribute($ubl);
         }
         $method = "/prod/FCTEL/rest/transformare/FACT1/DA";
         try {
@@ -481,14 +481,15 @@ class ANAFAPIClient
      * ATTENTION DOES NOT FUNCTION RELIABLY.
      * The API randomly returns "nok" for valid invoices.
      * @param string $ubl
+     * @param bool $authenticated If true, the request will use the OAuth2 API endpoint
      * @return ANAFVerifyResponse
      * @deprecated Use at your own risk. Read the comment above.
      */
-    public function VerifyXML(string $ubl): ANAFVerifyResponse
+    public function VerifyXML(string $ubl, bool $authenticated = true): ANAFVerifyResponse
     {
         try {
-            $method = "https://webservicesp.anaf.ro/prod/FCTEL/rest/validare/FACT1";
-            $httpResponse = $this->SendANAFRequest($method, $ubl, null, false, "text/plain");
+            $method = "/prod/FCTEL/rest/validare/FACT1";
+            $httpResponse = $this->SendANAFRequest($method, $ubl, null, $authenticated, "text/plain");
             if ($httpResponse->getStatusCode() >= 200 && $httpResponse->getStatusCode() < 300) {
                 //var_dump($httpResponse);
                 $contentString = $httpResponse->getBody()->getContents();
