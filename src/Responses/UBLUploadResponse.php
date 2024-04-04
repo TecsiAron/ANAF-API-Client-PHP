@@ -29,7 +29,7 @@ class UBLUploadResponse extends ANAFResponse
             } else {
                 $this->parseXML($this->rawResponse);
             }
-        } catch (\Throwable $ex) {
+        } catch (Throwable $ex) {
             $this->LastError = $ex;
             return false;
         }
