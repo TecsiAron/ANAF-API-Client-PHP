@@ -23,6 +23,11 @@ abstract class ANAFResponse
         return $this->LastError != null;
     }
 
+    public function IsSuccess(): bool
+    {
+        return !$this->HasError();
+    }
+
     /**
      * Utility method for implementers to create an error
      * @param string $message
