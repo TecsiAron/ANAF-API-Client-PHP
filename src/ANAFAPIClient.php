@@ -422,8 +422,7 @@ class ANAFAPIClient extends Client
                 }
                 $this->CallErrorCallback("Bad content format, expected PDF (UBL2PDF) - $metadata");
                 $this->CallErrorCallback($content);
-
-                return $content;
+                return false;
 
             }
         } catch (Throwable $ex) {
