@@ -12,18 +12,15 @@ class ANAFAnswerListResponse extends ANAFResponse
 {
     public string $serial;
     public string $cui;
-    public bool $success = true;
     public string $titlu;
-    public string $eroare = '';
     /**
      * @var ANAFAnswer[]
      */
     public array $mesaje;
 
     /**
-     * Similar to @param stdClass $parsed
-     * @return ANAFAnswerListResponse
-     * @see Entity::CreateFromParsed
+     * @param stdClass $parsed
+     * @return void
      */
     private function CopyFromParsed(stdClass $parsed): void
     {
