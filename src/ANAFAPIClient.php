@@ -342,7 +342,7 @@ class ANAFAPIClient
 
         try {
             $modeName = $this->Production ? "prod" : "test";
-            $method = "https://api.anaf.ro/$modeName/FCTEL/rest/upload";
+            $method = "/$modeName/FCTEL/rest/upload";
             $queryParams = ["standard" => "UBL", "cif" => $sellerCIF];
 
             if ($extern) {
@@ -380,7 +380,7 @@ class ANAFAPIClient
     public function DownloadAnswer(string $id): string
     {
         $modeName = $this->Production ? "prod" : "test";
-        $method = "https://api.anaf.ro/$modeName/FCTEL/rest/descarcare?id=$id";
+        $method = "/$modeName/FCTEL/rest/descarcare?id=$id";
 
         try {
             $httpResponse = $this->SendANAFRequest($method, null, null, true);
@@ -415,16 +415,12 @@ class ANAFAPIClient
         if (str_contains($ubl, 'xsi:schemaLocation')) {
             $ubl = $this->RemoveSchemaLocationAttribute($ubl);
         }
-
-        $modeName = $this->Production ? "prod" : "test";
-        $method = "https://webservicesp.anaf.ro/prod/FCTEL/rest/transformare/FACT1";
-
+        $method = "/prod/FCTEL/rest/transformare/FACT1/DA";
         try {
             $timeoutOverride = $timeoutOverride ?? $this->Timeout;
             $httpResponse = $this->SendANAFRequest($method, $ubl, null, false, "text/plain", $timeoutOverride);
 
             if ($httpResponse->getStatusCode() >= 200 && $httpResponse->getStatusCode() < 300) {
-                var_dump($httpResponse);
                 $content = $httpResponse->getBody()->getContents();
                 if (str_starts_with($content, "%PDF")) {
                     return $content;
@@ -463,7 +459,7 @@ class ANAFAPIClient
     public function ListAnswers(int $cif, int $days = 60): ANAFAnswerListResponse
     {
         $modeName = $this->Production ? "prod" : "test";
-        $method = "https://api.anaf.ro/$modeName/FCTEL/rest/listaMesajeFactura?zile=$days&cif=$cif";
+        $method = "/$modeName/FCTEL/rest/listaMesajeFactura?zile=$days&cif=$cif";
 
         try {
             $httpResponse = $this->SendANAFRequest($method, null, null, true);
