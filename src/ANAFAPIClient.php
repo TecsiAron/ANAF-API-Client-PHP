@@ -393,7 +393,15 @@ class ANAFAPIClient extends Client
         return "ERROR_NO_RESPONSE";
     }
 
-    public function UBL2PDF(string $ubl, string $metadata): string|false
+    /**
+     * Converts a UBL XML to a PDF, using the ANAF API, without validation.
+     * Currently seems to fail if not in production mode.
+     * @param string $ubl UBL XML content
+     * @param string $metadata used for logging ONLY (helps identify the request in logs
+     * @param float|null $timeoutOverride if set, will override the default timeout (ANAFAPIClient::$Timeout)
+     * @return string|false
+     */
+    public function UBL2PDF(string $ubl, string $metadata, float|null $timeoutOverride = null): string|false
     {
         if (str_contains($ubl, 'xsi:schemaLocation')) {
             $ubl = $this->RemoveSchemaLocationAttribute($ubl);
@@ -403,7 +411,8 @@ class ANAFAPIClient extends Client
         $method = "https://webservicesp.anaf.ro/$modeName/FCTEL/rest/transformare/FACT1/DA";
 
         try {
-            $httpResponse = $this->SendANAFRequest($method, $ubl, null, false, "text/plain");
+            $timeoutOverride = $timeoutOverride ?? $this->Timeout;
+            $httpResponse = $this->SendANAFRequest($method, $ubl, null, false, "text/plain", $timeoutOverride);
 
             if ($httpResponse->getStatusCode() >= 200 && $httpResponse->getStatusCode() < 300) {
                 //var_dump($httpResponse);
