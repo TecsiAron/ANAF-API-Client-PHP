@@ -23,7 +23,7 @@ use Throwable;
  * - TVA Status
  * - RO EFactura
  */
-class ANAFAPIClient extends Client
+class ANAFAPIClient
 {
     /**
      * @var float $Timeout Outgoing request timeout in seconds
@@ -42,6 +42,8 @@ class ANAFAPIClient extends Client
      * Specified in @see ANAFAPIClient::__construct()
      */
     private string $TokenFilePath;
+    private Client $PublicAPIClient;
+    private Client $AuthenticatedAPIClient;
 
     /**
      * @param array $OAuthConfig O Auth config for authenticated requests see README.md
@@ -52,6 +54,7 @@ class ANAFAPIClient extends Client
      */
     public function __construct(array $OAuthConfig, bool $production, callable $errorCallback = null, ?string $tokenFilePath = null)
     {
+        $config = [];
         $config['base_uri'] = 'https://webservicesp.anaf.ro';
         $config['headers'] = [
             'Content-Type' => 'application/json',
@@ -65,7 +68,14 @@ class ANAFAPIClient extends Client
         } else {
             $this->TokenFilePath = $tokenFilePath;
         }
-        parent::__construct($config);
+        $this->PublicAPIClient = new Client($config);
+        $config = [];
+        $config['base_uri'] = 'https://api.anaf.ro';
+        $config['headers'] = [
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+        ];
+        $this->AuthenticatedAPIClient = new Client($config);
     }
 
     /**
@@ -261,6 +271,7 @@ class ANAFAPIClient extends Client
      */
     private function SendANAFRequest(string $Method, ?string $body = null, array|null $queryParams = null, bool $hasAuth = false, string $contentType = "application/json", float|null $timeoutOverride = null): ResponseInterface
     {
+        $client = $hasAuth ? $this->AuthenticatedAPIClient : $this->PublicAPIClient;
         $options = ["headers" =>
             [
                 "Content-Type" => $contentType,
@@ -280,11 +291,11 @@ class ANAFAPIClient extends Client
         $options["timeout"] = $timeoutOverride === null ? $this->Timeout : $timeoutOverride;
 
         if ($body === null) {
-            return $this->get($Method, $options);
+            return $client->get($Method, $options);
         }
 
         $options['body'] = $body;
-        return $this->post($Method, $options);
+        return $client->post($Method, $options);
     }
 
     /**
