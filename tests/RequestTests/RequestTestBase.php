@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Throwable;
 
-abstract class RequestRule extends TestCase
+abstract class RequestTestBase extends TestCase
 {
     protected int $cif = -1;
     protected const ANAF_OAUTH=[

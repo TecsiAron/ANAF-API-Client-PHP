@@ -9,7 +9,7 @@ use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\Attributes\DependsExternal;
 use PHPUnit\Framework\Attributes\UsesFunction;
 use Throwable;
-class AnswerListAnswerTest extends RequestRule
+class AnswerListAnswerTest extends RequestTestBase
 {
 
     public function testEmptyResponse()
