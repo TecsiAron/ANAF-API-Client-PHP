@@ -13,15 +13,15 @@ class UBLUploadResponse extends ANAFResponse
     public ?int $ResponseTimestamp = null;
     public string|null $IndexIncarcare = null;
 
-    public function Parse(): bool
+    public function Parse(): void
     {
         if ($this->rawResponse === null) {
             $this->InternalCreateError("No response to parse", ANAFException::EMPTY_RAW_RESPONSE);
-            return false;
+            return;
         }
         if ($this->isErrorResponse($this->rawResponse)) {
             $this->InternalCreateError("API returned an error", ANAFException::REMOTE_EXCEPTION);
-            return false;
+            return;
         }
         try {
             if ($this->isJson($this->rawResponse)) {
@@ -31,9 +31,7 @@ class UBLUploadResponse extends ANAFResponse
             }
         } catch (Throwable $ex) {
             $this->LastError = $ex;
-            return false;
         }
-        return true;
     }
 
     /**

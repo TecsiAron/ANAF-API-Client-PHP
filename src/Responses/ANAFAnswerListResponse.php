@@ -51,14 +51,14 @@ class ANAFAnswerListResponse extends ANAFResponse
         return $result;
     }
 
-    public function Parse(): bool
+    public function Parse(): void
     {
         try {
             $parsed = $this->CommonParseJSON($this->rawResponse);
             //var_dump($parsed);
             if ($parsed == null && !$this->HasError()) {
                 $this->InternalCreateError("Internal error parsing response");
-                return false;
+                return;
             }
             if (strtolower($parsed->titlu) == "lista mesaje"
                 && isset($parsed->eroare)
@@ -74,10 +74,8 @@ class ANAFAnswerListResponse extends ANAFResponse
             }
 
             $this->CopyFromParsed($parsed);
-            return true;
         } catch (Throwable $ex) {
             $this->LastError = $ex;
-            return false;
         }
     }
 

@@ -14,7 +14,7 @@ abstract class ANAFResponse
     public Throwable|null $LastError = null;
     public string|null $rawResponse = null;
 
-    public abstract function Parse(): bool;
+    public abstract function Parse(): void;
 
     public static abstract function CreateError(Throwable $error): ANAFResponse;
 
