@@ -62,6 +62,7 @@ abstract class RequestRule extends TestCase
             };
         }
         $client= new ANAFAPIClient(self::ANAF_OAUTH, false, $errorCallback, __DIR__ . '/ANAFAccessToken.json');
+        $this->assertFalse($client->IsProduction());
         $classRef->getProperty("LockToken")->setValue($client, true);
         return $client;
     }
