@@ -13,6 +13,11 @@
             "EdituraEDU\\ANAF\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "EdituraEDU\\ANAF\\Tests\\": "tests/"
+        }
+    },
     "license": "MIT",
     "authors": [
         {

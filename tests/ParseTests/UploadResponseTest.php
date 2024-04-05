@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace ParseTests;
+namespace EdituraEDU\ANAF\Tests\ParseTests;
 
 use EdituraEDU\ANAF\Responses\ANAFException;
 use EdituraEDU\ANAF\Responses\UBLUploadResponse;
