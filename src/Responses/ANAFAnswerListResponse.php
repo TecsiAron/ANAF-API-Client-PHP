@@ -55,7 +55,7 @@ class ANAFAnswerListResponse extends ANAFResponse
     {
         try {
             $parsed = $this->CommonParseJSON($this->rawResponse);
-            if ($parsed == null) {
+            if ($parsed == null && !$this->HasError()) {
                 $this->InternalCreateError("Internal error parsing response", ANAFException::UNKNOWN_ERROR);
                 return false;
             }
