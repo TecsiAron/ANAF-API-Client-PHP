@@ -7,18 +7,41 @@ use Throwable;
 class AnswerListAnswerTest extends RequestRule
 {
     /**
-     *  @requires testHasAccessToken
+     * @covers \EdituraEDU\ANAF\ANAFAPIClient::ListAnswers
+     * @uses \EdituraEDU\ANAF\ANAFAPIClient::UploadEFactura()
      */
     public function testEmptyResponse()
     {
         try {
             $client = $this->createClient();
             $response = $client->ListAnswers($this->cif,1);
-            $this->assertFalse($response->IsSuccess(), "Response is successful");
-            $this->assertIsString($response->LastError->getMessage(), "Error message is not a string");
+            $localParsed=json_decode($response->rawResponse);
         } catch (Throwable $ex) {
             $this->fail("Exception thrown: " . $ex->getMessage());
         }
+        $this->assertTrue(json_last_error()==JSON_ERROR_NONE, "Invalid JSON response");
+        $this->assertTrue($response->IsSuccess(), "Response is not successful");
+
+        if(isset($localParsed->mesaje))
+        {
+            $this->markTestSkipped("Response was not empty");
+        }
+        else
+        {
+            $this->assertTrue(isset($localParsed->titlu), "Invalid response: title not set");
+            $this->assertEquals("lista mesaje", strtolower($localParsed->titlu), "Invalid response: title mismatch");
+            $this->assertTrue(isset($localParsed->eroare), "Invalid response: error not set");
+            $this->assertStringContainsString("nu exista mesaje", strtolower($localParsed->eroare), "Invalid response: error mismatch");
+            $this->assertFalse(isset($localParsed->cui), "Invalid response: CUI should not be set");
+            $this->assertFalse(isset($localParsed->serial), "Invalid response: serial should not be set");
+            $this->assertTrue($response->IsSuccess(), "Response not successful");
+            $this->assertCount(0, $response->mesaje, "Messages count mismatch");
+        }
+    }
+    public function ValidResponseCheck()
+    {
+
+        $this->assertTrue(true);
     }
 
 }

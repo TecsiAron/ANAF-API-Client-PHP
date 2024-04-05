@@ -7,6 +7,9 @@ use EdituraEDU\ANAF\Responses\EntityResponse;
 use PHPUnit\Framework\TestCase;
 use Throwable;
 
+/**
+ * @covers \EdituraEDU\ANAF\Responses\EntityResponse
+ */
 class EntityResponseTest extends TestCase
 {
     public function testParseNoError(): void

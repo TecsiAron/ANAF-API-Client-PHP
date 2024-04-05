@@ -7,6 +7,9 @@ use EdituraEDU\ANAF\Responses\UBLUploadResponse;
 use PHPUnit\Framework\TestCase;
 use Throwable;
 
+/**
+ * @covers \EdituraEDU\ANAF\Responses\UBLUploadResponse
+ */
 class UploadResponseTest extends TestCase
 {
     public function testSuccessResponse(): void
