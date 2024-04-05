@@ -37,6 +37,7 @@ class AnswerListTest extends TestCase
             $this->fail("Exception thrown: " . $ex->getMessage());
         }
     }
+
     public function testRemoteError(): void
     {
         $response = "{\"eroare\":\"Numarul de zile trebuie sa fie intre 1 si 60\",\"titlu\":\"Lista Mesaje\"}";

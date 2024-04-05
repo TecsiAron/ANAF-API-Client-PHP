@@ -5,6 +5,7 @@ namespace EdituraEDU\ANAF\Tests\ParseTests;
 use EdituraEDU\ANAF\Responses\ANAFVerifyResponse;
 use PHPUnit\Framework\TestCase;
 use Throwable;
+
 class VerifyResponseTest extends TestCase
 {
     public function testOKResponse(): void

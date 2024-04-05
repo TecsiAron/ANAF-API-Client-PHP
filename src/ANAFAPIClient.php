@@ -53,7 +53,7 @@ class ANAFAPIClient
     /**
      * @var bool $LockToken Used to make sure test suit does not mutate the token
      */
-    private bool $LockToken=false;
+    private bool $LockToken = false;
 
     /**
      * @param array $OAuthConfig O Auth config for authenticated requests see README.md
@@ -192,8 +192,7 @@ class ANAFAPIClient
      */
     private function SaveAccessToken(AccessToken $token): void
     {
-        if($this->LockToken)
-        {
+        if ($this->LockToken) {
             return;
         }
         $tokenJson = json_encode($token);
@@ -239,8 +238,7 @@ class ANAFAPIClient
      */
     public function RefreshAccessToken(?AccessToken $token = null): bool
     {
-        if($this->LockToken)
-        {
+        if ($this->LockToken) {
             return true;
         }
         $currentToken = $token ?? $this->LoadAccessToken(false);

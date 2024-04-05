@@ -9,6 +9,7 @@ use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\Attributes\DependsExternal;
 use PHPUnit\Framework\Attributes\UsesFunction;
 use Throwable;
+
 class AnswerListAnswerTest extends RequestTestBase
 {
 
@@ -16,20 +17,17 @@ class AnswerListAnswerTest extends RequestTestBase
     {
         try {
             $client = $this->createClient();
-            $response = $client->ListAnswers($this->cif,1);
-            $localParsed=json_decode($response->rawResponse);
+            $response = $client->ListAnswers($this->cif, 1);
+            $localParsed = json_decode($response->rawResponse);
         } catch (Throwable $ex) {
             $this->fail("Exception thrown: " . $ex->getMessage());
         }
-        $this->assertTrue(json_last_error()==JSON_ERROR_NONE, "Invalid JSON response");
+        $this->assertTrue(json_last_error() == JSON_ERROR_NONE, "Invalid JSON response");
         $this->assertTrue($response->IsSuccess(), "Response is not successful");
 
-        if(isset($localParsed->mesaje))
-        {
+        if (isset($localParsed->mesaje)) {
             $this->markTestSkipped("Response was not empty");
-        }
-        else
-        {
+        } else {
             $this->assertTrue(isset($localParsed->titlu), "Invalid response: title not set");
             $this->assertEquals("lista mesaje", strtolower($localParsed->titlu), "Invalid response: title mismatch");
             $this->assertTrue(isset($localParsed->eroare), "Invalid response: error not set");
@@ -43,16 +41,15 @@ class AnswerListAnswerTest extends RequestTestBase
 
     public function testValidResponseCheck()
     {
-        $validUBL=base64_decode(UploadUBLTest::VALID_UBL);
-        $listAnswer=null;
+        $validUBL = base64_decode(UploadUBLTest::VALID_UBL);
+        $listAnswer = null;
         try {
             $client = $this->createClient();
-            $result=$client->UploadEFactura($validUBL, $this->cif);
-            $this->assertTrue($result->IsSuccess(),"Test upload failed");
+            $result = $client->UploadEFactura($validUBL, $this->cif);
+            $this->assertTrue($result->IsSuccess(), "Test upload failed");
             sleep(1);
-            $listAnswer=$client->ListAnswers($this->cif, 1);
-        }
-        catch (Throwable $ex) {
+            $listAnswer = $client->ListAnswers($this->cif, 1);
+        } catch (Throwable $ex) {
             $this->fail("Exception thrown: " . $ex->getMessage());
         }
         $this->assertNotNull($listAnswer, "No answer found");

@@ -10,7 +10,7 @@ use Throwable;
 abstract class RequestTestBase extends TestCase
 {
     protected int $cif = -1;
-    protected const ANAF_OAUTH=[
+    protected const ANAF_OAUTH = [
         'clientId' => 'test-anaf-client-id',
         'clientSecret' => 'test-anaf-client-secret',
         'redirectUri' => 'https://test.com/callback.php',
@@ -49,19 +49,17 @@ abstract class RequestTestBase extends TestCase
 
     protected function createClient(callable|null $errorCallback = null): ANAFAPIClient
     {
-        $classRef=new ReflectionClass(ANAFAPIClient::class);
+        $classRef = new ReflectionClass(ANAFAPIClient::class);
 
-        if($errorCallback === null) {
-            $errorCallback = function (string $message, ?Throwable $exception=null)
-            {
-                if($exception !== null)
-                {
-                    $message .= "\n".$exception->getMessage()."\n".$exception->getTraceAsString();
+        if ($errorCallback === null) {
+            $errorCallback = function (string $message, ?Throwable $exception = null) {
+                if ($exception !== null) {
+                    $message .= "\n" . $exception->getMessage() . "\n" . $exception->getTraceAsString();
                 }
                 $this->fail($message);
             };
         }
-        $client= new ANAFAPIClient(self::ANAF_OAUTH, false, $errorCallback, __DIR__ . '/ANAFAccessToken.json');
+        $client = new ANAFAPIClient(self::ANAF_OAUTH, false, $errorCallback, __DIR__ . '/ANAFAccessToken.json');
         $this->assertFalse($client->IsProduction());
         $classRef->getProperty("LockToken")->setValue($client, true);
         return $client;

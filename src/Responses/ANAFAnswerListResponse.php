@@ -57,16 +57,15 @@ class ANAFAnswerListResponse extends ANAFResponse
             $parsed = $this->CommonParseJSON($this->rawResponse);
             //var_dump($parsed);
             if ($parsed == null && !$this->HasError()) {
-                $this->InternalCreateError("Internal error parsing response", ANAFException::UNKNOWN_ERROR);
+                $this->InternalCreateError("Internal error parsing response");
                 return false;
             }
-            if(strtolower($parsed->titlu)=="lista mesaje"
+            if (strtolower($parsed->titlu) == "lista mesaje"
                 && isset($parsed->eroare)
                 && !isset($parsed->mesaje)
                 && !isset($parsed->serial)
                 && !isset($parsed->cui)
-                && str_contains(strtolower($parsed->eroare), "nu exista mesaje"))
-            {
+                && str_contains(strtolower($parsed->eroare), "nu exista mesaje")) {
                 unset($parsed->eroare);
                 //var_dump($this->LastError);
                 $parsed->mesaje = [];
@@ -76,7 +75,7 @@ class ANAFAnswerListResponse extends ANAFResponse
 
             $this->CopyFromParsed($parsed);
             return true;
-        } catch (\Throwable $ex) {
+        } catch (Throwable $ex) {
             $this->LastError = $ex;
             return false;
         }
