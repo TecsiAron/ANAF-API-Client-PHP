@@ -1,8 +1,11 @@
 <?php declare(strict_types=1);
 
+namespace ParseTests;
+
 use EdituraEDU\ANAF\Responses\ANAFException;
 use EdituraEDU\ANAF\Responses\EntityResponse;
 use PHPUnit\Framework\TestCase;
+use Throwable;
 
 class EntityResponseTest extends TestCase
 {
