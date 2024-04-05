@@ -42,8 +42,18 @@ class ANAFAPIClient
      * Specified in @see ANAFAPIClient::__construct()
      */
     private string $TokenFilePath;
+    /**
+     * @var Client $PublicAPIClient Guzzle Client for public API requests
+     */
     private Client $PublicAPIClient;
+    /**
+     * @var Client $AuthenticatedAPIClient Guzzle Client for authenticated API requests
+     */
     private Client $AuthenticatedAPIClient;
+    /**
+     * @var bool $LockToken Used to make sure test suit does not mutate the token
+     */
+    private bool $LockToken=false;
 
     /**
      * @param array $OAuthConfig O Auth config for authenticated requests see README.md
@@ -182,6 +192,10 @@ class ANAFAPIClient
      */
     private function SaveAccessToken(AccessToken $token): void
     {
+        if($this->LockToken)
+        {
+            return;
+        }
         $tokenJson = json_encode($token);
         file_put_contents($this->TokenFilePath, $tokenJson);
         $this->AccessToken = $token;
@@ -225,6 +239,10 @@ class ANAFAPIClient
      */
     public function RefreshAccessToken(?AccessToken $token = null): bool
     {
+        if($this->LockToken)
+        {
+            return true;
+        }
         $currentToken = $token ?? $this->LoadAccessToken(false);
 
         if ($currentToken == null) {

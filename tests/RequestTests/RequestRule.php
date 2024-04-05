@@ -4,6 +4,7 @@ namespace EdituraEDU\ANAF\Tests\RequestTests;
 
 use EdituraEDU\ANAF\ANAFAPIClient;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 use Throwable;
 
 abstract class RequestRule extends TestCase
@@ -48,6 +49,8 @@ abstract class RequestRule extends TestCase
 
     protected function createClient(callable|null $errorCallback = null): ANAFAPIClient
     {
+        $classRef=new ReflectionClass(ANAFAPIClient::class);
+
         if($errorCallback === null) {
             $errorCallback = function (string $message, ?Throwable $exception=null)
             {
@@ -58,6 +61,9 @@ abstract class RequestRule extends TestCase
                 $this->fail($message);
             };
         }
-        return new ANAFAPIClient(self::ANAF_OAUTH, false, $errorCallback, __DIR__ . '/ANAFAccessToken.json');
+        $client= new ANAFAPIClient(self::ANAF_OAUTH, false, $errorCallback, __DIR__ . '/ANAFAccessToken.json');
+        $classRef->getProperty("LockToken")->setValue($client, true);
+        var_dump($client);
+        return $client;
     }
 }
