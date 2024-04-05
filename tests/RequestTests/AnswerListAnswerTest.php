@@ -2,16 +2,19 @@
 
 namespace EdituraEDU\ANAF\Tests\RequestTests;
 
+use EdituraEDU\ANAF\ANAFAPIClient;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversFunction;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\DependsExternal;
+use PHPUnit\Framework\Attributes\UsesFunction;
 use Throwable;
-
 class AnswerListAnswerTest extends RequestRule
 {
-    /**
-     * @covers \EdituraEDU\ANAF\ANAFAPIClient::ListAnswers
-     * @uses \EdituraEDU\ANAF\ANAFAPIClient::UploadEFactura()
-     */
+
     public function testEmptyResponse()
     {
+        echo "here2";
         try {
             $client = $this->createClient();
             $response = $client->ListAnswers($this->cif,1);
@@ -38,10 +41,12 @@ class AnswerListAnswerTest extends RequestRule
             $this->assertCount(0, $response->mesaje, "Messages count mismatch");
         }
     }
-    public function ValidResponseCheck()
+    #[Depends("testEmptyResponse")]
+    public function testValidResponseCheck()
     {
 
-        $this->assertTrue(true);
+
     }
+
 
 }

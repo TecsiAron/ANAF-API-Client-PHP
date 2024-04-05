@@ -7,9 +7,6 @@ use EdituraEDU\ANAF\Responses\ANAFException;
 use PHPUnit\Framework\TestCase;
 use Throwable;
 
-/**
- * @covers \EdituraEDU\ANAF\Responses\ANAFAnswerListResponse::Parse
- */
 class AnswerListTest extends TestCase
 {
     public function testValidAnswerList(): void

@@ -3,8 +3,9 @@
 namespace EdituraEDU\ANAF\Tests\RequestTests;
 
 use EdituraEDU\ANAF\ANAFAPIClient;
+use PHPUnit\Framework\Attributes\CoversFunction;
 
-class AccessTokenTest extends RequestRule
+ class AccessTokenTest extends RequestRule
 {
     public function testHasAccessToken(): void
     {
