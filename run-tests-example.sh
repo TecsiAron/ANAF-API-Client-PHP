@@ -7,4 +7,3 @@ export TEST_ANAF_CLIENT_CIF=YOUR_CIF_HERE
 # export ANAF_EMPTY_LIST_ONLY=true
 ./vendor/bin/phpunit tests --display-skipped
 )
-
