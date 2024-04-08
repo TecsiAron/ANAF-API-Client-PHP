@@ -1,7 +1,9 @@
 <?php
+
 namespace EdituraEDU\ANAF\Responses;
+
 use DateTime;
-use Error;
+use Throwable;
 
 /**
  * Represents the response structure for @see \EdituraEDU\ANAF\ANAFAPIClient::UploadEFactura()
@@ -9,32 +11,27 @@ use Error;
 class UBLUploadResponse extends ANAFResponse
 {
     public ?int $ResponseTimestamp = null;
-    public function Parse():bool
-    {
-        if($this->rawResspone===null)
-        {
-            $this->LastParseError = "No response to parse";
-            return false;
-        }
-        if($this->isErrorResponse($this->rawResspone))
-        {
-            throw new Error("Unknown message type: $this->rawResspone");
-        }
-        try
-        {
-            if ($this->isJson($this->rawResspone)) {
-                $this->parseJSON($this->rawResspone);
-            } else {
-                $this->parseXML($this->rawResspone);
-            }
-        }
-        catch (\Throwable $ex)
-        {
-            $this->LastParseError = $ex->getMessage();
-            return false;
-        }
+    public string|null $IndexIncarcare = null;
 
-        return true;
+    public function Parse(): void
+    {
+        if ($this->rawResponse === null) {
+            $this->InternalCreateError("No response to parse", ANAFException::EMPTY_RAW_RESPONSE);
+            return;
+        }
+        if ($this->isErrorResponse($this->rawResponse)) {
+            $this->InternalCreateError("API returned an error", ANAFException::REMOTE_EXCEPTION);
+            return;
+        }
+        try {
+            if ($this->isJson($this->rawResponse)) {
+                $this->parseJSON($this->rawResponse);
+            } else {
+                $this->parseXML($this->rawResponse);
+            }
+        } catch (Throwable $ex) {
+            $this->LastError = $ex;
+        }
     }
 
     /**
@@ -43,7 +40,8 @@ class UBLUploadResponse extends ANAFResponse
      * @param string $string
      * @return bool
      */
-    private function isJson(string $string): bool {
+    private function isJson(string $string): bool
+    {
         json_decode($string);
         return json_last_error() === JSON_ERROR_NONE;
     }
@@ -53,9 +51,10 @@ class UBLUploadResponse extends ANAFResponse
      * @param string $response
      * @return bool
      */
-    private function isErrorResponse(string $response): bool {
+    private function isErrorResponse(string $response): bool
+    {
         // Check for specific patterns indicative of an error message
-        return strpos($response, 'Your support ID is:') !== false;
+        return str_contains($response, 'Your support ID is:');
     }
 
     /**
@@ -63,7 +62,8 @@ class UBLUploadResponse extends ANAFResponse
      * @param string $xmlString
      * @return void
      */
-    private function parseXML(string $xmlString): void {
+    private function parseXML(string $xmlString): void
+    {
         $xml = simplexml_load_string($xmlString);
         $dateResponse = (string)$xml['dateResponse'];
 
@@ -71,25 +71,18 @@ class UBLUploadResponse extends ANAFResponse
             $this->ResponseTimestamp = $this->convertToTimestamp($dateResponse, 'YmdHi');
         }
 
-        $this->success = ((string)$xml['ExecutionStatus'] === "0");
+        $success = ((string)$xml['ExecutionStatus'] === "0");
 
         if (isset($xml['index_incarcare'])) {
-            $this->message = (string)$xml['index_incarcare'];
+            $this->IndexIncarcare = (string)$xml['index_incarcare'];
+        } else if ($success) {
+            $this->InternalCreateError("Eroare necunoscută, nu s-a regăsit index_incarcare în răspunsul ANAF", ANAFException::INCOMPLETE_RESPONSE);
         }
-        else if($this->success)
-        {
-            $this->success=false;
-            $this->message="Eroare necunoscută, nu s-a regăsit index_incarcare în răspunsul ANAF";
-        }
-        if(!$this->success)
-        {
-            if($xml->Errors && isset($xml->Errors['errorMessage']))
-            {
-                $this->message = (string)$xml->Errors['errorMessage'];
-            }
-            else
-            {
-                $this->message="Eroare necunoscută: $this->rawResspone";
+        if (!$success) {
+            if ($xml->Errors && isset($xml->Errors['errorMessage'])) {
+                $this->InternalCreateError((string)$xml->Errors['errorMessage'], ANAFException::REMOTE_EXCEPTION);
+            } else {
+                $this->InternalCreateError("Eroare necunoscută: " . $this->rawResponse, ANAFException::INCOMPLETE_RESPONSE);
             }
         }
     }
@@ -99,18 +92,20 @@ class UBLUploadResponse extends ANAFResponse
      * @param string $jsonString
      * @return void
      */
-    private function parseJSON(string $jsonString): void {
+    private function parseJSON(string $jsonString): void
+    {
         $json = json_decode($jsonString);
         if (isset($json->timestamp)) {
             $this->ResponseTimestamp = $this->convertToTimestamp($json->timestamp, 'd-m-Y H:i:s');
         }
 
         // JSON response always results in false execution status
-        $this->success = false;
+        $message = "Unknown error";
 
         if (isset($json->error) && isset($json->message)) {
-            $this->message = $json->error . ": " . $json->message;
+            $message = $json->error . ": " . $json->message;
         }
+        $this->InternalCreateError($message, ANAFException::REMOTE_EXCEPTION);
     }
 
     /**
@@ -119,8 +114,16 @@ class UBLUploadResponse extends ANAFResponse
      * @param string $format
      * @return int
      */
-    private function convertToTimestamp(string $dateStr, string $format): int {
+    private function convertToTimestamp(string $dateStr, string $format): int
+    {
         $date = DateTime::createFromFormat($format, $dateStr);
         return $date->getTimestamp();
+    }
+
+    public static function CreateError(Throwable $error): UBLUploadResponse
+    {
+        $result = new UBLUploadResponse();
+        $result->LastError = $error;
+        return $result;
     }
 }

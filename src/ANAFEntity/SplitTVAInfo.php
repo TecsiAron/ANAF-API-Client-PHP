@@ -7,20 +7,21 @@ namespace EdituraEDU\ANAF\ANAFEntity;
  */
 class SplitTVAInfo
 {
-    public string $dataInceputSplitTVA="";
-    public string $dataAnulareSplitTVA="";
-    public bool $statusSplitTVA=false;
+    public string $dataInceputSplitTVA = "";
+    public string $dataAnulareSplitTVA = "";
+    public bool $statusSplitTVA = false;
+
     /**
-     * Similar to @see Entity::CreateFromParsed
-     * @param \stdClass $parsedData
+     * Similar to @param \stdClass $parsedData
      * @return SplitTVAInfo
+     * @see Entity::CreateFromParsed
      */
-    public static function CreateFromParsed(\stdClass $parsedData):SplitTVAInfo
+    public static function CreateFromParsed(\stdClass $parsedData): SplitTVAInfo
     {
         $splitTVAInfo = new SplitTVAInfo();
         $splitTVAInfo->dataInceputSplitTVA = $parsedData->dataInceputSplitTVA ?? "";
-        $splitTVAInfo->dataAnulareSplitTVA = $parsedData->dataAnulareSplitTVA??"";
-        $splitTVAInfo->statusSplitTVA = $parsedData->statusSplitTVA??false;
+        $splitTVAInfo->dataAnulareSplitTVA = $parsedData->dataAnulareSplitTVA ?? "";
+        $splitTVAInfo->statusSplitTVA = $parsedData->statusSplitTVA ?? false;
         return $splitTVAInfo;
     }
 }

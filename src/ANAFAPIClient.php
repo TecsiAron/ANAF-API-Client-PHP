@@ -2,14 +2,16 @@
 
 namespace EdituraEDU\ANAF;
 
-use DOMDocument;
 use EdituraEDU\ANAF\Responses\ANAFAnswerListResponse;
+use EdituraEDU\ANAF\Responses\ANAFException;
 use EdituraEDU\ANAF\Responses\ANAFVerifyResponse;
 use EdituraEDU\ANAF\Responses\EntityResponse;
 use EdituraEDU\ANAF\Responses\TVAResponse;
 use EdituraEDU\ANAF\Responses\UBLUploadResponse;
-use Error;
+use Exception;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
+use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Provider\GenericProvider;
 use League\OAuth2\Client\Token\AccessToken;
 use Psr\Http\Message\ResponseInterface;
@@ -21,7 +23,7 @@ use Throwable;
  * - TVA Status
  * - RO EFactura
  */
-class ANAFAPIClient extends Client
+class ANAFAPIClient
 {
     /**
      * @var float $Timeout Outgoing request timeout in seconds
@@ -40,6 +42,18 @@ class ANAFAPIClient extends Client
      * Specified in @see ANAFAPIClient::__construct()
      */
     private string $TokenFilePath;
+    /**
+     * @var Client $PublicAPIClient Guzzle Client for public API requests
+     */
+    private Client $PublicAPIClient;
+    /**
+     * @var Client $AuthenticatedAPIClient Guzzle Client for authenticated API requests
+     */
+    private Client $AuthenticatedAPIClient;
+    /**
+     * @var bool $LockToken Used to make sure test suit does not mutate the token
+     */
+    private bool $LockToken = false;
 
     /**
      * @param array $OAuthConfig O Auth config for authenticated requests see README.md
@@ -50,6 +64,7 @@ class ANAFAPIClient extends Client
      */
     public function __construct(array $OAuthConfig, bool $production, callable $errorCallback = null, ?string $tokenFilePath = null)
     {
+        $config = [];
         $config['base_uri'] = 'https://webservicesp.anaf.ro';
         $config['headers'] = [
             'Content-Type' => 'application/json',
@@ -63,7 +78,14 @@ class ANAFAPIClient extends Client
         } else {
             $this->TokenFilePath = $tokenFilePath;
         }
-        parent::__construct($config);
+        $this->PublicAPIClient = new Client($config);
+        $config = [];
+        $config['base_uri'] = 'https://api.anaf.ro';
+        $config['headers'] = [
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+        ];
+        $this->AuthenticatedAPIClient = new Client($config);
     }
 
     /**
@@ -76,11 +98,12 @@ class ANAFAPIClient extends Client
         $cui = trim($cui);
         /**
          * @var TVAResponse $response
+         * @noinspection PhpRedundantVariableDocTypeInspection
          */
         $response = new TVAResponse();
         $sanitizedCUI = $this->SanitizeCUI($cui);
         /** @noinspection PhpIncompatibleReturnTypeInspection */
-        return $this->DoEntityFetch($sanitizedCUI, $response, $cui);
+        return $this->DoEntityFetch($sanitizedCUI, $response);
     }
 
     /**
@@ -94,7 +117,7 @@ class ANAFAPIClient extends Client
         $sanitizedCUI = $this->SanitizeCUI($cui);
         $response = new EntityResponse();
 
-        return $this->DoEntityFetch($sanitizedCUI, $response, $cui);
+        return $this->DoEntityFetch($sanitizedCUI, $response);
     }
 
     /**
@@ -134,7 +157,7 @@ class ANAFAPIClient extends Client
      * Gets the access token from ANAF, should be called from the OAuth callback script
      * @param string $authCode
      * @return ?AccessToken
-     * @throws \League\OAuth2\Client\Provider\Exception\IdentityProviderException
+     * @throws IdentityProviderException
      */
     public function ProcessOAuthCallback(string $authCode): ?AccessToken
     {
@@ -169,6 +192,9 @@ class ANAFAPIClient extends Client
      */
     private function SaveAccessToken(AccessToken $token): void
     {
+        if ($this->LockToken) {
+            return;
+        }
         $tokenJson = json_encode($token);
         file_put_contents($this->TokenFilePath, $tokenJson);
         $this->AccessToken = $token;
@@ -212,6 +238,9 @@ class ANAFAPIClient extends Client
      */
     public function RefreshAccessToken(?AccessToken $token = null): bool
     {
+        if ($this->LockToken) {
+            return true;
+        }
         $currentToken = $token ?? $this->LoadAccessToken(false);
 
         if ($currentToken == null) {
@@ -252,11 +281,13 @@ class ANAFAPIClient extends Client
      * @param array|null $queryParams Query parameters (if teh value is ["ex1"=>"val"] ?ex1=val will be appended to the URL)
      * @param bool $hasAuth Should be true of the request requires authentication
      * @param string $contentType Content type header for the outgoing request
+     * @param float|null $timeoutOverride if set, will override the default timeout (ANAFAPIClient::$Timeout)
      * @return ResponseInterface
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
-    private function SendANAFRequest(string $Method, ?string $body = null, array|null $queryParams = null, bool $hasAuth = false, string $contentType = "application/json"): ResponseInterface
+    private function SendANAFRequest(string $Method, ?string $body = null, array|null $queryParams = null, bool $hasAuth = false, string $contentType = "application/json", float|null $timeoutOverride = null): ResponseInterface
     {
+        $client = $hasAuth ? $this->AuthenticatedAPIClient : $this->PublicAPIClient;
         $options = ["headers" =>
             [
                 "Content-Type" => $contentType,
@@ -267,36 +298,33 @@ class ANAFAPIClient extends Client
 
         if ($hasAuth) {
             if (!$this->HasAccessToken()) {
-                throw new Error("ANAF API Error: No token");
+                throw new Exception("ANAF API Error: No token");
             }
 
             $options["headers"]["Authorization"] = "Bearer " . $this->AccessToken->getToken();
         }
         $options["query"] = $queryParams;
-        $options["timeout"] = $this->Timeout;
+        $options["timeout"] = $timeoutOverride === null ? $this->Timeout : $timeoutOverride;
 
         if ($body === null) {
-            return $this->get($Method, $options);
+            return $client->get($Method, $options);
         }
 
         $options['body'] = $body;
-        return $this->post($Method, $options);
+        return $client->post($Method, $options);
     }
 
     /**
      * Base method for fetching company/institution data from ANAF
      * @param false|string $sanitizedCUI
      * @param EntityResponse $response
-     * @param string $cui
      * @return EntityResponse
      */
-    public function DoEntityFetch(false|string $sanitizedCUI, EntityResponse $response, string $cui): EntityResponse
+    public function DoEntityFetch(false|string $sanitizedCUI, EntityResponse $response): EntityResponse
     {
         try {
             if ($sanitizedCUI === false || !self::ValidateCIF($sanitizedCUI)) {
-                $response->success = false;
-                $response->message = "CUI Invalid: $cui";
-
+                $response->LastError = new ANAFException("CUI invalid", ANAFException::INVALID_INPUT);
                 return $response;
             }
 
@@ -304,26 +332,17 @@ class ANAFAPIClient extends Client
             $httpResponse = $this->SendANAFRequest("PlatitorTvaRest/api/v8/ws/tva", json_encode($requestBody));
 
             if ($httpResponse->getStatusCode() >= 200 && $httpResponse->getStatusCode() < 300) {
-                $response->success = true;
                 $content = $httpResponse->getBody()->getContents();
                 //var_dump($content);
-                $response->rawResspone = $content;
-
-                if (!$response->Parse()) {
-                    $response->success = false;
-                    $response->message = "Eroare interpretare raspuns ANAF: " . $response->LastParseError . "\n" . $response->rawResspone;
-                }
-
+                $response->rawResponse = $content;
+                $response->Parse();
                 return $response;
             }
-            $response->success = false;
-            $response->message = "HTTP Error: " . $httpResponse->getStatusCode();
+            $response->LastError = new ANAFException("HTTP Error: " . $httpResponse->getStatusCode(), ANAFException::HTTP_ERROR);
         } catch (Throwable $ex) {
-            $response->success = false;
-            $response->message = "Eroare ANAF: " . $ex->getMessage();
+            $response->LastError = $ex;
             $this->CallErrorCallback("ANAF API Error", $ex);
         }
-
         return $response;
     }
 
@@ -340,7 +359,7 @@ class ANAFAPIClient extends Client
 
         try {
             $modeName = $this->Production ? "prod" : "test";
-            $method = "https://api.anaf.ro/$modeName/FCTEL/rest/upload";
+            $method = "/$modeName/FCTEL/rest/upload";
             $queryParams = ["standard" => "UBL", "cif" => $sellerCIF];
 
             if ($extern) {
@@ -356,16 +375,12 @@ class ANAFAPIClient extends Client
             if ($httpResponse->getStatusCode() >= 200 && $httpResponse->getStatusCode() < 300) {
                 //var_dump($httpResponse);
                 $content = $httpResponse->getBody()->getContents();
-                $response->rawResspone = $content;
+                $response->rawResponse = $content;
+                $response->Parse();
 
-                if (!$response->Parse()) {
-                    $response->success = false;
-                    $response->message = "Eroare interpretare raspuns ANAF: " . $response->LastParseError;
-                }
             }
         } catch (Throwable $ex) {
-            $response->success = false;
-            $response->message = "Eroare ANAF: " . $ex->getMessage();
+            $response->LastError = $ex;
             $this->CallErrorCallback("ANAF API Error", $ex);
         }
 
@@ -382,7 +397,7 @@ class ANAFAPIClient extends Client
     public function DownloadAnswer(string $id): string
     {
         $modeName = $this->Production ? "prod" : "test";
-        $method = "https://api.anaf.ro/$modeName/FCTEL/rest/descarcare?id=$id";
+        $method = "/$modeName/FCTEL/rest/descarcare?id=$id";
 
         try {
             $httpResponse = $this->SendANAFRequest($method, null, null, true);
@@ -405,28 +420,31 @@ class ANAFAPIClient extends Client
         return "ERROR_NO_RESPONSE";
     }
 
-    public function UBL2PDF(string $ubl, string $metadata): string|false
+    /**
+     * Convert UBL XML to PDF using the ANAF API
+     * @param string $ubl
+     * @param string $metadata
+     * @param bool $authenticated if true the request will use the OAuth2 API endpoint
+     * @param float|null $timeoutOverride if set, will override the default timeout (ANAFAPIClient::$Timeout)
+     * @return string|false
+     */
+    public function UBL2PDF(string $ubl, string $metadata, bool $authenticated = true, float|null $timeoutOverride = null): string|false
     {
         if (str_contains($ubl, 'xsi:schemaLocation')) {
-            $ubl = $this->RemoveSchemaLocationAttribute($ubl);
+            $ubl = self::RemoveSchemaLocationAttribute($ubl);
         }
-
-        $modeName = $this->Production ? "prod" : "test";
-        $method = "https://webservicesp.anaf.ro/$modeName/FCTEL/rest/transformare/FACT1/DA";
-
+        $method = "/prod/FCTEL/rest/transformare/FACT1/DA";
         try {
-            $httpResponse = $this->SendANAFRequest($method, $ubl, null, false, "text/plain");
-
+            $timeoutOverride = $timeoutOverride ?? $this->Timeout;
+            $httpResponse = $this->SendANAFRequest($method, $ubl, null, $authenticated, "text/plain", $timeoutOverride);
             if ($httpResponse->getStatusCode() >= 200 && $httpResponse->getStatusCode() < 300) {
-                //var_dump($httpResponse);
                 $content = $httpResponse->getBody()->getContents();
                 if (str_starts_with($content, "%PDF")) {
                     return $content;
                 }
                 $this->CallErrorCallback("Bad content format, expected PDF (UBL2PDF) - $metadata");
                 $this->CallErrorCallback($content);
-
-                return $content;
+                return false;
 
             }
         } catch (Throwable $ex) {
@@ -442,11 +460,11 @@ class ANAFAPIClient extends Client
      * @param $xmlString
      * @return string
      */
-    private function RemoveSchemaLocationAttribute($xmlString): string {
+    public static function RemoveSchemaLocationAttribute($xmlString): string
+    {
         $pattern = '/(xsi:schemaLocation\s*=\s*["\'][^"\']*["\'])/i';
-        $xmlString = preg_replace($pattern, '', $xmlString, -1, $count);
-        $xmlString = preg_replace('/\s{2,}/', ' ', $xmlString);
-        return $xmlString;
+        $xmlString = preg_replace($pattern, '', $xmlString, -1);
+        return preg_replace('/\s{2,}/', ' ', $xmlString);
     }
 
     /**
@@ -458,7 +476,7 @@ class ANAFAPIClient extends Client
     public function ListAnswers(int $cif, int $days = 60): ANAFAnswerListResponse
     {
         $modeName = $this->Production ? "prod" : "test";
-        $method = "https://api.anaf.ro/$modeName/FCTEL/rest/listaMesajeFactura?zile=$days&cif=$cif";
+        $method = "/$modeName/FCTEL/rest/listaMesajeFactura?zile=$days&cif=$cif";
 
         try {
             $httpResponse = $this->SendANAFRequest($method, null, null, true);
@@ -466,42 +484,40 @@ class ANAFAPIClient extends Client
             if ($httpResponse->getStatusCode() >= 200 && $httpResponse->getStatusCode() < 300) {
                 //var_dump($httpResponse);
                 $content = $httpResponse->getBody()->getContents();
-                return ANAFAnswerListResponse::CreateFromParsed(json_decode($content));
+                return ANAFAnswerListResponse::Create($content);
             }
         } catch (Throwable $ex) {
             $this->CallErrorCallback("ANAF API Error", $ex);
-            return ANAFAnswerListResponse::CreateError($ex->getMessage());
+            return ANAFAnswerListResponse::CreateError($ex);
         }
 
-        return ANAFAnswerListResponse::CreateError();
+        return ANAFAnswerListResponse::CreateError(new ANAFException("No response or error", ANAFException::UNKNOWN_ERROR));
     }
 
     /**
      * ATTENTION DOES NOT FUNCTION RELIABLY.
      * The API randomly returns "nok" for valid invoices.
      * @param string $ubl
-     * @return bool
+     * @param bool $authenticated If true, the request will use the OAuth2 API endpoint
+     * @return ANAFVerifyResponse
      * @deprecated Use at your own risk. Read the comment above.
      */
-    public function VerifyXML(string $ubl): bool
+    public function VerifyXML(string $ubl, bool $authenticated = true): ANAFVerifyResponse
     {
         try {
-            $method = "https://webservicesp.anaf.ro/prod/FCTEL/rest/validare/FACT1";
-            $httpResponse = $this->SendANAFRequest($method, $ubl, null, false, "text/plain");
+            $method = "/prod/FCTEL/rest/validare/FACT1";
+            $httpResponse = $this->SendANAFRequest($method, $ubl, null, $authenticated, "text/plain");
             if ($httpResponse->getStatusCode() >= 200 && $httpResponse->getStatusCode() < 300) {
                 //var_dump($httpResponse);
                 $contentString = $httpResponse->getBody()->getContents();
-                $content = ANAFVerifyResponse::CreateFromParsed(json_decode($contentString));
-                return $content->IsOK();
+                return ANAFVerifyResponse::Create($contentString);
             }
         } catch (Throwable $ex) {
-            $this->CallErrorCallback("ANAF API Error", $ex);
-            return false;
+            return ANAFVerifyResponse::CreateError($ex);
         }
 
         $this->CallErrorCallback("ANAF VERIFY ERROR: NO RESPONSE OR ERROR");
-
-        return false;
+        return ANAFVerifyResponse::CreateError(new ANAFException("No response or error", ANAFException::UNKNOWN_ERROR));
     }
 
     /**
@@ -555,7 +571,7 @@ class ANAFAPIClient extends Client
         }
         if (!is_int($cif)) {
             $cif = strtoupper($cif);
-            if (strpos($cif, 'RO') === 0) {
+            if (str_starts_with($cif, 'RO')) {
                 $cif = substr($cif, 2);
             }
             $cif = (int)trim($cif);

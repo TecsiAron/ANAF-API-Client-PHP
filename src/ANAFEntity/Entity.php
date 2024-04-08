@@ -62,21 +62,18 @@ class Entity
      */
     public function GetSector(): ?int
     {
-        if ($this->date_generale == null)
-        {
+        if ($this->date_generale == null) {
             return null;
         }
 
         $toSearch = $this->date_generale->adresa;
-        if (empty($toSearch))
-        {
+        if (empty($toSearch)) {
             return null;
         }
 
         $toSearch = strtolower($toSearch);
 
-        if (preg_match('/\bsector\b\s*(\d)(?=\s|\p{P}|\z)/u', $toSearch, $matches))
-        {
+        if (preg_match('/\bsector\b\s*(\d)(?=\s|\p{P}|\z)/u', $toSearch, $matches)) {
             return (int)$matches[1]; // Cast the captured digit to an integer and return it
         }
         return null;

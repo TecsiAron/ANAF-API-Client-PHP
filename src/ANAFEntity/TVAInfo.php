@@ -10,17 +10,18 @@ use stdClass;
 class TVAInfo
 {
     public bool $scpTVA = false;
-    public array $perioade_TVA=[];
+    public array $perioade_TVA = [];
+
     /**
-     * Similar to @see Entity::CreateFromParsed
-     * @param stdClass $parsedData
+     * Similar to @param stdClass $parsedData
      * @return TVAInfo
+     * @see Entity::CreateFromParsed
      */
-    public static function CreateFromParsed(stdClass $parsedData):TVAInfo
+    public static function CreateFromParsed(stdClass $parsedData): TVAInfo
     {
         $tvaInfo = new TVAInfo();
-        $tvaInfo->scpTVA = $parsedData->scpTVA??false;
-        $tvaInfo->perioade_TVA = $parsedData->perioade_TVA??[];
+        $tvaInfo->scpTVA = $parsedData->scpTVA ?? false;
+        $tvaInfo->perioade_TVA = $parsedData->perioade_TVA ?? [];
         return $tvaInfo;
     }
 }
