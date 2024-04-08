@@ -1,5 +1,5 @@
 # ANAF-API-Client-PHP
-Citeste CHANGELOG.md inainte de aface update de la v1.1.1-alpha la v2.0.0-beta  
+Citeste CHANGELOG.md inainte de a face update de la v1.1.1-alpha la v2.0.0-beta  
 API ANAF pentru interogare CIF si upload RO-eFactura.  
 Foloseste PHP 8+  
 # Versiunea minima de PHP se va schimba din 8.0 in 8.1 in viitorul apropriat!
