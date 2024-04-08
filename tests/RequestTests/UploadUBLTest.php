@@ -11,6 +11,10 @@ class UploadUBLTest extends RequestTestBase
 
     public function testUploadUBL(): void
     {
+        if(getenv("ANAF_EMPTY_LIST_ONLY")=="true")
+        {
+            $this->markTestSkipped("ANAF_EMPTY_ONLY is set, skipping");
+        }
         try {
             $client = $this->createClient();
             $ubl = base64_decode(UploadUBLTest::VALID_UBL);
