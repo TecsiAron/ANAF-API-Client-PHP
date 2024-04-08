@@ -59,7 +59,7 @@ abstract class RequestTestBase extends TestCase
                 $this->fail($message);
             };
         }
-        $client = new ANAFAPIClient(self::ANAF_OAUTH, false, $errorCallback, __DIR__ . '/ANAFAccessToken.json');
+        $client = new ANAFAPIClient(self::ANAF_OAUTH, false, $errorCallback);
         $this->assertFalse($client->IsProduction());
         $classRef->getProperty("LockToken")->setValue($client, true);
         return $client;
