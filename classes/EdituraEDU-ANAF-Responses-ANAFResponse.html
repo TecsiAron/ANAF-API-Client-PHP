@@ -98,11 +98,8 @@
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    UBLUploadResponse
+    ANAFResponse
 
-        <span class="phpdocumentor-element__extends">
-        extends <a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html"><abbr title="\EdituraEDU\ANAF\Responses\ANAFResponse">ANAFResponse</abbr></a>
-    </span>
     
             <div class="phpdocumentor-element__package">
             in package
@@ -117,25 +114,43 @@
 <div class="phpdocumentor-label-line">
 
 
+    <div class="phpdocumentor-label phpdocumentor-label--success"><span>Abstract</span><span>Yes</span></div>
+
 </div>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="Responses/UBLUploadResponse.php"><a href="files/responses-ubluploadresponse.html"><abbr title="Responses/UBLUploadResponse.php">UBLUploadResponse.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="Responses/ANAFResponse.php"><a href="files/responses-anafresponse.html"><abbr title="Responses/ANAFResponse.php">ANAFResponse.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">11</span>
+    <span class="phpdocumentor-element-found-in__line">12</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">Represents the response structure for @see \EdituraEDU\ANAF\ANAFAPIClient::UploadEFactura()</p>
+            <p class="phpdocumentor-summary">Represents the base structure for some ANAF API responses</p>
 
 
 
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">TODO</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>make *Response classes extend this class</p>
+</section>
+
+                                    </dd>
+                                            </dl>
 
 
 
 <h3 id="toc">
     Table of Contents
-    <a href="classes/EdituraEDU-ANAF-Responses-UBLUploadResponse.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h3>
 
@@ -149,16 +164,10 @@
 
 <h4 id="toc-properties">
     Properties
-    <a href="classes/EdituraEDU-ANAF-Responses-UBLUploadResponse.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a href="classes/EdituraEDU-ANAF-Responses-UBLUploadResponse.html#property_IndexIncarcare">$IndexIncarcare</a>
-    <span>
-                        &nbsp;: string|null            </span>
-</dt>
-
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#property_LastError">$LastError</a>
     <span>
@@ -171,17 +180,11 @@
                         &nbsp;: string|null            </span>
 </dt>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a href="classes/EdituraEDU-ANAF-Responses-UBLUploadResponse.html#property_ResponseTimestamp">$ResponseTimestamp</a>
-    <span>
-                        &nbsp;: int|null            </span>
-</dt>
-
     </dl>
 
 <h4 id="toc-methods">
     Methods
-    <a href="classes/EdituraEDU-ANAF-Responses-UBLUploadResponse.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
@@ -222,42 +225,6 @@
 </dt>
 <dd>Utility method for implementers to create an error</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -method -private">
-    <a href="classes/EdituraEDU-ANAF-Responses-UBLUploadResponse.html#method_convertToTimestamp">convertToTimestamp()</a>
-    <span>
-                                &nbsp;: int    </span>
-</dt>
-<dd>Convert date string to timestamp</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -private">
-    <a href="classes/EdituraEDU-ANAF-Responses-UBLUploadResponse.html#method_isErrorResponse">isErrorResponse()</a>
-    <span>
-                                &nbsp;: bool    </span>
-</dt>
-<dd>Used to check if API response is a specific type of error. Can be indicative of a bad request/invalid input data</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -private">
-    <a href="classes/EdituraEDU-ANAF-Responses-UBLUploadResponse.html#method_isJson">isJson()</a>
-    <span>
-                                &nbsp;: bool    </span>
-</dt>
-<dd>Used to check if API response is JSON
-Answers that are JSON are errors</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -private">
-    <a href="classes/EdituraEDU-ANAF-Responses-UBLUploadResponse.html#method_parseJSON">parseJSON()</a>
-    <span>
-                                &nbsp;: void    </span>
-</dt>
-<dd>Parse JSON error</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -private">
-    <a href="classes/EdituraEDU-ANAF-Responses-UBLUploadResponse.html#method_parseXML">parseXML()</a>
-    <span>
-                                &nbsp;: void    </span>
-</dt>
-<dd>Parse response XML</dd>
-
     </dl>
 
 
@@ -271,42 +238,9 @@ Answers that are JSON are errors</dd>
     <section class="phpdocumentor-properties">
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
-            <a href="classes/EdituraEDU-ANAF-Responses-UBLUploadResponse.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_IndexIncarcare">
-        $IndexIncarcare
-        <a href="classes/EdituraEDU-ANAF-Responses-UBLUploadResponse.html#property_IndexIncarcare" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="Responses/UBLUploadResponse.php"><a href="files/responses-ubluploadresponse.html"><abbr title="Responses/UBLUploadResponse.php">UBLUploadResponse.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">14</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">string|null</span>
-    <span class="phpdocumentor-signature__name">$IndexIncarcare</span>
-     = <span class="phpdocumentor-signature__default-value">null</span></code>
-
-    
-    
-    
-
-</article>
                     <article
         class="
             phpdocumentor-element
@@ -373,45 +307,12 @@ Answers that are JSON are errors</dd>
     
 
 </article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_ResponseTimestamp">
-        $ResponseTimestamp
-        <a href="classes/EdituraEDU-ANAF-Responses-UBLUploadResponse.html#property_ResponseTimestamp" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="Responses/UBLUploadResponse.php"><a href="files/responses-ubluploadresponse.html"><abbr title="Responses/UBLUploadResponse.php">UBLUploadResponse.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">13</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">int|null</span>
-    <span class="phpdocumentor-signature__name">$ResponseTimestamp</span>
-     = <span class="phpdocumentor-signature__default-value">null</span></code>
-
-    
-    
-    
-
-</article>
             </section>
 
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/EdituraEDU-ANAF-Responses-UBLUploadResponse.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
@@ -661,243 +562,13 @@ Answers that are JSON are errors</dd>
 
     
 </article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -private
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_convertToTimestamp">
-        convertToTimestamp()
-        <a href="classes/EdituraEDU-ANAF-Responses-UBLUploadResponse.html#method_convertToTimestamp" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="Responses/UBLUploadResponse.php"><a href="files/responses-ubluploadresponse.html"><abbr title="Responses/UBLUploadResponse.php">UBLUploadResponse.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">117</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Convert date string to timestamp</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
-                    <span class="phpdocumentor-signature__name">convertToTimestamp</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$dateStr</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$format</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$dateStr</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$format</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">int</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -private
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_isErrorResponse">
-        isErrorResponse()
-        <a href="classes/EdituraEDU-ANAF-Responses-UBLUploadResponse.html#method_isErrorResponse" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="Responses/UBLUploadResponse.php"><a href="files/responses-ubluploadresponse.html"><abbr title="Responses/UBLUploadResponse.php">UBLUploadResponse.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">54</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Used to check if API response is a specific type of error. Can be indicative of a bad request/invalid input data</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
-                    <span class="phpdocumentor-signature__name">isErrorResponse</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$response</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$response</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">bool</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -private
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_isJson">
-        isJson()
-        <a href="classes/EdituraEDU-ANAF-Responses-UBLUploadResponse.html#method_isJson" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="Responses/UBLUploadResponse.php"><a href="files/responses-ubluploadresponse.html"><abbr title="Responses/UBLUploadResponse.php">UBLUploadResponse.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">43</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Used to check if API response is JSON
-Answers that are JSON are errors</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
-                    <span class="phpdocumentor-signature__name">isJson</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$string</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$string</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">bool</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -private
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_parseJSON">
-        parseJSON()
-        <a href="classes/EdituraEDU-ANAF-Responses-UBLUploadResponse.html#method_parseJSON" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="Responses/UBLUploadResponse.php"><a href="files/responses-ubluploadresponse.html"><abbr title="Responses/UBLUploadResponse.php">UBLUploadResponse.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">95</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Parse JSON error</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
-                    <span class="phpdocumentor-signature__name">parseJSON</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$jsonString</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$jsonString</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -private
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_parseXML">
-        parseXML()
-        <a href="classes/EdituraEDU-ANAF-Responses-UBLUploadResponse.html#method_parseXML" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="Responses/UBLUploadResponse.php"><a href="files/responses-ubluploadresponse.html"><abbr title="Responses/UBLUploadResponse.php">UBLUploadResponse.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">65</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Parse response XML</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
-                    <span class="phpdocumentor-signature__name">parseXML</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$xmlString</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$xmlString</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-    
-</article>
             </section>
 
         <div class="phpdocumentor-modal" id="source-view">
     <div class="phpdocumentor-modal-bg" data-exit-button></div>
     <div class="phpdocumentor-modal-container">
         <div class="phpdocumentor-modal-content">
-            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/Responses/UBLUploadResponse.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
+            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/Responses/ANAFResponse.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
         </div>
         <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
     </div>
@@ -996,18 +667,16 @@ Answers that are JSON are errors</p>
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                                            <li><a href="classes/EdituraEDU-ANAF-Responses-UBLUploadResponse.html#toc-properties">Properties</a></li>
-                                                            <li><a href="classes/EdituraEDU-ANAF-Responses-UBLUploadResponse.html#toc-methods">Methods</a></li>
+                                                            <li><a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#toc-properties">Properties</a></li>
+                                                            <li><a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#toc-methods">Methods</a></li>
                                     </ul>
             </li>
             
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li><a href="classes/EdituraEDU-ANAF-Responses-UBLUploadResponse.html#property_IndexIncarcare">$IndexIncarcare<a href="classes/EdituraEDU-ANAF-Responses-UBLUploadResponse.html"></li>
-                                                    <li><a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#property_LastError">$LastError<a href="classes/EdituraEDU-ANAF-Responses-UBLUploadResponse.html"></li>
-                                                    <li><a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#property_rawResponse">$rawResponse<a href="classes/EdituraEDU-ANAF-Responses-UBLUploadResponse.html"></li>
-                                                    <li><a href="classes/EdituraEDU-ANAF-Responses-UBLUploadResponse.html#property_ResponseTimestamp">$ResponseTimestamp<a href="classes/EdituraEDU-ANAF-Responses-UBLUploadResponse.html"></li>
+                                                    <li><a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#property_LastError">$LastError<a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html"></li>
+                                                    <li><a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#property_rawResponse">$rawResponse<a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html"></li>
                                             </ul>
                 </li>
             
@@ -1020,11 +689,6 @@ Answers that are JSON are errors</p>
                                             <li><a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#method_Parse">Parse()</a></li>
                                             <li><a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#method_CommonParseJSON">CommonParseJSON()</a></li>
                                             <li><a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#method_InternalCreateError">InternalCreateError()</a></li>
-                                            <li><a href="classes/EdituraEDU-ANAF-Responses-UBLUploadResponse.html#method_convertToTimestamp">convertToTimestamp()</a></li>
-                                            <li><a href="classes/EdituraEDU-ANAF-Responses-UBLUploadResponse.html#method_isErrorResponse">isErrorResponse()</a></li>
-                                            <li><a href="classes/EdituraEDU-ANAF-Responses-UBLUploadResponse.html#method_isJson">isJson()</a></li>
-                                            <li><a href="classes/EdituraEDU-ANAF-Responses-UBLUploadResponse.html#method_parseJSON">parseJSON()</a></li>
-                                            <li><a href="classes/EdituraEDU-ANAF-Responses-UBLUploadResponse.html#method_parseXML">parseXML()</a></li>
                                     </ul>
             </li>
                     </ul>
@@ -1044,7 +708,7 @@ Answers that are JSON are errors</p>
     </section>
 </section>
         </div>
-        <a href="classes/EdituraEDU-ANAF-Responses-UBLUploadResponse.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 
