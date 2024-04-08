@@ -41,6 +41,10 @@ class AnswerListAnswerTest extends RequestTestBase
 
     public function testValidResponseCheck()
     {
+        if(getenv("ANAF_EMPTY_LIST_ONLY")=="true")
+        {
+            $this->markTestSkipped("ANAF_EMPTY_ONLY is set, skipping");
+        }
         $validUBL = base64_decode(UploadUBLTest::VALID_UBL);
         $listAnswer = null;
         try {
