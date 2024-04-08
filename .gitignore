@@ -3,3 +3,5 @@
 test_load.php
 phpDocumentor.phar
 .phpdoc/
+ANAFAccessToken.json
+run-tests.bat

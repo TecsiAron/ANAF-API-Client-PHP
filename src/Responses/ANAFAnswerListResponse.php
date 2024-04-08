@@ -3,56 +3,87 @@
 namespace EdituraEDU\ANAF\Responses;
 
 use stdClass;
+use Throwable;
 
 /**
  * Represents answer structure for @see \EdituraEDU\ANAF\ANAFAPIClient::ListAnswers()
  */
-class ANAFAnswerListResponse
+class ANAFAnswerListResponse extends ANAFResponse
 {
     public string $serial;
     public string $cui;
-    public bool $success=true;
     public string $titlu;
-    public string $eroare = '';
     /**
      * @var ANAFAnswer[]
      */
     public array $mesaje;
 
     /**
-     * Similar to @see Entity::CreateFromParsed
      * @param stdClass $parsed
-     * @return ANAFAnswerListResponse
+     * @return void
      */
-    public static function CreateFromParsed(stdClass $parsed):ANAFAnswerListResponse
+    private function CopyFromParsed(stdClass $parsed): void
     {
         if (isset($parsed->eroare)) {
-            return self::CreateError($parsed->eroare);
+            $this->InternalCreateError($parsed->eroare, ANAFException::REMOTE_EXCEPTION);
+            return;
         }
 
-        $response = new ANAFAnswerListResponse();
-        $response->serial = $parsed->serial;
-        $response->cui = $parsed->cui;
-        $response->titlu = $parsed->titlu;
-        $response->mesaje = [];
-        foreach ($parsed->mesaje as $mesaj)
-        {
-            $response->mesaje[] = ANAFAnswer::CreateFromParsed($mesaj);
+        $this->serial = $parsed->serial;
+        $this->cui = $parsed->cui;
+        $this->titlu = $parsed->titlu;
+        $this->mesaje = [];
+        foreach ($parsed->mesaje as $mesaj) {
+            $this->mesaje[] = ANAFAnswer::CreateFromParsed($mesaj);
         }
-        return $response;
     }
 
     /**
      * Create an error response
      * For internal use!
-     * @param string $error optional error message
+     * @param Throwable $error
      * @return ANAFAnswerListResponse
      */
-    public static function CreateError(string $error = ''):ANAFAnswerListResponse
+    public static function CreateError(Throwable $error): ANAFAnswerListResponse
+    {
+        $result = new ANAFAnswerListResponse();
+        $result->LastError = $error;
+        return $result;
+    }
+
+    public function Parse(): void
+    {
+        try {
+            $parsed = $this->CommonParseJSON($this->rawResponse);
+            //var_dump($parsed);
+            if ($parsed == null && !$this->HasError()) {
+                $this->InternalCreateError("Internal error parsing response");
+                return;
+            }
+            if (strtolower($parsed->titlu) == "lista mesaje"
+                && isset($parsed->eroare)
+                && !isset($parsed->mesaje)
+                && !isset($parsed->serial)
+                && !isset($parsed->cui)
+                && str_contains(strtolower($parsed->eroare), "nu exista mesaje")) {
+                unset($parsed->eroare);
+                //var_dump($this->LastError);
+                $parsed->mesaje = [];
+                $parsed->serial = "";
+                $parsed->cui = "";
+            }
+
+            $this->CopyFromParsed($parsed);
+        } catch (Throwable $ex) {
+            $this->LastError = $ex;
+        }
+    }
+
+    public static function Create($rawResponse): ANAFAnswerListResponse
     {
         $response = new ANAFAnswerListResponse();
-        $response->success = false;
-        $response->eroare = $error;
+        $response->rawResponse = $rawResponse;
+        $response->Parse();
         return $response;
     }
 }
