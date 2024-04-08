@@ -2,7 +2,7 @@
 In order to update/cleanup the code I've jumped to a new major version. Please read the breaking changes section below before you update.
 # BREAKING CHANGE
 Mostly internal changes:
-- ANAFAPIResponse renamed to ANAFResponse
+- ANAFAPIResponse renamed to ANAFResponse  
 - Added ANAFResponse::LastError to store the last error message, use LastError->getMessage() and LastError->getCode() to get more info  
 - ANAFResponse::success removed, use ANAFResponse::IsSuccess() or ANAFResponse::HasError() instead  
 - ANAFResponse::message removed, use ANAFResponse::LastError to get info  
@@ -11,7 +11,8 @@ Mostly internal changes:
 - ANAFAnswerListResponse now extends ANAFResponse and success and eroare properties removed  
 - Removed CreateFromParsed from all implementers of ANAFResponse  
 - ANAFAPIClient::VerifyXML no longer returns bool, returns ANAFVerifyResponse instead  
-- UBLUploadResponse no longer stores index_incarcare in message, has its own field UBLLoadResponse::IndexIncarcare
+- UBLUploadResponse no longer stores index_incarcare in message, has its own field UBLLoadResponse::IndexIncarcare  
+- ANAFAPIClient::DoEntityFetch now only takes 2 arguments (third was unused)  
 
 Non breaking changes:  
 - ANAFAPIClient no longer extends GuzzleHttp\Client  
@@ -26,7 +27,9 @@ Non breaking changes:
 - Added new dependency ext-simplexml  
 - Added PHUnit as a dev dependency  
 - Wrote tests for all response parsing  
-- Wrote tests for some API calls  
+- Wrote tests for some API calls
+- Fixed an issue where UBl2PDF failed if the client was in testing mode (the API has no backend for testing)  
+- Added run-tests-example.bat  
 
 
 # v1.1.1-alpha  

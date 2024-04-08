@@ -1,7 +1,7 @@
 # ANAF-API-Client-PHP
 API ANAF pentru interogare CIF si upload RO-eFactura.  
 Foloseste PHP 8+  
-
+# Versiunea minima de PHP se va schimba din 8.0 in 8.1 in viitorul apropriat!
 Pentru a instala:  
 ```
 composer require tecsiaron/anaf-api-client-php  
