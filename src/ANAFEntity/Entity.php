@@ -78,4 +78,14 @@ class Entity
         }
         return null;
     }
+
+    /**
+     * Check if CIF is "radiat" (closed?)
+     * @return bool
+     */
+    public function IsRadiat(): bool
+    {
+        return str_starts_with(strtolower($this->date_generale->stare_inregistrare), "radi",);
+    }
+
 }
