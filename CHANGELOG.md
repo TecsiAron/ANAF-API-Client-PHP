@@ -1,3 +1,5 @@
+# v2.0.1-beta  
+ANAFAPIClient->AccessToken is now protected (was private)  
 # v2.0.0-beta
 In order to update/cleanup the code I've jumped to a new major version. Please read the breaking changes section below before you update.
 # BREAKING CHANGE
