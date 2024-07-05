@@ -33,7 +33,7 @@ class ANAFAPIClient
      * @var bool $Production If true, the client will use the production API otherwise will use testing API endpoints
      */
     private bool $Production;
-    private ?AccessToken $AccessToken = null;
+    protected ?AccessToken $AccessToken = null;
     /** @var callable|null $ErrorCallback */
     private $ErrorCallback = null;
     private array $OAuthConfig;
