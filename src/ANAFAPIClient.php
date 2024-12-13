@@ -232,6 +232,23 @@ class ANAFAPIClient
     }
 
     /**
+     * Checks if the current access token will expire soon
+     * @param int $soon Time in seconds to consider "soon" Default value is 24 hours
+     * @return bool|null Null if the token is not set or does not have an expiration date
+     */
+    public function TokenWillExpireSoon(int $soon = (3600 * 24)): bool|null
+    {
+        if ($this->AccessToken == null) {
+            return null;
+        }
+        $expires = $this->AccessToken->getExpires();
+        if ($expires == null) {
+            return null;
+        }
+        return $expires < time() + $soon;
+    }
+
+    /**
      * Refresh the access token using the refresh token
      * @param AccessToken|null $token if null the current access token @see ANAFAPIClient::$AccessToken will be used.
      * @return bool
