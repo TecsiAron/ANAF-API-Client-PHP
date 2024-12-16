@@ -18,6 +18,7 @@ class ANAFException extends Exception
     const INVALID_INPUT = 9;
     const HTTP_ERROR = 10;
     const REMOTE_EXCEPTION = 11;
+    const COMPOUND_ERROR = 12;
 
     public function __construct(string $message = "Unknown error", int $code = self::UNKNOWN_ERROR, ?Throwable $previous = null)
     {
