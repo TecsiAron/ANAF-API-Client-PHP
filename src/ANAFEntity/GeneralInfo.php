@@ -3,6 +3,7 @@
 namespace EdituraEDU\ANAF\ANAFEntity;
 
 use stdClass;
+use Throwable;
 
 /**
  * Represents the general information about a company based on the ANAF API response structure
@@ -45,7 +46,7 @@ class GeneralInfo
                 }
             }
             return $result;
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             error_log($th->getMessage());
             error_log($th->getTraceAsString());
             return null;

@@ -3,6 +3,7 @@
 namespace EdituraEDU\ANAF\ANAFEntity;
 
 use stdClass;
+use Throwable;
 
 /**
  * Represents an address based on the ANAF API response structure
@@ -43,7 +44,7 @@ class Address
                 }
             }
             return $result;
-        } catch (\Throwable $th) {
+        } catch (Throwable) {
             return null;
         }
     }

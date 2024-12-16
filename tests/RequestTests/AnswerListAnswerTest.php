@@ -4,12 +4,6 @@ namespace EdituraEDU\ANAF\Tests\RequestTests;
 
 use DateInterval;
 use DateTime;
-use EdituraEDU\ANAF\ANAFAPIClient;
-use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\CoversFunction;
-use PHPUnit\Framework\Attributes\Depends;
-use PHPUnit\Framework\Attributes\DependsExternal;
-use PHPUnit\Framework\Attributes\UsesFunction;
 use Throwable;
 
 class AnswerListAnswerTest extends RequestTestBase
@@ -87,7 +81,7 @@ class AnswerListAnswerTest extends RequestTestBase
                 if ($original->id == $paged->id) {
                     $found = true;
                     $this->assertEquals($original->detalii, $paged->detalii);
-                    break 2;
+                    break 1;
                 }
             }
             $this->assertTrue($found, "Message not found in original list");

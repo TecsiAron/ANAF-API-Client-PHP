@@ -3,10 +3,10 @@
 namespace EdituraEDU\ANAF;
 
 use EdituraEDU\ANAF\Responses\ANAFAnswerListResponse;
-use EdituraEDU\ANAF\Responses\InternalPagedAnswersResponse;
 use EdituraEDU\ANAF\Responses\ANAFException;
 use EdituraEDU\ANAF\Responses\ANAFVerifyResponse;
 use EdituraEDU\ANAF\Responses\EntityResponse;
+use EdituraEDU\ANAF\Responses\InternalPagedAnswersResponse;
 use EdituraEDU\ANAF\Responses\PagedAnswerListResponse;
 use EdituraEDU\ANAF\Responses\TVAResponse;
 use EdituraEDU\ANAF\Responses\UBLUploadResponse;
@@ -526,7 +526,7 @@ class ANAFAPIClient
     /**
      * Get answer list for a company (authenticated user must have access to the company!)
      * Uses the paged API end point
-     * Answers will returned in a unified list
+     * Answers will be returned in a unified list
      * @param int $startTime
      * @param int $endTime
      * @param int $cif
@@ -545,7 +545,7 @@ class ANAFAPIClient
         if ($specificPage != null) {
             $response = $this->GetAnswerPage($startTime, $endTime, $cif, $specificPage, $filter);
             if ($response->IsSuccess()) {
-                return new PagedAnswerListResponse([$response],[]);
+                return new PagedAnswerListResponse([$response], []);
             }
             return PagedAnswerListResponse::CreateError($response->LastError);
         }
@@ -696,6 +696,7 @@ class ANAFAPIClient
         if ($cif === false) {
             return false;
         }
+        /** @noinspection PhpConditionAlreadyCheckedInspection */
         if (!is_int($cif)) {
             $cif = strtoupper($cif);
             if (str_starts_with($cif, 'RO')) {

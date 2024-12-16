@@ -1,6 +1,8 @@
 <?php
 
 namespace EdituraEDU\ANAF\ANAFEntity;
+use stdClass;
+
 /**
  * Represents the RTVA (taxable on payment?)  information about a company based on the ANAF API response structure
  */
@@ -14,11 +16,11 @@ class RTVAInfo
     public bool $statusTvaIncasare = false;
 
     /**
-     * Similar to @param \stdClass $parsedData
+     * Similar to @param stdClass $parsedData
      * @return RTVAInfo
      * @see Entity::CreateFromParsed
      */
-    public static function CreateFromParsed(\stdClass $parsedData): RTVAInfo
+    public static function CreateFromParsed(stdClass $parsedData): RTVAInfo
     {
         $rtvaInfo = new RTVAInfo();
         $rtvaInfo->dataInceputTvaInc = $parsedData->dataInceputTvaInc ?? "";

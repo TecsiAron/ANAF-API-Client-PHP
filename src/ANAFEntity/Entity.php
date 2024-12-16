@@ -1,6 +1,8 @@
 <?php
 
 namespace EdituraEDU\ANAF\ANAFEntity;
+use stdClass;
+
 /**
  * Represents the comprehensive response structure for a company/institution from the ANAF API
  */
@@ -38,10 +40,10 @@ class Entity
 
     /**
      * Used to convert the parsed data (json) from the ANAF API to an Entity object
-     * @param \stdClass $parsedData
+     * @param stdClass $parsedData
      * @return Entity
      */
-    public static function CreateFromParsed(\stdClass $parsedData): Entity
+    public static function CreateFromParsed(stdClass $parsedData): Entity
     {
         $entity = new Entity();
         $entity->date_generale = isset($parsedData->date_generale) ? GeneralInfo::CreateFromParsed($parsedData->date_generale) : null;
@@ -85,7 +87,7 @@ class Entity
      */
     public function IsRadiat(): bool
     {
-        return str_starts_with(strtolower($this->date_generale->stare_inregistrare), "radi",);
+        return str_starts_with(strtolower($this->date_generale->stare_inregistrare), "radi");
     }
 
 }

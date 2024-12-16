@@ -2,7 +2,6 @@
 
 namespace EdituraEDU\ANAF\Tests\RequestTests;
 
-use PHPUnit\Framework\TestCase;
 use Throwable;
 
 class UploadUBLTest extends RequestTestBase
