@@ -2,10 +2,14 @@
 
 namespace EdituraEDU\ANAF;
 
+use DateInterval;
+use DateTime;
 use EdituraEDU\ANAF\Responses\ANAFAnswerListResponse;
+use EdituraEDU\ANAF\Responses\InternalPagedAnswersResponse;
 use EdituraEDU\ANAF\Responses\ANAFException;
 use EdituraEDU\ANAF\Responses\ANAFVerifyResponse;
 use EdituraEDU\ANAF\Responses\EntityResponse;
+use EdituraEDU\ANAF\Responses\PagedAnswerListResponse;
 use EdituraEDU\ANAF\Responses\TVAResponse;
 use EdituraEDU\ANAF\Responses\UBLUploadResponse;
 use Exception;
@@ -490,8 +494,22 @@ class ANAFAPIClient
      * @param int $days Number of days to look back
      * @return ANAFAnswerListResponse
      */
-    public function ListAnswers(int $cif, int $days = 60): ANAFAnswerListResponse
+    public function ListAnswers(int $cif, int $days = 60, string|null $filter = null, bool $usePagination = false): ANAFAnswerListResponse
     {
+        if ($usePagination) {
+            $startTime = new DateTime();
+            $startTime->sub(new DateInterval("P{$days}D"));
+            $startTime->setTime(0, 0, 0);
+            $endTime = new DateTime();
+            $startTime->sub(new DateInterval("PT10S")); // 10 seconds ago
+            return $this->ListAnswersWithPagination($startTime->getTimestamp(), $endTime->getTimestamp(), $cif, null, $filter);
+        }
+        if ($filter != null) {
+            $filter = strtoupper($filter);
+            if (!$this->ValidateFilter($filter)) {
+                return ANAFAnswerListResponse::CreateError(new ANAFException("Invalid filter", ANAFException::INVALID_INPUT));
+            }
+        }
         $modeName = $this->Production ? "prod" : "test";
         $method = "/$modeName/FCTEL/rest/listaMesajeFactura?zile=$days&cif=$cif";
         if ($filter != null) {
@@ -511,6 +529,67 @@ class ANAFAPIClient
         }
 
         return ANAFAnswerListResponse::CreateError(new ANAFException("No response or error", ANAFException::UNKNOWN_ERROR));
+    }
+
+    public function ListAnswersWithPagination(int $startTime, int $endTime, int $cif, int $specificPage = null, string|null $filter = null): PagedAnswerListResponse
+    {
+        if ($filter != null) {
+            $filter = strtoupper($filter);
+            if (!$this->ValidateFilter($filter)) {
+                return PagedAnswerListResponse::CreateError(new ANAFException("Invalid filter", ANAFException::INVALID_INPUT));
+            }
+        }
+        if ($specificPage != null) {
+            $response = $this->GetAnswerPage($startTime, $endTime, $cif, $specificPage, $filter);
+            if ($response->IsSuccess()) {
+                return new PagedAnswerListResponse([$response]);
+            }
+            return PagedAnswerListResponse::CreateError($response->LastError);
+        }
+        /**
+         * @var InternalPagedAnswersResponse[] $pages
+         */
+        $pages = [];
+        $currentPage = 1;
+        $canFetchNextPage = true;
+        while ($canFetchNextPage) {
+            $response = $this->GetAnswerPage($startTime, $endTime, $cif, $currentPage, $filter);
+            if ($response->IsSuccess()) {
+                if (count($response->mesaje) > 0) {
+                    $pages[] = $response;
+                }
+            }
+            $canFetchNextPage = !$response->IsLastPage();
+            $currentPage++;
+        }
+
+        return new PagedAnswerListResponse($pages);
+    }
+
+    public function GetAnswerPage(int $startTime, int $endTime, int $cif, int $pageNumber, string|null $filter = null): InternalPagedAnswersResponse
+    {
+        $modeName = $this->Production ? "prod" : "test";
+        $actualStart = $startTime * 1000;
+        $actualEnd = $endTime * 1000;
+        $method = "/$modeName/FCTEL/rest/listaMesajePaginatieFactura?startTime=$actualStart&endTime=$actualEnd&cif=$cif&pagina=$pageNumber";
+        if ($filter != null) {
+            $method .= "&filtru=$filter";
+        }
+        try {
+            $httpResponse = $this->SendANAFRequest($method, null, null, true);
+
+            if ($httpResponse->getStatusCode() >= 200 && $httpResponse->getStatusCode() < 300) {
+                //var_dump($httpResponse);
+                $content = $httpResponse->getBody()->getContents();
+                return InternalPagedAnswersResponse::Create($content);
+            }
+        } catch (Throwable $ex) {
+            $this->CallErrorCallback("ANAF API Error", $ex);
+            return InternalPagedAnswersResponse::CreateError($ex);
+        }
+
+        return InternalPagedAnswersResponse::CreateError(new ANAFException("No response or error", ANAFException::UNKNOWN_ERROR));
+
     }
 
     /**

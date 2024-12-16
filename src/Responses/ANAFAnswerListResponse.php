@@ -79,7 +79,7 @@ class ANAFAnswerListResponse extends ANAFResponse
         }
     }
 
-    public static function Create($rawResponse): ANAFAnswerListResponse
+    public static function Create($rawResponse): self
     {
         $response = new ANAFAnswerListResponse();
         $response->rawResponse = $rawResponse;

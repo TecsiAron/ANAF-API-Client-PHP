@@ -41,8 +41,7 @@ class AnswerListAnswerTest extends RequestTestBase
 
     public function testValidResponseCheck()
     {
-        if(getenv("ANAF_EMPTY_LIST_ONLY")=="true")
-        {
+        if (getenv("ANAF_EMPTY_LIST_ONLY") == "true") {
             $this->markTestSkipped("ANAF_EMPTY_ONLY is set, skipping");
         }
         $validUBL = base64_decode(UploadUBLTest::VALID_UBL);
@@ -60,6 +59,24 @@ class AnswerListAnswerTest extends RequestTestBase
         $this->assertTrue($listAnswer->IsSuccess(), "Failed to list answers");
         $this->assertIsArray($listAnswer->mesaje, "Messages is not an array");
         $this->assertGreaterThan(0, count($listAnswer->mesaje), "No messages found");
+    }
+
+    public function testAnswersWithSpecialPage()
+    {
+        $client = $this->createClient();
+        $answers = $client->ListAnswers($this->cif, 10);
+        $this->assertTrue($answers->IsSuccess());
+        $this->assertIsArray($answers->mesaje);
+        $pagedAnswers = $client->ListAnswers($this->cif, 10, null, true);
+        $this->assertTrue($pagedAnswers->IsSuccess());
+        $this->assertIsArray($pagedAnswers->mesaje);
+        $this->assertSameSize($answers->mesaje, $pagedAnswers->mesaje);
+        for ($i = 0; $i < count($answers->mesaje); $i++) {
+            $original = $answers->mesaje[$i];
+            $paged = $pagedAnswers->mesaje[$i];
+            $this->assertEquals($original->id, $paged->id);
+            $this->assertEquals($original->detalii, $paged->detalii);
+        }
     }
 
 
