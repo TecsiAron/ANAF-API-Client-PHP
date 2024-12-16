@@ -5,6 +5,9 @@
 - Added private ValidateFilter to check for valid filter chars  
 - Invalid filters will create an INVALID_INPUT exception  
 - Added ListAnswersWithPagination will return an answer list containing all pages.  
+- PHPUnit version changed from 11  to ^11  
+- Minimum stability changed from alpha to stable  
+- Updated some dependencies  
 
 
 # v2.0.1-beta  
