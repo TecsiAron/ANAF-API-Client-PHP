@@ -3,9 +3,22 @@ namespace EdituraEDU\ANAF\Responses;
 use Exception;
 use Throwable;
 
+/**
+ * Pseudo response for unifying multiple paged answer lists into a single response
+ * @see ANAFAPIClient::ListAnswersWithPagination()
+ */
 class PagedAnswerListResponse extends ANAFAnswerListResponse
 {
+    /**
+     * Stores a reference to the original responses
+     * NOTE: empty responses (no messages) are not stored
+     * @var array|InternalPagedAnswersResponse[] $Pages
+     */
     public array $Pages;
+    /**
+     * Total number of pages
+     * @var int $PageCount
+     */
     public int $PageCount;
     /**
      * @param InternalPagedAnswersResponse[] $responses

@@ -492,7 +492,11 @@ class ANAFAPIClient
      * Get answer list for a company (authenticated user must have access to the company!)
      * @param int $cif
      * @param int $days Number of days to look back
+     * @param string|null $filter
+     * @param bool $usePagination if true ListAnswersWithPagination will be called (different API method)
      * @return ANAFAnswerListResponse
+     * @throws Exception DateTime operations exception?
+     * @see ANAFAPIClient::ListAnswersWithPagination()
      */
     public function ListAnswers(int $cif, int $days = 60, string|null $filter = null, bool $usePagination = false): ANAFAnswerListResponse
     {
@@ -531,6 +535,17 @@ class ANAFAPIClient
         return ANAFAnswerListResponse::CreateError(new ANAFException("No response or error", ANAFException::UNKNOWN_ERROR));
     }
 
+    /**
+     * Get answer list for a company (authenticated user must have access to the company!)
+     * Uses the paged API end point
+     * Answers will returned in a unified list
+     * @param int $startTime
+     * @param int $endTime
+     * @param int $cif
+     * @param int|null $specificPage
+     * @param string|null $filter
+     * @return PagedAnswerListResponse
+     */
     public function ListAnswersWithPagination(int $startTime, int $endTime, int $cif, int $specificPage = null, string|null $filter = null): PagedAnswerListResponse
     {
         if ($filter != null) {
@@ -566,6 +581,15 @@ class ANAFAPIClient
         return new PagedAnswerListResponse($pages);
     }
 
+    /**
+     * Call the paged answer list endpoint with a speicifc page number
+     * @param int $startTime
+     * @param int $endTime
+     * @param int $cif
+     * @param int $pageNumber
+     * @param string|null $filter
+     * @return InternalPagedAnswersResponse
+     */
     public function GetAnswerPage(int $startTime, int $endTime, int $cif, int $pageNumber, string|null $filter = null): InternalPagedAnswersResponse
     {
         $modeName = $this->Production ? "prod" : "test";
@@ -618,6 +642,11 @@ class ANAFAPIClient
         return ANAFVerifyResponse::CreateError(new ANAFException("No response or error", ANAFException::UNKNOWN_ERROR));
     }
 
+    /**
+     * Currently accepted filter chars are: E, T, P, R
+     * @param string $filter
+     * @return bool
+     */
     private function ValidateFilter(string $filter): bool
     {
         if (strlen($filter) != 1) {

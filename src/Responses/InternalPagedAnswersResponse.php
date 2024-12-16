@@ -2,8 +2,13 @@
 
 namespace EdituraEDU\ANAF\Responses;
 
+use EdituraEDU\ANAF\ANAFAPIClient;
 use Throwable;
 
+/**
+ * Response to the paged answers API endpoint
+ * @see ANAFAPIClient::GetAnswerPage()
+ */
 class InternalPagedAnswersResponse extends ANAFAnswerListResponse
 {
     public int $numar_inregistrari_in_pagina = 0;
