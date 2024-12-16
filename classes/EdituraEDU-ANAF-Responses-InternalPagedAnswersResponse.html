@@ -98,10 +98,10 @@
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    TVAResponse
+    InternalPagedAnswersResponse
 
         <span class="phpdocumentor-element__extends">
-        extends <a href="classes/EdituraEDU-ANAF-Responses-EntityResponse.html"><abbr title="\EdituraEDU\ANAF\Responses\EntityResponse">EntityResponse</abbr></a>
+        extends <a href="classes/EdituraEDU-ANAF-Responses-ANAFAnswerListResponse.html"><abbr title="\EdituraEDU\ANAF\Responses\ANAFAnswerListResponse">ANAFAnswerListResponse</abbr></a>
     </span>
     
             <div class="phpdocumentor-element__package">
@@ -120,17 +120,32 @@
 </div>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="Responses/TVAResponse.php"><a href="files/responses-tvaresponse.html"><abbr title="Responses/TVAResponse.php">TVAResponse.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="Responses/InternalPagedAnswersResponse.php"><a href="files/responses-internalpagedanswersresponse.html"><abbr title="Responses/InternalPagedAnswersResponse.php">InternalPagedAnswersResponse.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">7</span>
+    <span class="phpdocumentor-element-found-in__line">12</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">Represents the response structure for @see \EdituraEDU\ANAF\ANAFAPIClient::CheckTVAStatus()</p>
+            <p class="phpdocumentor-summary">Response to the paged answers API endpoint</p>
 
 
 
 
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">see</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_GetAnswerPage"><abbr title="\EdituraEDU\ANAF\ANAFAPIClient::GetAnswerPage()">ANAFAPIClient::GetAnswerPage()</abbr></a></span>
+                                        
+                                             
+                                    </dd>
+                                            </dl>
 
 
 
@@ -138,7 +153,7 @@
 
 <h3 id="toc">
     Table of Contents
-    <a href="classes/EdituraEDU-ANAF-Responses-TVAResponse.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h3>
 
@@ -152,20 +167,20 @@
 
 <h4 id="toc-properties">
     Properties
-    <a href="classes/EdituraEDU-ANAF-Responses-TVAResponse.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/EdituraEDU-ANAF-Responses-EntityResponse.html#property_Entity">$Entity</a>
+    <a class="" href="classes/EdituraEDU-ANAF-Responses-ANAFAnswerListResponse.html#property_cui">$cui</a>
     <span>
-                        &nbsp;: <a href="classes/EdituraEDU-ANAF-ANAFEntity-Entity.html"><abbr title="\EdituraEDU\ANAF\ANAFEntity\Entity">Entity</abbr></a>|null            </span>
+                        &nbsp;: string            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/EdituraEDU-ANAF-Responses-TVAResponse.html#property_IsTVARegistered">$IsTVARegistered</a>
+    <a class="" href="classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#property_index_pagina_curenta">$index_pagina_curenta</a>
     <span>
-                        &nbsp;: bool|null            </span>
+                        &nbsp;: int            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -175,24 +190,74 @@
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/EdituraEDU-ANAF-Responses-ANAFAnswerListResponse.html#property_mesaje">$mesaje</a>
+    <span>
+                        &nbsp;: array&lt;string|int, <a href="classes/EdituraEDU-ANAF-Responses-ANAFAnswer.html"><abbr title="\EdituraEDU\ANAF\Responses\ANAFAnswer">ANAFAnswer</abbr></a>&gt;            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#property_numar_inregistrari_in_pagina">$numar_inregistrari_in_pagina</a>
+    <span>
+                        &nbsp;: int            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#property_numar_total_inregistrari">$numar_total_inregistrari</a>
+    <span>
+                        &nbsp;: int            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#property_numar_total_inregistrari_per_pagina">$numar_total_inregistrari_per_pagina</a>
+    <span>
+                        &nbsp;: int            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#property_numar_total_pagini">$numar_total_pagini</a>
+    <span>
+                        &nbsp;: int            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#property_rawResponse">$rawResponse</a>
     <span>
                         &nbsp;: string|null            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/EdituraEDU-ANAF-Responses-ANAFAnswerListResponse.html#property_serial">$serial</a>
+    <span>
+                        &nbsp;: string            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/EdituraEDU-ANAF-Responses-ANAFAnswerListResponse.html#property_titlu">$titlu</a>
+    <span>
+                        &nbsp;: string            </span>
 </dt>
 
     </dl>
 
 <h4 id="toc-methods">
     Methods
-    <a href="classes/EdituraEDU-ANAF-Responses-TVAResponse.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/EdituraEDU-ANAF-Responses-EntityResponse.html#method_CreateError">CreateError()</a>
+    <a class="" href="classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#method_Create">Create()</a>
     <span>
-                                &nbsp;: <a href="classes/EdituraEDU-ANAF-Responses-EntityResponse.html"><abbr title="\EdituraEDU\ANAF\Responses\EntityResponse">EntityResponse</abbr></a>    </span>
+                                &nbsp;: <a href="classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html"><abbr title="\EdituraEDU\ANAF\Responses\InternalPagedAnswersResponse">InternalPagedAnswersResponse</abbr></a>    </span>
 </dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#method_CreateError">CreateError()</a>
+    <span>
+                                &nbsp;: <a href="classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html"><abbr title="\EdituraEDU\ANAF\Responses\InternalPagedAnswersResponse">InternalPagedAnswersResponse</abbr></a>    </span>
+</dt>
+<dd>Create an error response
+For internal use!</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#method_HasError">HasError()</a>
@@ -201,13 +266,21 @@
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#method_IsLastPage">IsLastPage()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+<dd>Check if the current page is the last page
+Will always return true if the response is not successful</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#method_IsSuccess">IsSuccess()</a>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/EdituraEDU-ANAF-Responses-TVAResponse.html#method_Parse">Parse()</a>
+    <a class="" href="classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#method_Parse">Parse()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
@@ -225,6 +298,12 @@
 </dt>
 <dd>Utility method for implementers to create an error</dd>
 
+            <dt class="phpdocumentor-table-of-contents__entry -method -private">
+    <a class="" href="classes/EdituraEDU-ANAF-Responses-ANAFAnswerListResponse.html#method_CopyFromParsed">CopyFromParsed()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+
     </dl>
 
 
@@ -235,7 +314,7 @@
     <section class="phpdocumentor-properties">
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
-            <a href="classes/EdituraEDU-ANAF-Responses-TVAResponse.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
@@ -245,17 +324,17 @@
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_Entity">
-        $Entity
-        <a href="classes/EdituraEDU-ANAF-Responses-EntityResponse.html#property_Entity" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_cui">
+        $cui
+        <a href="classes/EdituraEDU-ANAF-Responses-ANAFAnswerListResponse.html#property_cui" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="Responses/EntityResponse.php"><a href="files/responses-entityresponse.html"><abbr title="Responses/EntityResponse.php">EntityResponse.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="Responses/ANAFAnswerListResponse.php"><a href="files/responses-anafanswerlistresponse.html"><abbr title="Responses/ANAFAnswerListResponse.php">ANAFAnswerListResponse.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">13</span>
+    <span class="phpdocumentor-element-found-in__line">14</span>
 
     </aside>
 
@@ -263,9 +342,9 @@
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/EdituraEDU-ANAF-ANAFEntity-Entity.html"><abbr title="\EdituraEDU\ANAF\ANAFEntity\Entity">Entity</abbr></a>|null</span>
-    <span class="phpdocumentor-signature__name">$Entity</span>
-     = <span class="phpdocumentor-signature__default-value">null</span></code>
+        <span class="phpdocumentor-signature__type">string</span>
+    <span class="phpdocumentor-signature__name">$cui</span>
+    </code>
 
     
     
@@ -281,17 +360,17 @@
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_IsTVARegistered">
-        $IsTVARegistered
-        <a href="classes/EdituraEDU-ANAF-Responses-TVAResponse.html#property_IsTVARegistered" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_index_pagina_curenta">
+        $index_pagina_curenta
+        <a href="classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#property_index_pagina_curenta" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="Responses/TVAResponse.php"><a href="files/responses-tvaresponse.html"><abbr title="Responses/TVAResponse.php">TVAResponse.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="Responses/InternalPagedAnswersResponse.php"><a href="files/responses-internalpagedanswersresponse.html"><abbr title="Responses/InternalPagedAnswersResponse.php">InternalPagedAnswersResponse.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">9</span>
+    <span class="phpdocumentor-element-found-in__line">18</span>
 
     </aside>
 
@@ -299,9 +378,9 @@
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">bool|null</span>
-    <span class="phpdocumentor-signature__name">$IsTVARegistered</span>
-     = <span class="phpdocumentor-signature__default-value">null</span></code>
+        <span class="phpdocumentor-signature__type">int</span>
+    <span class="phpdocumentor-signature__name">$index_pagina_curenta</span>
+     = <span class="phpdocumentor-signature__default-value">0</span></code>
 
     
     
@@ -353,6 +432,186 @@
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="property_mesaje">
+        $mesaje
+        <a href="classes/EdituraEDU-ANAF-Responses-ANAFAnswerListResponse.html#property_mesaje" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="Responses/ANAFAnswerListResponse.php"><a href="files/responses-anafanswerlistresponse.html"><abbr title="Responses/ANAFAnswerListResponse.php">ANAFAnswerListResponse.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">19</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">array&lt;string|int, <a href="classes/EdituraEDU-ANAF-Responses-ANAFAnswer.html"><abbr title="\EdituraEDU\ANAF\Responses\ANAFAnswer">ANAFAnswer</abbr></a>&gt;</span>
+    <span class="phpdocumentor-signature__name">$mesaje</span>
+    </code>
+
+    
+    
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_numar_inregistrari_in_pagina">
+        $numar_inregistrari_in_pagina
+        <a href="classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#property_numar_inregistrari_in_pagina" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="Responses/InternalPagedAnswersResponse.php"><a href="files/responses-internalpagedanswersresponse.html"><abbr title="Responses/InternalPagedAnswersResponse.php">InternalPagedAnswersResponse.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">14</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">int</span>
+    <span class="phpdocumentor-signature__name">$numar_inregistrari_in_pagina</span>
+     = <span class="phpdocumentor-signature__default-value">0</span></code>
+
+    
+    
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_numar_total_inregistrari">
+        $numar_total_inregistrari
+        <a href="classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#property_numar_total_inregistrari" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="Responses/InternalPagedAnswersResponse.php"><a href="files/responses-internalpagedanswersresponse.html"><abbr title="Responses/InternalPagedAnswersResponse.php">InternalPagedAnswersResponse.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">16</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">int</span>
+    <span class="phpdocumentor-signature__name">$numar_total_inregistrari</span>
+     = <span class="phpdocumentor-signature__default-value">0</span></code>
+
+    
+    
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_numar_total_inregistrari_per_pagina">
+        $numar_total_inregistrari_per_pagina
+        <a href="classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#property_numar_total_inregistrari_per_pagina" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="Responses/InternalPagedAnswersResponse.php"><a href="files/responses-internalpagedanswersresponse.html"><abbr title="Responses/InternalPagedAnswersResponse.php">InternalPagedAnswersResponse.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">15</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">int</span>
+    <span class="phpdocumentor-signature__name">$numar_total_inregistrari_per_pagina</span>
+     = <span class="phpdocumentor-signature__default-value">0</span></code>
+
+    
+    
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_numar_total_pagini">
+        $numar_total_pagini
+        <a href="classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#property_numar_total_pagini" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="Responses/InternalPagedAnswersResponse.php"><a href="files/responses-internalpagedanswersresponse.html"><abbr title="Responses/InternalPagedAnswersResponse.php">InternalPagedAnswersResponse.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">17</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">int</span>
+    <span class="phpdocumentor-signature__name">$numar_total_pagini</span>
+     = <span class="phpdocumentor-signature__default-value">0</span></code>
+
+    
+    
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="property_rawResponse">
         $rawResponse
         <a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#property_rawResponse" class="headerlink"><i class="fas fa-link"></i></a>
@@ -382,12 +641,84 @@
     
 
 </article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_serial">
+        $serial
+        <a href="classes/EdituraEDU-ANAF-Responses-ANAFAnswerListResponse.html#property_serial" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="Responses/ANAFAnswerListResponse.php"><a href="files/responses-anafanswerlistresponse.html"><abbr title="Responses/ANAFAnswerListResponse.php">ANAFAnswerListResponse.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">13</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">string</span>
+    <span class="phpdocumentor-signature__name">$serial</span>
+    </code>
+
+    
+    
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_titlu">
+        $titlu
+        <a href="classes/EdituraEDU-ANAF-Responses-ANAFAnswerListResponse.html#property_titlu" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="Responses/ANAFAnswerListResponse.php"><a href="files/responses-anafanswerlistresponse.html"><abbr title="Responses/ANAFAnswerListResponse.php">ANAFAnswerListResponse.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">15</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">string</span>
+    <span class="phpdocumentor-signature__name">$titlu</span>
+    </code>
+
+    
+    
+    
+
+    
+
+</article>
             </section>
 
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/EdituraEDU-ANAF-Responses-TVAResponse.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
@@ -396,22 +727,72 @@
             -public
                                     -static                    "
 >
-    <h4 class="phpdocumentor-element__name" id="method_CreateError">
-        CreateError()
-        <a href="classes/EdituraEDU-ANAF-Responses-EntityResponse.html#method_CreateError" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_Create">
+        Create()
+        <a href="classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#method_Create" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="Responses/EntityResponse.php"><a href="files/responses-entityresponse.html"><abbr title="Responses/EntityResponse.php">EntityResponse.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="Responses/InternalPagedAnswersResponse.php"><a href="files/responses-internalpagedanswersresponse.html"><abbr title="Responses/InternalPagedAnswersResponse.php">InternalPagedAnswersResponse.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">50</span>
+    <span class="phpdocumentor-element-found-in__line">76</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">CreateError</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Throwable">Throwable</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$error</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/EdituraEDU-ANAF-Responses-EntityResponse.html"><abbr title="\EdituraEDU\ANAF\Responses\EntityResponse">EntityResponse</abbr></a></span></code>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">Create</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$rawResponse</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html"><abbr title="\EdituraEDU\ANAF\Responses\InternalPagedAnswersResponse">InternalPagedAnswersResponse</abbr></a></span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$rawResponse</span>
+                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html"><abbr title="\EdituraEDU\ANAF\Responses\InternalPagedAnswersResponse">InternalPagedAnswersResponse</abbr></a></span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                    -static                    "
+>
+    <h4 class="phpdocumentor-element__name" id="method_CreateError">
+        CreateError()
+        <a href="classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#method_CreateError" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="Responses/InternalPagedAnswersResponse.php"><a href="files/responses-internalpagedanswersresponse.html"><abbr title="Responses/InternalPagedAnswersResponse.php">InternalPagedAnswersResponse.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">69</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Create an error response
+For internal use!</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">CreateError</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Throwable">Throwable</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$error</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html"><abbr title="\EdituraEDU\ANAF\Responses\InternalPagedAnswersResponse">InternalPagedAnswersResponse</abbr></a></span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -434,7 +815,7 @@
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/EdituraEDU-ANAF-Responses-EntityResponse.html"><abbr title="\EdituraEDU\ANAF\Responses\EntityResponse">EntityResponse</abbr></a></span>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html"><abbr title="\EdituraEDU\ANAF\Responses\InternalPagedAnswersResponse">InternalPagedAnswersResponse</abbr></a></span>
             </section>
 
 </article>
@@ -460,6 +841,46 @@
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">HasError</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_IsLastPage">
+        IsLastPage()
+        <a href="classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#method_IsLastPage" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="Responses/InternalPagedAnswersResponse.php"><a href="files/responses-internalpagedanswersresponse.html"><abbr title="Responses/InternalPagedAnswersResponse.php">InternalPagedAnswersResponse.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">55</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Check if the current page is the last page
+Will always return true if the response is not successful</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">IsLastPage</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -522,13 +943,13 @@
 >
     <h4 class="phpdocumentor-element__name" id="method_Parse">
         Parse()
-        <a href="classes/EdituraEDU-ANAF-Responses-TVAResponse.html#method_Parse" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#method_Parse" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="Responses/TVAResponse.php"><a href="files/responses-tvaresponse.html"><abbr title="Responses/TVAResponse.php">TVAResponse.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="Responses/InternalPagedAnswersResponse.php"><a href="files/responses-internalpagedanswersresponse.html"><abbr title="Responses/InternalPagedAnswersResponse.php">InternalPagedAnswersResponse.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">11</span>
+    <span class="phpdocumentor-element-found-in__line">20</span>
 
     </aside>
 
@@ -655,13 +1076,57 @@
 
     
 </article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -private
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_CopyFromParsed">
+        CopyFromParsed()
+        <a href="classes/EdituraEDU-ANAF-Responses-ANAFAnswerListResponse.html#method_CopyFromParsed" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="Responses/ANAFAnswerListResponse.php"><a href="files/responses-anafanswerlistresponse.html"><abbr title="Responses/ANAFAnswerListResponse.php">ANAFAnswerListResponse.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">25</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+                    <span class="phpdocumentor-signature__name">CopyFromParsed</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\stdClass">stdClass</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$parsed</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$parsed</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\stdClass">stdClass</abbr></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+    
+
+    
+</article>
             </section>
 
         <div class="phpdocumentor-modal" id="source-view">
     <div class="phpdocumentor-modal-bg" data-exit-button></div>
     <div class="phpdocumentor-modal-container">
         <div class="phpdocumentor-modal-content">
-            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/Responses/TVAResponse.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
+            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/Responses/InternalPagedAnswersResponse.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
         </div>
         <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
     </div>
@@ -760,30 +1225,40 @@
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                                            <li><a href="classes/EdituraEDU-ANAF-Responses-TVAResponse.html#toc-properties">Properties</a></li>
-                                                            <li><a href="classes/EdituraEDU-ANAF-Responses-TVAResponse.html#toc-methods">Methods</a></li>
+                                                            <li><a href="classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#toc-properties">Properties</a></li>
+                                                            <li><a href="classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#toc-methods">Methods</a></li>
                                     </ul>
             </li>
             
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li class=""><a href="classes/EdituraEDU-ANAF-Responses-EntityResponse.html#property_Entity">$Entity</a></li>
-                                                    <li class=""><a href="classes/EdituraEDU-ANAF-Responses-TVAResponse.html#property_IsTVARegistered">$IsTVARegistered</a></li>
+                                                    <li class=""><a href="classes/EdituraEDU-ANAF-Responses-ANAFAnswerListResponse.html#property_cui">$cui</a></li>
+                                                    <li class=""><a href="classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#property_index_pagina_curenta">$index_pagina_curenta</a></li>
                                                     <li class=""><a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#property_LastError">$LastError</a></li>
+                                                    <li class=""><a href="classes/EdituraEDU-ANAF-Responses-ANAFAnswerListResponse.html#property_mesaje">$mesaje</a></li>
+                                                    <li class=""><a href="classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#property_numar_inregistrari_in_pagina">$numar_inregistrari_in_pagina</a></li>
+                                                    <li class=""><a href="classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#property_numar_total_inregistrari">$numar_total_inregistrari</a></li>
+                                                    <li class=""><a href="classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#property_numar_total_inregistrari_per_pagina">$numar_total_inregistrari_per_pagina</a></li>
+                                                    <li class=""><a href="classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#property_numar_total_pagini">$numar_total_pagini</a></li>
                                                     <li class=""><a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#property_rawResponse">$rawResponse</a></li>
+                                                    <li class=""><a href="classes/EdituraEDU-ANAF-Responses-ANAFAnswerListResponse.html#property_serial">$serial</a></li>
+                                                    <li class=""><a href="classes/EdituraEDU-ANAF-Responses-ANAFAnswerListResponse.html#property_titlu">$titlu</a></li>
                                             </ul>
                 </li>
             
                         <li class="phpdocumentor-on-this-page-section__title">Methods</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                            <li class=""><a href="classes/EdituraEDU-ANAF-Responses-EntityResponse.html#method_CreateError">CreateError()</a></li>
+                                            <li class=""><a href="classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#method_Create">Create()</a></li>
+                                            <li class=""><a href="classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#method_CreateError">CreateError()</a></li>
                                             <li class=""><a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#method_HasError">HasError()</a></li>
+                                            <li class=""><a href="classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#method_IsLastPage">IsLastPage()</a></li>
                                             <li class=""><a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#method_IsSuccess">IsSuccess()</a></li>
-                                            <li class=""><a href="classes/EdituraEDU-ANAF-Responses-TVAResponse.html#method_Parse">Parse()</a></li>
+                                            <li class=""><a href="classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#method_Parse">Parse()</a></li>
                                             <li class=""><a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#method_CommonParseJSON">CommonParseJSON()</a></li>
                                             <li class=""><a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#method_InternalCreateError">InternalCreateError()</a></li>
+                                            <li class=""><a href="classes/EdituraEDU-ANAF-Responses-ANAFAnswerListResponse.html#method_CopyFromParsed">CopyFromParsed()</a></li>
                                     </ul>
             </li>
                     </ul>
@@ -803,7 +1278,7 @@
     </section>
 </section>
         </div>
-        <a href="classes/EdituraEDU-ANAF-Responses-TVAResponse.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 

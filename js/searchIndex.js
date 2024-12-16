@@ -51,6 +51,11 @@ Search.appendIndex(
             "summary": "Loads\u0020the\u0020access\u0020token\u0020from\u0020the\u0020file\u0020specified\u0020in\u0020TokenFilePath",
             "url": "classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_LoadAccessToken"
         },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\ANAFAPIClient\u003A\u003ATokenWillExpireSoon\u0028\u0029",
+            "name": "TokenWillExpireSoon",
+            "summary": "Checks\u0020if\u0020the\u0020current\u0020access\u0020token\u0020will\u0020expire\u0020soon",
+            "url": "classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_TokenWillExpireSoon"
+        },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFAPIClient\u003A\u003ARefreshAccessToken\u0028\u0029",
             "name": "RefreshAccessToken",
             "summary": "Refresh\u0020the\u0020access\u0020token\u0020using\u0020the\u0020refresh\u0020token",
@@ -96,10 +101,25 @@ Search.appendIndex(
             "summary": "Get\u0020answer\u0020list\u0020for\u0020a\u0020company\u0020\u0028authenticated\u0020user\u0020must\u0020have\u0020access\u0020to\u0020the\u0020company\u0021\u0029",
             "url": "classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_ListAnswers"
         },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\ANAFAPIClient\u003A\u003AListAnswersWithPagination\u0028\u0029",
+            "name": "ListAnswersWithPagination",
+            "summary": "Get\u0020answer\u0020list\u0020for\u0020a\u0020company\u0020\u0028authenticated\u0020user\u0020must\u0020have\u0020access\u0020to\u0020the\u0020company\u0021\u0029\nUses\u0020the\u0020paged\u0020API\u0020end\u0020point\nAnswers\u0020will\u0020be\u0020returned\u0020in\u0020a\u0020unified\u0020list",
+            "url": "classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_ListAnswersWithPagination"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\ANAFAPIClient\u003A\u003AGetAnswerPage\u0028\u0029",
+            "name": "GetAnswerPage",
+            "summary": "Call\u0020the\u0020paged\u0020answer\u0020list\u0020endpoint\u0020with\u0020a\u0020speicifc\u0020page\u0020number",
+            "url": "classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_GetAnswerPage"
+        },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFAPIClient\u003A\u003AVerifyXML\u0028\u0029",
             "name": "VerifyXML",
             "summary": "ATTENTION\u0020DOES\u0020NOT\u0020FUNCTION\u0020RELIABLY.",
             "url": "classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_VerifyXML"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\ANAFAPIClient\u003A\u003AValidateFilter\u0028\u0029",
+            "name": "ValidateFilter",
+            "summary": "Currently\u0020accepted\u0020filter\u0020chars\u0020are\u003A\u0020E,\u0020T,\u0020P,\u0020R",
+            "url": "classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_ValidateFilter"
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFAPIClient\u003A\u003ACallErrorCallback\u0028\u0029",
             "name": "CallErrorCallback",
@@ -241,6 +261,11 @@ Search.appendIndex(
             "summary": "Try\u0020to\u0020extract\u0020Bucharest\u0027s\u0020sector\u0020from\u0020the\u0020address\nWill\u0020return\u0020null\u0020if\u0020the\u0020address\u0020is\u0020not\u0020set\u0020or\u0020if\u0020the\u0020address\u0020does\u0020not\u0020contain\u0020a\u0020sector.",
             "url": "classes/EdituraEDU-ANAF-ANAFEntity-Entity.html#method_GetSector"
         },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\ANAFEntity\\Entity\u003A\u003AIsRadiat\u0028\u0029",
+            "name": "IsRadiat",
+            "summary": "Check\u0020if\u0020CIF\u0020is\u0020\u0022radiat\u0022\u0020\u0028closed\u003F\u0029",
+            "url": "classes/EdituraEDU-ANAF-ANAFEntity-Entity.html#method_IsRadiat"
+        },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFEntity\\Entity\u003A\u003A\u0024date_generale",
             "name": "date_generale",
             "summary": "",
@@ -378,7 +403,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFEntity\\InactiveInfo\u003A\u003ACreateFromParsed\u0028\u0029",
             "name": "CreateFromParsed",
-            "summary": "Similar\u0020to\u0020\u0040param\u0020\\stdClass\u0020\u0024parsedData",
+            "summary": "Similar\u0020to\u0020\u0040param\u0020stdClass\u0020\u0024parsedData",
             "url": "classes/EdituraEDU-ANAF-ANAFEntity-InactiveInfo.html#method_CreateFromParsed"
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFEntity\\InactiveInfo\u003A\u003A\u0024dataInactivare",
@@ -413,7 +438,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFEntity\\RTVAInfo\u003A\u003ACreateFromParsed\u0028\u0029",
             "name": "CreateFromParsed",
-            "summary": "Similar\u0020to\u0020\u0040param\u0020\\stdClass\u0020\u0024parsedData",
+            "summary": "Similar\u0020to\u0020\u0040param\u0020stdClass\u0020\u0024parsedData",
             "url": "classes/EdituraEDU-ANAF-ANAFEntity-RTVAInfo.html#method_CreateFromParsed"
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFEntity\\RTVAInfo\u003A\u003A\u0024dataInceputTvaInc",
@@ -453,7 +478,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFEntity\\SplitTVAInfo\u003A\u003ACreateFromParsed\u0028\u0029",
             "name": "CreateFromParsed",
-            "summary": "Similar\u0020to\u0020\u0040param\u0020\\stdClass\u0020\u0024parsedData",
+            "summary": "Similar\u0020to\u0020\u0040param\u0020stdClass\u0020\u0024parsedData",
             "url": "classes/EdituraEDU-ANAF-ANAFEntity-SplitTVAInfo.html#method_CreateFromParsed"
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFEntity\\SplitTVAInfo\u003A\u003A\u0024dataInceputSplitTVA",
@@ -641,6 +666,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/EdituraEDU-ANAF-Responses-ANAFException.html#constant_REMOTE_EXCEPTION"
         },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\ANAFException\u003A\u003ACOMPOUND_ERROR",
+            "name": "COMPOUND_ERROR",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Responses-ANAFException.html#constant_COMPOUND_ERROR"
+        },                {
             "fqsen": "\\EdituraEDU\\ANAF\\Responses\\ANAFResponse",
             "name": "ANAFResponse",
             "summary": "Represents\u0020the\u0020base\u0020structure\u0020for\u0020some\u0020ANAF\u0020API\u0020responses",
@@ -750,6 +780,91 @@ Search.appendIndex(
             "name": "Entity",
             "summary": "",
             "url": "classes/EdituraEDU-ANAF-Responses-EntityResponse.html#property_Entity"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\InternalPagedAnswersResponse",
+            "name": "InternalPagedAnswersResponse",
+            "summary": "Response\u0020to\u0020the\u0020paged\u0020answers\u0020API\u0020endpoint",
+            "url": "classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\InternalPagedAnswersResponse\u003A\u003AParse\u0028\u0029",
+            "name": "Parse",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#method_Parse"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\InternalPagedAnswersResponse\u003A\u003AIsLastPage\u0028\u0029",
+            "name": "IsLastPage",
+            "summary": "Check\u0020if\u0020the\u0020current\u0020page\u0020is\u0020the\u0020last\u0020page\nWill\u0020always\u0020return\u0020true\u0020if\u0020the\u0020response\u0020is\u0020not\u0020successful",
+            "url": "classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#method_IsLastPage"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\InternalPagedAnswersResponse\u003A\u003ACreateError\u0028\u0029",
+            "name": "CreateError",
+            "summary": "Create\u0020an\u0020error\u0020response\nFor\u0020internal\u0020use\u0021",
+            "url": "classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#method_CreateError"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\InternalPagedAnswersResponse\u003A\u003ACreate\u0028\u0029",
+            "name": "Create",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#method_Create"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\InternalPagedAnswersResponse\u003A\u003A\u0024numar_inregistrari_in_pagina",
+            "name": "numar_inregistrari_in_pagina",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#property_numar_inregistrari_in_pagina"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\InternalPagedAnswersResponse\u003A\u003A\u0024numar_total_inregistrari_per_pagina",
+            "name": "numar_total_inregistrari_per_pagina",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#property_numar_total_inregistrari_per_pagina"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\InternalPagedAnswersResponse\u003A\u003A\u0024numar_total_inregistrari",
+            "name": "numar_total_inregistrari",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#property_numar_total_inregistrari"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\InternalPagedAnswersResponse\u003A\u003A\u0024numar_total_pagini",
+            "name": "numar_total_pagini",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#property_numar_total_pagini"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\InternalPagedAnswersResponse\u003A\u003A\u0024index_pagina_curenta",
+            "name": "index_pagina_curenta",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#property_index_pagina_curenta"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\PagedAnswerListResponse",
+            "name": "PagedAnswerListResponse",
+            "summary": "Pseudo\u0020response\u0020for\u0020unifying\u0020multiple\u0020paged\u0020answer\u0020lists\u0020into\u0020a\u0020single\u0020response",
+            "url": "classes/EdituraEDU-ANAF-Responses-PagedAnswerListResponse.html"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\PagedAnswerListResponse\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Responses-PagedAnswerListResponse.html#method___construct"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\PagedAnswerListResponse\u003A\u003ACreate\u0028\u0029",
+            "name": "Create",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Responses-PagedAnswerListResponse.html#method_Create"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\PagedAnswerListResponse\u003A\u003ACreateError\u0028\u0029",
+            "name": "CreateError",
+            "summary": "Create\u0020an\u0020error\u0020response\nFor\u0020internal\u0020use\u0021",
+            "url": "classes/EdituraEDU-ANAF-Responses-PagedAnswerListResponse.html#method_CreateError"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\PagedAnswerListResponse\u003A\u003A\u0024Pages",
+            "name": "Pages",
+            "summary": "Stores\u0020a\u0020reference\u0020to\u0020the\u0020original\u0020responses\nNOTE\u003A\u0020empty\u0020responses\u0020\u0028no\u0020messages\u0029\u0020are\u0020not\u0020stored",
+            "url": "classes/EdituraEDU-ANAF-Responses-PagedAnswerListResponse.html#property_Pages"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\PagedAnswerListResponse\u003A\u003A\u0024ErrorPages",
+            "name": "ErrorPages",
+            "summary": "Stores\u0020a\u0020reference\u0020to\u0020the\u0020original\u0020errors",
+            "url": "classes/EdituraEDU-ANAF-Responses-PagedAnswerListResponse.html#property_ErrorPages"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\PagedAnswerListResponse\u003A\u003A\u0024PageCount",
+            "name": "PageCount",
+            "summary": "Total\u0020number\u0020of\u0020pages",
+            "url": "classes/EdituraEDU-ANAF-Responses-PagedAnswerListResponse.html#property_PageCount"
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\Responses\\TVAResponse",
             "name": "TVAResponse",
