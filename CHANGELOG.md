@@ -1,3 +1,12 @@
+# v2.0.2-beta  
+- ANAFAPIClient new has a new method TokenWillExpireSoon that returns true of the token will expire in 24h or less  
+- TokenWillExpireSoon is used to determine when to auto refresh the token  
+- ListAnswers now support filtering  
+- Added private ValidateFilter to check for valid filter chars  
+- Invalid filters will create an INVALID_INPUT exception  
+- Added ListAnswersWithPagination will return an answer list containing all pages.  
+
+
 # v2.0.1-beta  
 ANAFAPIClient->AccessToken is now protected (was private)  
 # v2.0.0-beta
