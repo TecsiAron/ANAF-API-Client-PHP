@@ -2,6 +2,8 @@
 
 namespace EdituraEDU\ANAF\Tests\RequestTests;
 
+use DateInterval;
+use DateTime;
 use EdituraEDU\ANAF\ANAFAPIClient;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\CoversFunction;
@@ -61,21 +63,34 @@ class AnswerListAnswerTest extends RequestTestBase
         $this->assertGreaterThan(0, count($listAnswer->mesaje), "No messages found");
     }
 
-    public function testAnswersWithSpecialPage()
+    public function testAnswersListWithPages()
     {
         $client = $this->createClient();
         $answers = $client->ListAnswers($this->cif, 10);
         $this->assertTrue($answers->IsSuccess());
         $this->assertIsArray($answers->mesaje);
-        $pagedAnswers = $client->ListAnswers($this->cif, 10, null, true);
-        $this->assertTrue($pagedAnswers->IsSuccess());
+        $startTime = new DateTime();
+        $startTime->sub(new DateInterval("P10D"));
+        /** @noinspection PhpRedundantOptionalArgumentInspection */
+        $startTime->setTime(0, 0, 0);
+        $endTime = new DateTime();
+        $endTime->sub(new DateInterval("PT60S"));
+        $pagedAnswers = $client->ListAnswersWithPagination($startTime->getTimestamp(), $endTime->getTimestamp(), $this->cif);
+        $errorMessage = $pagedAnswers->IsSuccess() ? "" : $pagedAnswers->LastError->getMessage();
+        $this->assertTrue($pagedAnswers->IsSuccess(), $errorMessage);
         $this->assertIsArray($pagedAnswers->mesaje);
-        $this->assertSameSize($answers->mesaje, $pagedAnswers->mesaje);
-        for ($i = 0; $i < count($answers->mesaje); $i++) {
-            $original = $answers->mesaje[$i];
+        for ($i = 0; $i < count($pagedAnswers->mesaje); $i++) {
             $paged = $pagedAnswers->mesaje[$i];
-            $this->assertEquals($original->id, $paged->id);
-            $this->assertEquals($original->detalii, $paged->detalii);
+            $found = false;
+            for ($j = 0; $j < count($answers->mesaje); $j++) {
+                $original = $answers->mesaje[$j];
+                if ($original->id == $paged->id) {
+                    $found = true;
+                    $this->assertEquals($original->detalii, $paged->detalii);
+                    break 2;
+                }
+            }
+            $this->assertTrue($found, "Message not found in original list");
         }
     }
 
