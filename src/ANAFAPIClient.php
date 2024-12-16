@@ -545,7 +545,7 @@ class ANAFAPIClient
         if ($specificPage != null) {
             $response = $this->GetAnswerPage($startTime, $endTime, $cif, $specificPage, $filter);
             if ($response->IsSuccess()) {
-                return new PagedAnswerListResponse([$response]);
+                return new PagedAnswerListResponse([$response],[]);
             }
             return PagedAnswerListResponse::CreateError($response->LastError);
         }
@@ -553,6 +553,7 @@ class ANAFAPIClient
          * @var InternalPagedAnswersResponse[] $pages
          */
         $pages = [];
+        $errors = [];
         $currentPage = 1;
         $canFetchNextPage = true;
         while ($canFetchNextPage) {
@@ -561,12 +562,14 @@ class ANAFAPIClient
                 if (count($response->mesaje) > 0) {
                     $pages[] = $response;
                 }
+            } else {
+                $errors[] = $response;
             }
             $canFetchNextPage = !$response->IsLastPage();
             $currentPage++;
         }
 
-        return new PagedAnswerListResponse($pages);
+        return new PagedAnswerListResponse($pages, $errors);
     }
 
     /**

@@ -15,6 +15,7 @@ class PagedAnswerListResponse extends ANAFAnswerListResponse
      * @var array|InternalPagedAnswersResponse[] $Pages
      */
     public array $Pages;
+    public array $ErrorPages;
     /**
      * Total number of pages
      * @var int $PageCount
@@ -24,8 +25,9 @@ class PagedAnswerListResponse extends ANAFAnswerListResponse
      * @param InternalPagedAnswersResponse[] $responses
      * @return void
      */
-    public function __construct(array $responses)
+    public function __construct(array $responses, array $errors)
     {
+        $this->ErrorPages=$errors;
         $this->PageCount=count($responses);
         if($this->PageCount==0)
         {
@@ -38,39 +40,21 @@ class PagedAnswerListResponse extends ANAFAnswerListResponse
         $this->serial=$responses[0]->serial;
         $this->titlu=$responses[0]->titlu;
         $this->mesaje=[];
+        if(count($errors)!=0)
+        {
+            if(count($errors)==1)
+            {
+                $this->LastError=$errors[0]->LastError;
+            }
+            else
+            {
+                $this->LastError=new ANAFException("Multiple page requests result in an error", ANAFException::COMPOUND_ERROR);
+            }
+        }
         for($i=0; $i<$this->PageCount; $i++)
         {
             $this->mesaje=array_merge($this->mesaje,$responses[$i]->mesaje);
         }
-    }
-
-    /**
-     * Overrides the default HasError to check all pages for errors if the current instance has no error of its own
-     * @return bool
-     */
-    public function HasError(): bool
-    {
-        if($this->LastError!=null)
-        {
-            return true;
-        }
-        foreach($this->Pages as $page)
-        {
-            if($page->HasError())
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * May not be needed?
-     * @return bool
-     */
-    public function IsSuccess(): bool
-    {
-        return !$this->HasError();
     }
 
     public static function Create($rawResponse): PagedAnswerListResponse
@@ -80,7 +64,7 @@ class PagedAnswerListResponse extends ANAFAnswerListResponse
 
     public static function CreateError(Throwable $error): PagedAnswerListResponse
     {
-        $response=new PagedAnswerListResponse([]);
+        $response=new PagedAnswerListResponse([],[]);
         $response->LastError=$error;
         return $response;
 
