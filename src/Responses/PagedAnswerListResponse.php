@@ -12,9 +12,14 @@ class PagedAnswerListResponse extends ANAFAnswerListResponse
     /**
      * Stores a reference to the original responses
      * NOTE: empty responses (no messages) are not stored
-     * @var array|InternalPagedAnswersResponse[] $Pages
+     * @var InternalPagedAnswersResponse[] $Pages
      */
     public array $Pages;
+
+    /**
+     * Stores a reference to the original errors
+     * @var InternalPagedAnswersResponse[] $ErrorPages
+     */
     public array $ErrorPages;
     /**
      * Total number of pages
@@ -23,6 +28,7 @@ class PagedAnswerListResponse extends ANAFAnswerListResponse
     public int $PageCount;
     /**
      * @param InternalPagedAnswersResponse[] $responses
+     * @param InternalPagedAnswersResponse[] $errors
      * @return void
      */
     public function __construct(array $responses, array $errors)
