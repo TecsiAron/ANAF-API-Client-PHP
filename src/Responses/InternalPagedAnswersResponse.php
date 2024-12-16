@@ -42,7 +42,7 @@ class InternalPagedAnswersResponse extends ANAFAnswerListResponse
             return;
         }
         parent::Parse();
-        if(count($this->mesaje)>0)
+        if(isset($this->mesaje) && count($this->mesaje)>0)
         {
             $this->numar_inregistrari_in_pagina = $parsed->numar_inregistrari_in_pagina;
             $this->numar_total_inregistrari_per_pagina = $parsed->numar_total_inregistrari_per_pagina;
