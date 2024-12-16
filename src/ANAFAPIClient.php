@@ -494,7 +494,9 @@ class ANAFAPIClient
     {
         $modeName = $this->Production ? "prod" : "test";
         $method = "/$modeName/FCTEL/rest/listaMesajeFactura?zile=$days&cif=$cif";
-
+        if ($filter != null) {
+            $method .= "&filtru=$filter";
+        }
         try {
             $httpResponse = $this->SendANAFRequest($method, null, null, true);
 
@@ -535,6 +537,15 @@ class ANAFAPIClient
 
         $this->CallErrorCallback("ANAF VERIFY ERROR: NO RESPONSE OR ERROR");
         return ANAFVerifyResponse::CreateError(new ANAFException("No response or error", ANAFException::UNKNOWN_ERROR));
+    }
+
+    private function ValidateFilter(string $filter): bool
+    {
+        if (strlen($filter) != 1) {
+            return false;
+        }
+        $acceptedFilters = ["E", "T", "P", "R"];
+        return in_array($filter, $acceptedFilters);
     }
 
     /**
