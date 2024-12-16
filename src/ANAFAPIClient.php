@@ -2,8 +2,6 @@
 
 namespace EdituraEDU\ANAF;
 
-use DateInterval;
-use DateTime;
 use EdituraEDU\ANAF\Responses\ANAFAnswerListResponse;
 use EdituraEDU\ANAF\Responses\InternalPagedAnswersResponse;
 use EdituraEDU\ANAF\Responses\ANAFException;
@@ -493,21 +491,11 @@ class ANAFAPIClient
      * @param int $cif
      * @param int $days Number of days to look back
      * @param string|null $filter
-     * @param bool $usePagination if true ListAnswersWithPagination will be called (different API method)
      * @return ANAFAnswerListResponse
-     * @throws Exception DateTime operations exception?
      * @see ANAFAPIClient::ListAnswersWithPagination()
      */
-    public function ListAnswers(int $cif, int $days = 60, string|null $filter = null, bool $usePagination = false): ANAFAnswerListResponse
+    public function ListAnswers(int $cif, int $days = 60, string|null $filter = null): ANAFAnswerListResponse
     {
-        if ($usePagination) {
-            $startTime = new DateTime();
-            $startTime->sub(new DateInterval("P{$days}D"));
-            $startTime->setTime(0, 0, 0);
-            $endTime = new DateTime();
-            $startTime->sub(new DateInterval("PT10S")); // 10 seconds ago
-            return $this->ListAnswersWithPagination($startTime->getTimestamp(), $endTime->getTimestamp(), $cif, null, $filter);
-        }
         if ($filter != null) {
             $filter = strtoupper($filter);
             if (!$this->ValidateFilter($filter)) {
