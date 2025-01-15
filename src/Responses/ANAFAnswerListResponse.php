@@ -25,7 +25,11 @@ class ANAFAnswerListResponse extends ANAFResponse
     private function CopyFromParsed(stdClass $parsed): void
     {
         if (isset($parsed->eroare)) {
-            $this->InternalCreateError($parsed->eroare, ANAFException::REMOTE_EXCEPTION);
+            $code = ANAFException::REMOTE_EXCEPTION;
+            if (str_starts_with($parsed->eroare, "Lista de mesaje este mai mare decat numarul de")) {
+                $code = ANAFException::MESSAGE_LIST_TOO_LONG;
+            }
+            $this->InternalCreateError($parsed->eroare, $code);
             return;
         }
 
