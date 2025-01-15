@@ -491,10 +491,12 @@ class ANAFAPIClient
      * @param int $cif
      * @param int $days Number of days to look back
      * @param string|null $filter
+     * @param bool $usePaginationIfNeeded If true and the answer has LastError code ANAFException::MESSAGE_LIST_TOO_LONG, the method will try to fetch the answers using pagination
+     * @param float|int $endDateOffsetForPagination ANAF API gives an error if the end date is "in the future" based on their internal clock, so end date will be currentTime-$endDateOffsetForPagination. Default is 5 minutes
      * @return ANAFAnswerListResponse
      * @see ANAFAPIClient::ListAnswersWithPagination()
      */
-    public function ListAnswers(int $cif, int $days = 60, string|null $filter = null): ANAFAnswerListResponse
+    public function ListAnswers(int $cif, int $days = 60, string|null $filter = null, bool $usePaginationIfNeeded = false, $endDateOffsetForPagination = 5 * 60): ANAFAnswerListResponse
     {
         if ($filter != null) {
             $filter = strtoupper($filter);
@@ -513,7 +515,15 @@ class ANAFAPIClient
             if ($httpResponse->getStatusCode() >= 200 && $httpResponse->getStatusCode() < 300) {
                 //var_dump($httpResponse);
                 $content = $httpResponse->getBody()->getContents();
-                return ANAFAnswerListResponse::Create($content);
+                $answer = ANAFAnswerListResponse::Create($content);
+                if ($answer->IsSuccess() || !$usePaginationIfNeeded) {
+                    return $answer;
+                }
+                if ($answer->LastError->getCode() == ANAFException::MESSAGE_LIST_TOO_LONG) {
+                    $startDate = time() - ($days * 24 * 3600);
+                    $endDate = time() - $endDateOffsetForPagination;
+                    return $this->ListAnswersWithPagination($startDate, $endDate, $cif, null, $filter);
+                }
             }
         } catch (Throwable $ex) {
             $this->CallErrorCallback("ANAF API Error", $ex);
