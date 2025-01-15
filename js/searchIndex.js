@@ -671,6 +671,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/EdituraEDU-ANAF-Responses-ANAFException.html#constant_COMPOUND_ERROR"
         },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\ANAFException\u003A\u003AMESSAGE_LIST_TOO_LONG",
+            "name": "MESSAGE_LIST_TOO_LONG",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Responses-ANAFException.html#constant_MESSAGE_LIST_TOO_LONG"
+        },                {
             "fqsen": "\\EdituraEDU\\ANAF\\Responses\\ANAFResponse",
             "name": "ANAFResponse",
             "summary": "Represents\u0020the\u0020base\u0020structure\u0020for\u0020some\u0020ANAF\u0020API\u0020responses",

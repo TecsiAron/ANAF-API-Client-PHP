@@ -1082,7 +1082,7 @@ To obtain the ID, use ListAnswers</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="ANAFAPIClient.php"><a href="files/anafapiclient.html">ANAFAPIClient.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">584</span>
+    <span class="phpdocumentor-element-found-in__line">594</span>
 
     </aside>
 
@@ -1247,7 +1247,7 @@ To obtain the ID, use ListAnswers</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="ANAFAPIClient.php"><a href="files/anafapiclient.html">ANAFAPIClient.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">675</span>
+    <span class="phpdocumentor-element-found-in__line">685</span>
 
     </aside>
 
@@ -1286,7 +1286,7 @@ To obtain the ID, use ListAnswers</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="ANAFAPIClient.php"><a href="files/anafapiclient.html">ANAFAPIClient.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">684</span>
+    <span class="phpdocumentor-element-found-in__line">694</span>
 
     </aside>
 
@@ -1339,7 +1339,7 @@ To obtain the ID, use ListAnswers</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="ANAFAPIClient.php"><a href="files/anafapiclient.html">ANAFAPIClient.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">497</span>
+    <span class="phpdocumentor-element-found-in__line">499</span>
 
     </aside>
 
@@ -1347,7 +1347,7 @@ To obtain the ID, use ListAnswers</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">ListAnswers</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$cif</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$days</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">60</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$filter</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/EdituraEDU-ANAF-Responses-ANAFAnswerListResponse.html"><abbr title="\EdituraEDU\ANAF\Responses\ANAFAnswerListResponse">ANAFAnswerListResponse</abbr></a></span></code>
+                    <span class="phpdocumentor-signature__name">ListAnswers</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$cif</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$days</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">60</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$filter</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$usePaginationIfNeeded</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">false</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">float|int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$endDateOffsetForPagination</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">5 * 60</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/EdituraEDU-ANAF-Responses-ANAFAnswerListResponse.html"><abbr title="\EdituraEDU\ANAF\Responses\ANAFAnswerListResponse">ANAFAnswerListResponse</abbr></a></span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -1377,6 +1377,24 @@ To obtain the ID, use ListAnswers</p>
                  = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$usePaginationIfNeeded</span>
+                : <span class="phpdocumentor-signature__argument__return-type">bool</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">false</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>If true and the answer has LastError code ANAFException::MESSAGE_LIST_TOO_LONG, the method will try to fetch the answers using pagination</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$endDateOffsetForPagination</span>
+                : <span class="phpdocumentor-signature__argument__return-type">float|int</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">5 * 60</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>ANAF API gives an error if the end date is &quot;in the future&quot; based on their internal clock, so end date will be currentTime-$endDateOffsetForPagination. Default is 5 minutes</p>
+</section>
+
             </dd>
             </dl>
 
@@ -1419,7 +1437,7 @@ To obtain the ID, use ListAnswers</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="ANAFAPIClient.php"><a href="files/anafapiclient.html">ANAFAPIClient.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">537</span>
+    <span class="phpdocumentor-element-found-in__line">547</span>
 
     </aside>
 
@@ -1936,7 +1954,7 @@ Answers will be returned in a unified list</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="ANAFAPIClient.php"><a href="files/anafapiclient.html">ANAFAPIClient.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">694</span>
+    <span class="phpdocumentor-element-found-in__line">704</span>
 
     </aside>
 
@@ -1985,7 +2003,7 @@ Answers will be returned in a unified list</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="ANAFAPIClient.php"><a href="files/anafapiclient.html">ANAFAPIClient.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">618</span>
+    <span class="phpdocumentor-element-found-in__line">628</span>
 
     </aside>
 
@@ -2052,7 +2070,7 @@ Answers will be returned in a unified list</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="ANAFAPIClient.php"><a href="files/anafapiclient.html">ANAFAPIClient.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">657</span>
+    <span class="phpdocumentor-element-found-in__line">667</span>
 
     </aside>
 
@@ -2385,7 +2403,7 @@ This method is case-insensitive.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="ANAFAPIClient.php"><a href="files/anafapiclient.html">ANAFAPIClient.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">641</span>
+    <span class="phpdocumentor-element-found-in__line">651</span>
 
     </aside>
 
