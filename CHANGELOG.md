@@ -1,3 +1,8 @@
+# v2.0.3
+- Added error code MESSAGE_LIST_TOO_LONG = 13 to ANAFException  
+- ANAFAnswerListResponse now checks if recived error states that message count is to high for a non paged answer list and uses the appropriate error code if so  
+- ANAFAAPIClient::ListAnswers now has 2 new optional parameters that allow it to fall back to ListAnswersWithPagination if the after receiving an MESSAGE_LIST_TOO_LONG exception  
+  
 # v2.0.2-beta  
 - ANAFAPIClient new has a new method TokenWillExpireSoon that returns true of the token will expire in 24h or less  
 - TokenWillExpireSoon is used to determine when to auto refresh the token  
