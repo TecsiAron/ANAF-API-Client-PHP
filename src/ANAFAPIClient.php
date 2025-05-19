@@ -348,7 +348,7 @@ class ANAFAPIClient
             }
 
             $requestBody = [["cui" => $sanitizedCUI, "data" => date("Y-m-d")]];
-            $httpResponse = $this->SendANAFRequest("PlatitorTvaRest/api/v8/ws/tva", json_encode($requestBody));
+            $httpResponse = $this->SendANAFRequest("api/PlatitorTvaRest/v9/tva", json_encode($requestBody));
 
             if ($httpResponse->getStatusCode() >= 200 && $httpResponse->getStatusCode() < 300) {
                 $content = $httpResponse->getBody()->getContents();
