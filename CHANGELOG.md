@@ -1,4 +1,9 @@
-# v2.0.3
+# v2.0.4  
+- Fixed a bug that could lead to a runtime error if unexpected statusInactivi response was recived when loading a companies info  
+- Moved to new (v9) API endpoint for loading company info
+  
+  
+# v2.0.3  
 - Added error code MESSAGE_LIST_TOO_LONG = 13 to ANAFException  
 - ANAFAnswerListResponse now checks if recived error states that message count is to high for a non paged answer list and uses the appropriate error code if so  
 - ANAFAAPIClient::ListAnswers now has 2 new optional parameters that allow it to fall back to ListAnswersWithPagination if the after receiving an MESSAGE_LIST_TOO_LONG exception  
