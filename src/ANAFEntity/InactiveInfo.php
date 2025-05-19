@@ -27,7 +27,7 @@ class InactiveInfo
         $inactiveInfo->dataReactivare = $parsedData->dataReactivare ?? "";
         $inactiveInfo->dataPublicare = $parsedData->dataPublicare ?? "";
         $inactiveInfo->dataRadiere = $parsedData->dataRadiere ?? "";
-        $inactiveInfo->statusInactivi = $parsedData->statusInactivi ?? "";
+        $inactiveInfo->statusInactivi = $parsedData->statusInactivi ?? false;
         return $inactiveInfo;
     }
 }
