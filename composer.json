@@ -1,6 +1,14 @@
 {
     "name": "tecsiaron/anaf-api-client-php",
-    "description": "PHP API Client for ANAF API",
+    "description": "PHP API Client for ANAF API and Ro eFactura",
+    "keywords": [
+        "anaf",
+        "api",
+        "cif",
+        "api client",
+        "roefactura",
+        "efactura"
+    ],
     "type": "library",
     "require": {
         "guzzlehttp/guzzle": "^7.0",
