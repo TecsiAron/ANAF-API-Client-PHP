@@ -1,8 +1,10 @@
+# v2.0.5  
+- Fixed PHP 8.4 warnings
+  
 # v2.0.4  
 - Fixed a bug that could lead to a runtime error if unexpected statusInactivi response was recived when loading a companies info  
 - Moved to new (v9) API endpoint for loading company info
-  
-  
+    
 # v2.0.3  
 - Added error code MESSAGE_LIST_TOO_LONG = 13 to ANAFException  
 - ANAFAnswerListResponse now checks if recived error states that message count is to high for a non paged answer list and uses the appropriate error code if so  
