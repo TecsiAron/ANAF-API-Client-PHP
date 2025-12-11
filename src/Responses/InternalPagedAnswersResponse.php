@@ -7,7 +7,7 @@ use Throwable;
 
 /**
  * Response to the paged answers API endpoint
- * @see ANAFAPIClient::GetAnswerPage()
+ * @see ANAFAPIClient::GetAnswerPageInternal()
  */
 class InternalPagedAnswersResponse extends ANAFAnswerListResponse
 {

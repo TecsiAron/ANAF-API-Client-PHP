@@ -184,7 +184,7 @@ class ANAFAPIClient
             $this->SaveAccessToken($token);
             return $token;
         } catch (Throwable $ex) {
-            $this->CallErrorCallback("ANAF token save failed!", $ex);
+            $this->CallLogCallback("ANAF token save failed!", $ex);
             return null;
         }
     }
@@ -237,13 +237,13 @@ class ANAFAPIClient
 
             if ($autoRefresh && $this->TokenWillExpireSoon()) {
                 if (!$this->RefreshAccessToken($token)) {
-                    $this->CallErrorCallback("ANAF token auto-refresh failed! Will not use expired token!");
+                    $this->CallLogCallback("ANAF token auto-refresh failed! Will not use expired token!");
                     $this->AccessToken = null;
                 }
             }
             return $this->AccessToken;
         } catch (Throwable $ex) {
-            $this->CallErrorCallback("ANAF token load failed!", $ex);
+            $this->CallLogCallback("ANAF token load failed!", $ex);
             return null;
         }
     }
@@ -278,7 +278,7 @@ class ANAFAPIClient
         $currentToken = $token ?? $this->LoadAccessToken(false);
 
         if ($currentToken == null) {
-            $this->CallErrorCallback("ANAF token refresh failed!");
+            $this->CallLogCallback("ANAF token refresh failed!");
             return false;
         }
 
@@ -287,7 +287,7 @@ class ANAFAPIClient
         try {
             $newToken = $provider->getAccessToken('refresh_token', ["refresh_token" => $currentToken->getRefreshToken()]);
         } catch (Throwable $ex) {
-            $this->CallErrorCallback("ANAF token refresh failed!", $ex);
+            $this->CallLogCallback("ANAF token refresh failed!", $ex);
             return false;
         }
 
@@ -375,7 +375,7 @@ class ANAFAPIClient
             $response->LastError = new ANAFException("HTTP Error: " . $httpResponse->getStatusCode(), ANAFException::HTTP_ERROR);
         } catch (Throwable $ex) {
             $response->LastError = $ex;
-            $this->CallErrorCallback("ANAF API Error", $ex);
+            $this->CallLogCallback("ANAF API Error", $ex);
         }
         return $response;
     }
@@ -415,7 +415,7 @@ class ANAFAPIClient
             }
         } catch (Throwable $ex) {
             $response->LastError = $ex;
-            $this->CallErrorCallback("ANAF API Error", $ex);
+            $this->CallLogCallback("ANAF API Error", $ex);
         }
 
         return $response;
@@ -441,13 +441,14 @@ class ANAFAPIClient
                 $content = $httpResponse->getBody()->getContents();
 
                 if (str_starts_with($content, "PK")) {
+                    $this->CallbackManager->CallInvoiceDownloaded($content, $id);
                     return $content;
                 }
                 return "ERROR_BAD_CONTENT";
 
             }
         } catch (Throwable $ex) {
-            $this->CallErrorCallback("ANAF API Error", $ex);
+            $this->CallLogCallback("ANAF API Error", $ex);
             return "ERROR";
         }
 
@@ -476,13 +477,13 @@ class ANAFAPIClient
                 if (str_starts_with($content, "%PDF")) {
                     return $content;
                 }
-                $this->CallErrorCallback("Bad content format, expected PDF (UBL2PDF) - $metadata");
-                $this->CallErrorCallback($content);
+                $this->CallLogCallback("Bad content format, expected PDF (UBL2PDF) - $metadata");
+                $this->CallLogCallback($content);
                 return false;
 
             }
         } catch (Throwable $ex) {
-            $this->CallErrorCallback("ANAF API Error", $ex);
+            $this->CallLogCallback("ANAF API Error", $ex);
             return false;
         }
 
@@ -532,16 +533,21 @@ class ANAFAPIClient
                 $content = $httpResponse->getBody()->getContents();
                 $answer = ANAFAnswerListResponse::Create($content);
                 if ($answer->IsSuccess() || !$usePaginationIfNeeded) {
+                    $this->CallbackManager->CallAnswerReceived($answer);
                     return $answer;
                 }
                 if ($answer->LastError->getCode() == ANAFException::MESSAGE_LIST_TOO_LONG) {
                     $startDate = time() - ($days * 24 * 3600);
                     $endDate = time() - $endDateOffsetForPagination;
-                    return $this->ListAnswersWithPagination($startDate, $endDate, $cif, null, $filter);
+                    $pagedResult = $this->ListAnswersWithPagination($startDate, $endDate, $cif, null, $filter);
+                    if($pagedResult->IsSuccess()){
+                        $this->CallbackManager->CallAnswerReceived($pagedResult);
+                    }
+                    return $pagedResult;
                 }
             }
         } catch (Throwable $ex) {
-            $this->CallErrorCallback("ANAF API Error", $ex);
+            $this->CallLogCallback("ANAF API Error", $ex);
             return ANAFAnswerListResponse::CreateError($ex);
         }
 
@@ -568,7 +574,7 @@ class ANAFAPIClient
             }
         }
         if ($specificPage != null) {
-            $response = $this->GetAnswerPage($startTime, $endTime, $cif, $specificPage, $filter);
+            $response = $this->GetAnswerPageInternal($startTime, $endTime, $cif, $specificPage, $filter);
             if ($response->IsSuccess()) {
                 return new PagedAnswerListResponse([$response], []);
             }
@@ -582,7 +588,7 @@ class ANAFAPIClient
         $currentPage = 1;
         $canFetchNextPage = true;
         while ($canFetchNextPage) {
-            $response = $this->GetAnswerPage($startTime, $endTime, $cif, $currentPage, $filter);
+            $response = $this->GetAnswerPageInternal($startTime, $endTime, $cif, $currentPage, $filter);
             if ($response->IsSuccess()) {
                 if (count($response->mesaje) > 0) {
                     $pages[] = $response;
@@ -596,17 +602,25 @@ class ANAFAPIClient
 
         return new PagedAnswerListResponse($pages, $errors);
     }
+    /**
+     * @see ANAFAPIClient::GetAnswerPageInternal()
+     */
+    public function GetAnswerPage(int $startTime, int $endTime, int $cif, int $pageNumber, string|null $filter = null): InternalPagedAnswersResponse
+    {
+        return $this->GetAnswerPageInternal($startTime, $endTime, $cif, $pageNumber, $filter, false);
+    }
 
     /**
-     * Call the paged answer list endpoint with a speicifc page number
+     * Call the paged answer list endpoint with a specific page number
      * @param int $startTime
      * @param int $endTime
      * @param int $cif
      * @param int $pageNumber
      * @param string|null $filter
+     * @param bool $internalCall if true, the method will not call the callback manager since ListAnswersWithPagination is already doing that, otherwise it was called by the user via GetAnswerPage, and callbacks should be called
      * @return InternalPagedAnswersResponse
      */
-    public function GetAnswerPage(int $startTime, int $endTime, int $cif, int $pageNumber, string|null $filter = null): InternalPagedAnswersResponse
+    private function GetAnswerPageInternal(int $startTime, int $endTime, int $cif, int $pageNumber, string|null $filter = null, bool $internalCall=true): InternalPagedAnswersResponse
     {
         $modeName = $this->Production ? "prod" : "test";
         $actualStart = $startTime * 1000;
@@ -619,15 +633,17 @@ class ANAFAPIClient
             $httpResponse = $this->SendANAFRequest($method, null, null, true);
 
             if ($httpResponse->getStatusCode() >= 200 && $httpResponse->getStatusCode() < 300) {
-                //var_dump($httpResponse);
                 $content = $httpResponse->getBody()->getContents();
-                return InternalPagedAnswersResponse::Create($content);
+                $parsedResponse= InternalPagedAnswersResponse::Create($content);
+                if(!$internalCall && $parsedResponse->IsSuccess()){
+                    $this->CallbackManager->CallAnswerReceived($parsedResponse);
+                }
+                return $parsedResponse;
             }
         } catch (Throwable $ex) {
-            $this->CallErrorCallback("ANAF API Error", $ex);
+            $this->CallLogCallback("ANAF API Error", $ex);
             return InternalPagedAnswersResponse::CreateError($ex);
         }
-
         return InternalPagedAnswersResponse::CreateError(new ANAFException("No response or error", ANAFException::UNKNOWN_ERROR));
 
     }
@@ -654,7 +670,7 @@ class ANAFAPIClient
             return ANAFVerifyResponse::CreateError($ex);
         }
 
-        $this->CallErrorCallback("ANAF VERIFY ERROR: NO RESPONSE OR ERROR");
+        $this->CallLogCallback("ANAF VERIFY ERROR: NO RESPONSE OR ERROR");
         return ANAFVerifyResponse::CreateError(new ANAFException("No response or error", ANAFException::UNKNOWN_ERROR));
     }
 
@@ -679,19 +695,13 @@ class ANAFAPIClient
      * @return void
      * @see          ANAFAPIClient::$ErrorCallback
      */
-    private function CallErrorCallback(string $message, ?Throwable $ex = null): void
+    private function CallLogCallback(string $message, ?Throwable $ex = null): void
     {
         if ($this->ErrorCallback != null) {
             ($this->ErrorCallback)($message, $ex);
             return;
         }
-
-        error_log($message);
-
-        if ($ex != null) {
-            error_log($ex->getMessage());
-            error_log($ex->getTraceAsString());
-        }
+        $this->CallbackManager->WriteErrorLog($message,$ex);;
     }
 
     /**
