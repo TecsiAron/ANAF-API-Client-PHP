@@ -2,16 +2,18 @@
 
 namespace EdituraEDU\ANAF;
 
-class UBLUtility
+use EdituraEDU\ANAF\Callback\ANAFAPICallbackManager;
+
+class ANAFUBLUtility
 {
     private bool $_IsUsable;
-    private static UBLUtility|null $_Instance=null;
+    private static ANAFUBLUtility|null $_Instance=null;
     private const REQUIRED_CLASSES=["\ZipArchive", "\DOMDocument"];
 
-    public static function GetInstance(): UBLUtility
+    public static function GetInstance(): ANAFUBLUtility
     {
         if(self::$_Instance===null)
-            self::$_Instance=new UBLUtility();
+            self::$_Instance=new ANAFUBLUtility();
         return self::$_Instance;
     }
 
@@ -34,11 +36,11 @@ class UBLUtility
         return $this->_IsUsable;
     }
 
-    public function ExtractANAFAnswer(string $zipContent, int $id): array|false
+    public function ExtractANAFAnswer(string $zipContent, string $answerID): array|false
     {
         if(!$this->_IsUsable)
         {
-            ANAFAPICallbackManager::GetInstance()->WriteErrorLog("ext-zip  or ext-dom not installed, cannot parse signed invoice ($id)");
+            ANAFAPICallbackManager::GetInstance()->WriteErrorLog("ext-zip  or ext-dom not installed, cannot parse signed invoice ($answerID)");
             return false;
         }
         // Create a temporary file
@@ -59,7 +61,7 @@ class UBLUtility
             {
                 unlink($tempFileName);
                 $zip->close();
-                ANAFAPICallbackManager::GetInstance()->WriteErrorLog("Unexpected file count in zip ($id)");
+                ANAFAPICallbackManager::GetInstance()->WriteErrorLog("Unexpected file count in zip ($answerID)");
                 return false;
             }
             for ($i = 0; $i < $zip->numFiles; $i++)
@@ -70,13 +72,13 @@ class UBLUtility
                 {
                     $signature = $FileContent;
                 }
-                else if ($FileName == "$id.xml")
+                else if ($FileName == "$answerID.xml")
                 {
                     $content = $FileContent;
                 }
                 else
                 {
-                    ANAFAPICallbackManager::GetInstance()->WriteErrorLog("Unexpected file(" . $FileName . ") in zip ($id). First 32 bytes:" . substr($FileContent, 0, 32));
+                    ANAFAPICallbackManager::GetInstance()->WriteErrorLog("Unexpected file(" . $FileName . ") in zip ($answerID). First 32 bytes:" . substr($FileContent, 0, 32));
                     unlink($tempFileName);
                     $zip->close();
 
@@ -88,7 +90,7 @@ class UBLUtility
         else
         {
             unlink($tempFileName);
-            ANAFAPICallbackManager::GetInstance()->WriteErrorLog("Failed to open zip ($id)");
+            ANAFAPICallbackManager::GetInstance()->WriteErrorLog("Failed to open zip ($answerID)");
             return false;
         }
 
@@ -97,7 +99,7 @@ class UBLUtility
         unlink($tempFileName);
         if (empty($signature) || empty($content))
         {
-            ANAFAPICallbackManager::GetInstance()->WriteErrorLog("Empty signature or content ($id)");
+            ANAFAPICallbackManager::GetInstance()->WriteErrorLog("Empty signature or content ($answerID)");
             return false;
         }
         return [$signature, $content];
@@ -105,11 +107,12 @@ class UBLUtility
 
     /**
      * @param string $ublContent
-     * @param int $answerID
+     * @param string $answerID
      * @param bool $strictMode If true, throws an exception on failure
      * @return array|string
+     * @throws \Exception If strict mode is enabled and an error occurs
      */
-    public function GetCIFsFromUBL(string $ublContent, int $answerID, bool $strictMode=false): array|string
+    public function GetCIFsFromUBL(string $ublContent, string $answerID, bool $strictMode=false): array|string
     {
         if(!$this->_IsUsable)
         {
@@ -146,7 +149,7 @@ class UBLUtility
     /**
      * @param \DOMDocument $document
      * @param string $partySchemaName
-     * @return mixed
+     * @return string|false
      * @noinspection PhpComposerExtensionStubsInspection
      */
     private function ExtractCIF(mixed $document, string $partySchemaName): string|false
