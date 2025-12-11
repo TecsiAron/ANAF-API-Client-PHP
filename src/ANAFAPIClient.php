@@ -2,6 +2,8 @@
 
 namespace EdituraEDU\ANAF;
 
+use EdituraEDU\ANAF\Callback\ANAFAPICallbackManager;
+use EdituraEDU\ANAF\Callback\ILogCallback;
 use EdituraEDU\ANAF\Responses\ANAFAnswerListResponse;
 use EdituraEDU\ANAF\Responses\ANAFException;
 use EdituraEDU\ANAF\Responses\ANAFVerifyResponse;
@@ -57,14 +59,16 @@ class ANAFAPIClient
      */
     private bool $LockToken = false;
 
+    private ANAFAPICallbackManager $CallbackManager;
+
     /**
      * @param array $OAuthConfig O Auth config for authenticated requests see README.md
      * @param bool $production If true, the client will use the production API otherwise will use testing API endpoints
-     * @param callable|null $errorCallback The callable should have the following signature:
+     * @param callable|null $logCallbackHandler The callable should have the following signature:
      *                                     function (string $message, ?Throwable $ex = null): void
      * @param string|null $tokenFilePath Path to the file where the access token will be saved/loaded from, if null the file will be called ANAFAccessToken.json in the same folder as this script
      */
-    public function __construct(array $OAuthConfig, bool $production, callable|null $errorCallback = null, ?string $tokenFilePath = null)
+    public function __construct(array $OAuthConfig, bool $production, ILogCallback|callable|null $logCallbackHandler = null, ?string $tokenFilePath = null)
     {
         $config = [];
         $config['base_uri'] = 'https://webservicesp.anaf.ro';
@@ -73,7 +77,18 @@ class ANAFAPIClient
             'Accept' => 'application/json',
         ];
         $this->Production = $production;
-        $this->ErrorCallback = $errorCallback;
+        $this->CallbackManager=ANAFAPICallbackManager::GetInstance();
+        if($logCallbackHandler!=null)
+        {
+            if(is_callable($logCallbackHandler)) {
+                trigger_error("Deprecated: Passing a callable for the logCallbackHandler parameter is deprecated, use an instance of ILogCallback instead.", E_USER_DEPRECATED);
+            }
+            else{
+                $this->CallbackManager->RegisterErrorLogCallback($logCallbackHandler);
+            }
+        }
+
+        $this->ErrorCallback = $logCallbackHandler;
         $this->OAuthConfig = $OAuthConfig;
         if ($tokenFilePath == null) {
             $this->TokenFilePath = dirname(__FILE__) . "/ANAFAccessToken.json";
