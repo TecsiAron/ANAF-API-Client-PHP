@@ -64,7 +64,7 @@ class ANAFAPIClient
      *                                     function (string $message, ?Throwable $ex = null): void
      * @param string|null $tokenFilePath Path to the file where the access token will be saved/loaded from, if null the file will be called ANAFAccessToken.json in the same folder as this script
      */
-    public function __construct(array $OAuthConfig, bool $production, callable $errorCallback = null, ?string $tokenFilePath = null)
+    public function __construct(array $OAuthConfig, bool $production, callable|null $errorCallback = null, ?string $tokenFilePath = null)
     {
         $config = [];
         $config['base_uri'] = 'https://webservicesp.anaf.ro';
@@ -544,7 +544,7 @@ class ANAFAPIClient
      * @param string|null $filter
      * @return PagedAnswerListResponse
      */
-    public function ListAnswersWithPagination(int $startTime, int $endTime, int $cif, int $specificPage = null, string|null $filter = null): PagedAnswerListResponse
+    public function ListAnswersWithPagination(int $startTime, int $endTime, int $cif, int|null $specificPage = null, string|null $filter = null): PagedAnswerListResponse
     {
         if ($filter != null) {
             $filter = strtoupper($filter);
