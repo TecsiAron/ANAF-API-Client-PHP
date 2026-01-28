@@ -83,7 +83,7 @@ class ExtractedAnswer extends ANAFResponse
                 $this->LastError = new ANAFException("Invalid signature file name: " . $signatureFileName, ANAFException::UNEXPECTED_ZIP_FORMAT);
                 return;
             }
-            $expectedID = explode("1", $explodedFileName[0])[0];
+            $expectedID = explode(".", $explodedFileName[1])[0];
             if (empty($expectedID)) {
                 $this->LastError = new ANAFException("Failed to detect index incarcare from signature file name: " . $signatureFileName, ANAFException::UNEXPECTED_ZIP_FORMAT);
                 return;
