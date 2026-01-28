@@ -16,6 +16,10 @@
         "php": ">=8.0",
         "ext-simplexml": "*"
     },
+    "suggest": {
+        "ext-libxml": "*",
+        "ext-zip": ">=1.1.0"
+    },
     "autoload": {
         "psr-4": {
             "EdituraEDU\\ANAF\\": "src/"
