@@ -2,10 +2,13 @@
 
 namespace EdituraEDU\ANAF;
 
+use EdituraEDU\ANAF\Responses\ANAFAnswer;
 use EdituraEDU\ANAF\Responses\ANAFAnswerListResponse;
+use EdituraEDU\ANAF\Responses\ANAFErrorAnswer;
 use EdituraEDU\ANAF\Responses\ANAFException;
 use EdituraEDU\ANAF\Responses\ANAFVerifyResponse;
 use EdituraEDU\ANAF\Responses\EntityResponse;
+use EdituraEDU\ANAF\Responses\ExtractedAnswer;
 use EdituraEDU\ANAF\Responses\InternalPagedAnswersResponse;
 use EdituraEDU\ANAF\Responses\PagedAnswerListResponse;
 use EdituraEDU\ANAF\Responses\TVAResponse;
@@ -409,11 +412,14 @@ class ANAFAPIClient
     /**
      * Download Answer from ANAF
      * To obtain the ID, use ListAnswers
+     * NOTE: ANAFAnswer::tip can be used to determine if the answer is an error or a valid answer
      * @param string $id
-     * @return string either an error message (starts with "ERROR_") or zip file content
+     * @param bool $expectingError if true, the method will try to parse XML to an ANAFErrorAnswer object
+     * @return string|ANAFErrorAnswer strings starting with "ERROR_" for errors, the zip file content for valid answers, and ANAFErrorAnswer if $expectedError is true
+     * @see ANAFAnswer::$tip
      * @see ANAFAPIClient::ListAnswers()
      */
-    public function DownloadAnswer(string $id): string
+    public function DownloadAnswer(string $id, bool $expectingError = false): string|ANAFErrorAnswer
     {
         $modeName = $this->Production ? "prod" : "test";
         $method = "/$modeName/FCTEL/rest/descarcare?id=$id";
@@ -426,6 +432,15 @@ class ANAFAPIClient
                 $content = $httpResponse->getBody()->getContents();
 
                 if (str_starts_with($content, "PK")) {
+                    if ($expectingError) {
+                        $extractedAnswer = self::ExtractAnswer($content);
+
+                        if (!$extractedAnswer->IsSuccess() || empty($extractedAnswer->content)) {
+                            $this->CallErrorCallback("ANAF API Error: Answer extraction failed silently!");
+                            return "ERROR_UNZIP_FAILED_SILENT";
+                        }
+                        return ANAFErrorAnswer::Create($extractedAnswer->content);
+                    }
                     return $content;
                 }
                 return "ERROR_BAD_CONTENT";
@@ -437,6 +452,16 @@ class ANAFAPIClient
         }
 
         return "ERROR_NO_RESPONSE";
+    }
+
+    /**
+     * Helper method, shortcut for @param string $rawAnswerContent
+     * @return ExtractedAnswer
+     * @see ExtractedAnswer::Create()
+     */
+    public static function ExtractAnswer(string $rawAnswerContent): ExtractedAnswer
+    {
+        return ExtractedAnswer::Create($rawAnswerContent);
     }
 
     /**

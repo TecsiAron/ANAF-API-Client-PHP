@@ -22,8 +22,7 @@ class ANAFErrorAnswer extends ANAFResponse
 
     public function Parse(): void
     {
-        if(!function_exists('simplexml_load_string') || !function_exists('libxml_use_internal_errors'))
-        {
+        if (!function_exists('simplexml_load_string') || !function_exists('libxml_use_internal_errors')) {
             $this->InternalCreateError("simplexml_load_string() or libxml_use_internal_errors() not found.", ANAFException::ERROR_ANSWER_NOT_SUPPORTED);
         }
         try {
@@ -32,13 +31,12 @@ class ANAFErrorAnswer extends ANAFResponse
             $parsedXML = simplexml_load_string($xml);
             if ($parsedXML === false) {
                 $libXMLErrors = libxml_get_errors();
-                $errorDescriptions=[];
-                for($i=0;$i<count($libXMLErrors);$i++) {
-                    if($libXMLErrors[$i] instanceof  LibXMLError) {
+                $errorDescriptions = [];
+                for ($i = 0; $i < count($libXMLErrors); $i++) {
+                    if ($libXMLErrors[$i] instanceof LibXMLError) {
                         $errorDescriptions[] = $libXMLErrors[$i]->message;
-                    }
-                    else {
-                        $errorDescriptions[] = "Anomalous error: ".json_encode($libXMLErrors[$i]);
+                    } else {
+                        $errorDescriptions[] = "Anomalous error: " . json_encode($libXMLErrors[$i]);
                     }
                 }
                 $this->InternalCreateError("Error parsing XML: " . implode(", ", $errorDescriptions), ANAFException::ERROR_ANSWER_PARSE_FAILED);
@@ -105,9 +103,9 @@ class ANAFErrorAnswer extends ANAFResponse
         }
     }
 
-    public function IsDuplicateUploadError():bool
+    public function IsDuplicateUploadError(): bool
     {
-        if(!$this->IsSuccess() || empty($this->message)) return false;
+        if (!$this->IsSuccess() || empty($this->message)) return false;
         return str_starts_with(strtolower($this->message), "factura a mai fost transmisa anterior");
     }
 
