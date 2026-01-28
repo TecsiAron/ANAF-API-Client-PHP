@@ -9,6 +9,8 @@ class ExtractedAnswer extends ANAFResponse
 
     public string|null $content = null;
     public string|null $signature = null;
+
+    public string|null $index_incarcare = null;
     private string $TempFileName;
 
     private function DeleteTempFile(): void
@@ -94,6 +96,7 @@ class ExtractedAnswer extends ANAFResponse
             }
             $this->content = $content;
             $this->signature = $signature;
+            $this->index_incarcare = $expectedID;
         } else {
             $this->DeleteTempFile();
             $this->LastError = new ANAFException("Failed to open zip file");
