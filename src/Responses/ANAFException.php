@@ -21,6 +21,9 @@ class ANAFException extends Exception
     const COMPOUND_ERROR = 12;
     const MESSAGE_LIST_TOO_LONG = 13;
 
+    const ERROR_ANSWER_PARSE_FAILED = 14;
+    const EXPECTED_ERROR_GOT_VALID_ANSWER=15;
+    const ERROR_ANSWER_NOT_SUPPORTED=16;
     public function __construct(string $message = "Unknown error", int $code = self::UNKNOWN_ERROR, ?Throwable $previous = null)
     {
         parent::__construct($message, $code, $previous);
