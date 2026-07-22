@@ -13,12 +13,14 @@ use Throwable;
  */
 class ANAFErrorAnswer extends ANAFResponse
 {
+    public string $AnswerID;
     public string|null $message = null;
     public string|null $index_incarcare = null;
 
     public string|null $data_incarcare = null;
 
     public string|null $cif_emitent = null;
+
 
     public function Parse(): void
     {
@@ -39,14 +41,14 @@ class ANAFErrorAnswer extends ANAFResponse
                         $errorDescriptions[] = "Anomalous error: " . json_encode($libXMLErrors[$i]);
                     }
                 }
-                $this->InternalCreateError("Error parsing XML: " . implode(", ", $errorDescriptions), ANAFException::ERROR_ANSWER_PARSE_FAILED);
+                $this->InternalCreateError("Error parsing XML for answer $this->AnswerID: " . implode(", ", $errorDescriptions), ANAFException::ERROR_ANSWER_PARSE_FAILED);
                 return;
             }
 
             // Dacă este o factură validă (Invoice UBL), returnează mesaj de succes
             $rootName = strtolower($parsedXML->getName());
             if ($rootName === 'invoice') {
-                $this->InternalCreateError("Was expecting error, got valid invoice.", ANAFException::EXPECTED_ERROR_GOT_VALID_ANSWER);
+                $this->InternalCreateError("Was expecting error, got valid invoice (Answer ID: $this->AnswerID).", ANAFException::EXPECTED_ERROR_GOT_VALID_ANSWER);
                 return;
             }
 
@@ -97,7 +99,7 @@ class ANAFErrorAnswer extends ANAFResponse
                 }
             }
         } catch (Throwable $ex) {
-            $this->InternalCreateError("Error parsing XML: " . $ex->getMessage(), ANAFException::UNKNOWN_ERROR, $ex);
+            $this->InternalCreateError("Error parsing XML for answer $this->AnswerID: " . $ex->getMessage(), ANAFException::UNKNOWN_ERROR, $ex);
             $this->message = $ex->getMessage();
             $this->error = true;
         }
@@ -114,9 +116,10 @@ class ANAFErrorAnswer extends ANAFResponse
      * @param string $rawResponse
      * @return ANAFErrorAnswer
      */
-    public static function Create(string $rawResponse): self
+    public static function Create(string $id, string $rawResponse): self
     {
         $response = new ANAFErrorAnswer();
+        $response->AnswerID = $id;
         $response->rawResponse = $rawResponse;
         $response->Parse();
         return $response;
@@ -132,6 +135,7 @@ class ANAFErrorAnswer extends ANAFResponse
         $response = new ANAFErrorAnswer();
         $response->message = $error->getMessage();
         $response->LastError = $error;
+        $response->AnswerID = "UNKNOWN";
         return $response;
     }
 
