@@ -22,7 +22,7 @@ class ANAFErrorAnswer extends ANAFResponse
 
     public function Parse(): void
     {
-        if (!function_exists('simplexml_load_string') || !function_exists('libxml_use_internal_errors')) {
+        if (!self::IsSupported()) {
             $this->InternalCreateError("simplexml_load_string() or libxml_use_internal_errors() not found.", ANAFException::ERROR_ANSWER_NOT_SUPPORTED);
         }
         try {
@@ -134,4 +134,14 @@ class ANAFErrorAnswer extends ANAFResponse
         $response->LastError = $error;
         return $response;
     }
+
+    /**
+     * Checks for SimpleXML and libxml support in the current PHP environment.
+     * @return bool
+     */
+    public static function IsSupported(): bool
+    {
+        return function_exists('simplexml_load_string') && function_exists('libxml_use_internal_errors');
+    }
+
 }
