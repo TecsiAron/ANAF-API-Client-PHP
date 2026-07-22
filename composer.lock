@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "46f2d57e51a7e692afdae01cc0cc9677",
+    "content-hash": "77048e0221ff5eecba07c68105910497",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -666,6 +666,52 @@
                 }
             ],
             "time": "2024-09-25T14:20:29+00:00"
+        },
+        {
+            "name": "tecsiaron/cli-app",
+            "version": "0.1.0-alpha",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/TecsiAron/cli-app.git",
+                "reference": "6ccf1e0e914aa85428291d63e883a61a338328c6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/TecsiAron/cli-app/zipball/6ccf1e0e914aa85428291d63e883a61a338328c6",
+                "reference": "6ccf1e0e914aa85428291d63e883a61a338328c6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "EdituraEDU\\CLI\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tecsi Aron",
+                    "email": "aron@edituraedu.com"
+                }
+            ],
+            "description": "PHP library for building 1 file - 1 command CLI apps",
+            "keywords": [
+                "arguments",
+                "cli",
+                "command-line",
+                "options"
+            ],
+            "support": {
+                "issues": "https://github.com/TecsiAron/cli-app/issues",
+                "source": "https://github.com/TecsiAron/cli-app/tree/0.1.0-alpha"
+            },
+            "time": "2026-01-23T11:25:17+00:00"
         }
     ],
     "packages-dev": [
@@ -2357,13 +2403,15 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "tecsiaron/cli-app": 15
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
         "php": ">=8.0",
         "ext-simplexml": "*"
     },
-    "platform-dev": [],
-    "plugin-api-version": "2.6.0"
+    "platform-dev": {},
+    "plugin-api-version": "2.9.0"
 }

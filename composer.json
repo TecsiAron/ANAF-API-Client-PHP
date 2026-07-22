@@ -14,10 +14,12 @@
         "guzzlehttp/guzzle": "^7.0",
         "league/oauth2-client": "^2.7",
         "php": ">=8.0",
-        "ext-simplexml": "*"
+        "ext-simplexml": "*",
+        "tecsiaron/cli-app": "^0.1@alpha"
     },
     "suggest": {
         "ext-libxml": "*",
+        "ext-simplexml": "*",
         "ext-zip": ">=1.1.0"
     },
     "autoload": {
@@ -40,5 +42,9 @@
     "minimum-stability": "stable",
     "require-dev": {
         "phpunit/phpunit": "^11"
-    }
+    },
+    "bin": [
+        "bin/ANAFListAnswers",
+        "bin/ANAFDownloadAnswer"
+    ]
 }
