@@ -148,4 +148,45 @@ class ANAFErrorAnswer extends ANAFResponse
         return function_exists('simplexml_load_string') && function_exists('libxml_use_internal_errors');
     }
 
+    public static function IsExpectedErrorFormat(string $rawContent): bool
+    {
+        if (!self::IsSupported()) {
+            return false;
+        }
+        try {
+            libxml_use_internal_errors(true);
+            $parsedXML = simplexml_load_string($rawContent);
+            if ($parsedXML === false) {
+                return false;
+            }
+            $rootName = strtolower($parsedXML->getName());
+            if ($rootName === 'invoice') {
+                return false;
+            }
+            $namespaces = $parsedXML->getDocNamespaces(true);
+            $header = $parsedXML;
+            $errorNode = null;
+            if (!empty($namespaces)) {
+                $prefix = array_key_first($namespaces);
+                foreach ($header->children($prefix ?: null) as $child) {
+                    $name = strtolower($child->getName());
+                    if ($name === 'error' || $name === 'eroare') {
+                        $errorNode = $child;
+                        break;
+                    }
+                }
+            } else {
+                foreach ($header->children() as $child) {
+                    $name = strtolower($child->getName());
+                    if ($name === 'error' || $name === 'eroare') {
+                        $errorNode = $child;
+                        break;
+                    }
+                }
+            }
+            return !is_null($errorNode);
+        } catch (Throwable $ex) {
+            return false;
+        }
+    }
 }

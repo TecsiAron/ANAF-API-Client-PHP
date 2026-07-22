@@ -35,4 +35,11 @@ class ANAFErrorAnswerTest extends TestCase
         $this->assertNotNull($answer->LastError);
         $this->assertEquals(ANAFException::ERROR_ANSWER_PARSE_FAILED, $answer->LastError->getCode());
     }
+
+    public function testExpectedErrorFormat(): void
+    {
+        $this->assertTrue(ANAFErrorAnswer::IsExpectedErrorFormat(self::ERROR_XML));
+        $this->assertFalse(ANAFErrorAnswer::IsExpectedErrorFormat(self::VALID_INVOICE));
+        $this->assertFalse(ANAFErrorAnswer::IsExpectedErrorFormat("Invalid XML"));
+    }
 }
