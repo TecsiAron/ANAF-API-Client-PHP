@@ -67,8 +67,7 @@ class ANAFAPIClient
      *                                     function (string $message, ?Throwable $ex = null): void
      * @param string|null $tokenFilePath Path to the file where the access token will be saved/loaded from, if null the file will be called ANAFAccessToken.json in the same folder as this script
      */
-    public function __construct(array $OAuthConfig, bool $production, callable|null $errorCallback = null, ?string $tokenFilePath = null)
-    {
+    public function __construct(array $OAuthConfig, bool $production, callable|null $errorCallback = null, ?string $tokenFilePath = null) {
         $config = [];
         $config['base_uri'] = 'https://webservicesp.anaf.ro';
         $config['headers'] = [
@@ -98,8 +97,7 @@ class ANAFAPIClient
      * @param string $cui
      * @return TVAResponse
      */
-    public function CheckTVAStatus(string $cui): TVAResponse
-    {
+    public function CheckTVAStatus(string $cui): TVAResponse {
         $cui = trim($cui);
         /**
          * @var TVAResponse $response
@@ -116,8 +114,7 @@ class ANAFAPIClient
      * @param string $cui
      * @return EntityResponse
      */
-    public function GetEntity(string $cui): EntityResponse
-    {
+    public function GetEntity(string $cui): EntityResponse {
         $cui = trim($cui);
         $sanitizedCUI = $this->SanitizeCUI($cui);
         $response = new EntityResponse();
@@ -132,8 +129,7 @@ class ANAFAPIClient
      * @param string $cui
      * @return string|false Will return false if the input contains non-numeric other than  the "RO" prefix
      */
-    private function SanitizeCUI(string $cui): string|false
-    {
+    private function SanitizeCUI(string $cui): string|false {
         $cui = strtolower($cui);
 
         if (is_numeric($cui)) {
@@ -152,8 +148,7 @@ class ANAFAPIClient
      * Helper method for the initial OAuth2 login
      * @return string
      */
-    public function GetLoginURL(): string
-    {
+    public function GetLoginURL(): string {
         $provider = $this->GetOAuthProvider();
         return $provider->getAuthorizationUrl(['token_content_type' => 'jwt']);
     }
@@ -164,8 +159,7 @@ class ANAFAPIClient
      * @return ?AccessToken
      * @throws IdentityProviderException
      */
-    public function ProcessOAuthCallback(string $authCode): ?AccessToken
-    {
+    public function ProcessOAuthCallback(string $authCode): ?AccessToken {
         $provider = $this->GetOAuthProvider();
         $token = $provider->getAccessToken('authorization_code', ["code" => $authCode, 'token_content_type' => 'jwt']);
         try {
@@ -181,8 +175,7 @@ class ANAFAPIClient
      * Gets the current access token (if it exists), tries to load it from the file if necessary
      * @return ?AccessToken
      */
-    public function GetAccessToken(): ?AccessToken
-    {
+    public function GetAccessToken(): ?AccessToken {
         if ($this->AccessToken == null) {
             $this->LoadAccessToken();
         }
@@ -195,8 +188,7 @@ class ANAFAPIClient
      * @return void
      * @see ANAFAPIClient::$TokenFilePath
      */
-    private function SaveAccessToken(AccessToken $token): void
-    {
+    private function SaveAccessToken(AccessToken $token): void {
         if ($this->LockToken) {
             return;
         }
@@ -212,8 +204,7 @@ class ANAFAPIClient
      * @see ANAFAPIClient::$TokenFilePath
      * Note: This will be called automatically by @see ANAFAPIClient::SendANAFRequest() if the token is not already loaded and the request requires it.
      */
-    public function LoadAccessToken(bool $autoRefresh = true): ?AccessToken
-    {
+    public function LoadAccessToken(bool $autoRefresh = true): ?AccessToken {
         if (file_exists($this->TokenFilePath) === false) {
             return null;
         }
@@ -241,8 +232,7 @@ class ANAFAPIClient
      * @param int $soon Time in seconds to consider "soon" Default value is 24 hours
      * @return bool|null Null if the token is not set or does not have an expiration date
      */
-    public function TokenWillExpireSoon(int $soon = (3600 * 24)): bool|null
-    {
+    public function TokenWillExpireSoon(int $soon = (3600 * 24)): bool|null {
         if ($this->AccessToken == null) {
             return null;
         }
@@ -258,8 +248,7 @@ class ANAFAPIClient
      * @param AccessToken|null $token if null the current access token @see ANAFAPIClient::$AccessToken will be used.
      * @return bool
      */
-    public function RefreshAccessToken(?AccessToken $token = null): bool
-    {
+    public function RefreshAccessToken(?AccessToken $token = null): bool {
         if ($this->LockToken) {
             return true;
         }
@@ -291,8 +280,7 @@ class ANAFAPIClient
      * Creates a new instance of the OAuth2 provider based on the configuration specified in the constructor
      * @return GenericProvider
      */
-    private function GetOAuthProvider(): GenericProvider
-    {
+    private function GetOAuthProvider(): GenericProvider {
         return new GenericProvider($this->OAuthConfig);
     }
 
@@ -307,8 +295,7 @@ class ANAFAPIClient
      * @return ResponseInterface
      * @throws GuzzleException
      */
-    private function SendANAFRequest(string $Method, ?string $body = null, array|null $queryParams = null, bool $hasAuth = false, string $contentType = "application/json", float|null $timeoutOverride = null): ResponseInterface
-    {
+    private function SendANAFRequest(string $Method, ?string $body = null, array|null $queryParams = null, bool $hasAuth = false, string $contentType = "application/json", float|null $timeoutOverride = null): ResponseInterface {
         $client = $hasAuth ? $this->AuthenticatedAPIClient : $this->PublicAPIClient;
         $options = ["headers" =>
             [
@@ -342,8 +329,7 @@ class ANAFAPIClient
      * @param EntityResponse $response
      * @return EntityResponse
      */
-    public function DoEntityFetch(false|string $sanitizedCUI, EntityResponse $response): EntityResponse
-    {
+    public function DoEntityFetch(false|string $sanitizedCUI, EntityResponse $response): EntityResponse {
         try {
             if ($sanitizedCUI === false || !self::ValidateCIF($sanitizedCUI)) {
                 $response->LastError = new ANAFException("CUI invalid", ANAFException::INVALID_INPUT);
@@ -375,8 +361,7 @@ class ANAFAPIClient
      * @param bool $autoFactura If true, the invoice is marked as "autofactura" (issued by the buyer in the sellers name)
      * @return UBLUploadResponse
      */
-    public function UploadEFactura(string $ubl, string $sellerCIF, bool $extern = false, bool $autoFactura = false): UBLUploadResponse
-    {
+    public function UploadEFactura(string $ubl, string $sellerCIF, bool $extern = false, bool $autoFactura = false): UBLUploadResponse {
         $response = new UBLUploadResponse();
 
         try {
@@ -459,8 +444,7 @@ class ANAFAPIClient
      * @return ExtractedAnswer
      * @see ExtractedAnswer::Create()
      */
-    public static function ExtractAnswer(string $rawAnswerContent): ExtractedAnswer
-    {
+    public static function ExtractAnswer(string $rawAnswerContent): ExtractedAnswer {
         return ExtractedAnswer::Create($rawAnswerContent);
     }
 
@@ -472,8 +456,7 @@ class ANAFAPIClient
      * @param float|null $timeoutOverride if set, will override the default timeout (ANAFAPIClient::$Timeout)
      * @return string|false
      */
-    public function UBL2PDF(string $ubl, string $metadata, bool $authenticated = true, float|null $timeoutOverride = null): string|false
-    {
+    public function UBL2PDF(string $ubl, string $metadata, bool $authenticated = true, float|null $timeoutOverride = null): string|false {
         if (str_contains($ubl, 'xsi:schemaLocation')) {
             $ubl = self::RemoveSchemaLocationAttribute($ubl);
         }
@@ -504,8 +487,7 @@ class ANAFAPIClient
      * @param $xmlString
      * @return string
      */
-    public static function RemoveSchemaLocationAttribute($xmlString): string
-    {
+    public static function RemoveSchemaLocationAttribute($xmlString): string {
         $pattern = '/(xsi:schemaLocation\s*=\s*["\'][^"\']*["\'])/i';
         $xmlString = preg_replace($pattern, '', $xmlString, -1);
         return preg_replace('/\s{2,}/', ' ', $xmlString);
@@ -521,8 +503,7 @@ class ANAFAPIClient
      * @return ANAFAnswerListResponse
      * @see ANAFAPIClient::ListAnswersWithPagination()
      */
-    public function ListAnswers(int $cif, int $days = 60, string|null $filter = null, bool $usePaginationIfNeeded = false, $endDateOffsetForPagination = 5 * 60): ANAFAnswerListResponse
-    {
+    public function ListAnswers(int $cif, int $days = 60, string|null $filter = null, bool $usePaginationIfNeeded = false, $endDateOffsetForPagination = 5 * 60): ANAFAnswerListResponse {
         if ($filter != null) {
             $filter = strtoupper($filter);
             if (!$this->ValidateFilter($filter)) {
@@ -569,8 +550,7 @@ class ANAFAPIClient
      * @param string|null $filter
      * @return PagedAnswerListResponse
      */
-    public function ListAnswersWithPagination(int $startTime, int $endTime, int $cif, int|null $specificPage = null, string|null $filter = null): PagedAnswerListResponse
-    {
+    public function ListAnswersWithPagination(int $startTime, int $endTime, int $cif, int|null $specificPage = null, string|null $filter = null): PagedAnswerListResponse {
         if ($filter != null) {
             $filter = strtoupper($filter);
             if (!$this->ValidateFilter($filter)) {
@@ -616,8 +596,7 @@ class ANAFAPIClient
      * @param string|null $filter
      * @return InternalPagedAnswersResponse
      */
-    public function GetAnswerPage(int $startTime, int $endTime, int $cif, int $pageNumber, string|null $filter = null): InternalPagedAnswersResponse
-    {
+    public function GetAnswerPage(int $startTime, int $endTime, int $cif, int $pageNumber, string|null $filter = null): InternalPagedAnswersResponse {
         $modeName = $this->Production ? "prod" : "test";
         $actualStart = $startTime * 1000;
         $actualEnd = $endTime * 1000;
@@ -650,8 +629,7 @@ class ANAFAPIClient
      * @return ANAFVerifyResponse
      * @deprecated Use at your own risk. Read the comment above.
      */
-    public function VerifyXML(string $ubl, bool $authenticated = true): ANAFVerifyResponse
-    {
+    public function VerifyXML(string $ubl, bool $authenticated = true): ANAFVerifyResponse {
         try {
             $method = "/prod/FCTEL/rest/validare/FACT1";
             $httpResponse = $this->SendANAFRequest($method, $ubl, null, $authenticated, "text/plain");
@@ -673,8 +651,7 @@ class ANAFAPIClient
      * @param string $filter
      * @return bool
      */
-    private function ValidateFilter(string $filter): bool
-    {
+    private function ValidateFilter(string $filter): bool {
         if (strlen($filter) != 1) {
             return false;
         }
@@ -689,8 +666,7 @@ class ANAFAPIClient
      * @return void
      * @see          ANAFAPIClient::$ErrorCallback
      */
-    private function CallErrorCallback(string $message, ?Throwable $ex = null): void
-    {
+    private function CallErrorCallback(string $message, ?Throwable $ex = null): void {
         if ($this->ErrorCallback != null) {
             ($this->ErrorCallback)($message, $ex);
             return;
@@ -705,10 +681,17 @@ class ANAFAPIClient
     }
 
     /**
+     * Check if the client has support for suggested extensions (ZIP, SimpleXML, and libxml right now)
+     * @return bool
+     */
+    private static function HasSuggestedExtensionSupport(): bool {
+        return ExtractedAnswer::IsSupported() && ANAFErrorAnswer::IsSupported();
+    }
+
+    /**
      * Check if the client has a valid access token.
      */
-    public function HasAccessToken(): bool
-    {
+    public function HasAccessToken(): bool {
         return $this->GetAccessToken() != null;
     }
 
@@ -716,8 +699,7 @@ class ANAFAPIClient
      * @return bool
      * @see ANAFAPIClient::$Production
      */
-    public function IsProduction(): bool
-    {
+    public function IsProduction(): bool {
         return $this->Production;
     }
 
@@ -726,8 +708,7 @@ class ANAFAPIClient
      * @param string|false $cif
      * @return bool
      */
-    public static function ValidateCIF(string|false $cif): bool
-    {
+    public static function ValidateCIF(string|false $cif): bool {
         if ($cif === false) {
             return false;
         }
