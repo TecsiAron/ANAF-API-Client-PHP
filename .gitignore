@@ -6,3 +6,4 @@ phpDocumentor.phar
 ANAFAccessToken.json
 run-tests.bat
 bin-config.json
+tmp/
