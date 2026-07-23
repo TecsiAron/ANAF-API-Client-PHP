@@ -5,8 +5,7 @@ namespace EdituraEDU\ANAF\Responses;
 use Exception;
 use Throwable;
 
-class ANAFException extends Exception
-{
+class ANAFException extends Exception {
     const UNKNOWN_ERROR = 1;
     const EMPTY_RAW_RESPONSE = 2;
     const JSON_UNKNOWN_ERROR = 3;
@@ -27,8 +26,7 @@ class ANAFException extends Exception
     const UNEXPECTED_ZIP_FORMAT = 18;
     const FAILED_TO_WRITE_TEMP_FILE = 19;
 
-    public function __construct(string $message = "Unknown error", int $code = self::UNKNOWN_ERROR, ?Throwable $previous = null)
-    {
+    public function __construct(string $message = "Unknown error", int $code = self::UNKNOWN_ERROR, ?Throwable $previous = null) {
         parent::__construct($message, $code, $previous);
     }
 }

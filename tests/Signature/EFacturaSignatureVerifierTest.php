@@ -9,8 +9,7 @@ use EdituraEDU\ANAF\Signature\EFacturaSignatureVerifier;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-final class EFacturaSignatureVerifierTest extends TestCase
-{
+final class EFacturaSignatureVerifierTest extends TestCase {
     private const VALID_ANSWER_BASE64 = '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';
 
     private const DIGEST_MISSMATCH_ANSWER_BASE64 = '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';
@@ -21,28 +20,27 @@ final class EFacturaSignatureVerifierTest extends TestCase
 
     private const INVALID_CERTIFICATE_BASE64 = 'aW52YWxpZCBjZXJ0aWZpY2F0ZQ==';
 
-    public static function verificationCases(): array
-    {
+    public static function verificationCases(): array {
         return [
-            'valid answer' => [
-                self::VALID_ANSWER_BASE64,
-                EFacturaSignatureVerifier::SUCCESS,
-            ],
-            'digest mismatch' => [
-                self::DIGEST_MISSMATCH_ANSWER_BASE64,
-                EFacturaSignatureVerifier::DIGEST_MISSMATCH,
-            ],
-            'signature mismatch' => [
-                self::SIGNATURE_MISSMATCH_ANSWER_BASE64,
-                EFacturaSignatureVerifier::SIGNATURE_MISSMATCH,
-            ],
+                'valid answer' => [
+                        self::VALID_ANSWER_BASE64,
+                        EFacturaSignatureVerifier::SUCCESS,
+                ],
+                'digest mismatch' => [
+                        self::DIGEST_MISSMATCH_ANSWER_BASE64,
+                        EFacturaSignatureVerifier::DIGEST_MISSMATCH,
+                ],
+                'signature mismatch' => [
+                        self::SIGNATURE_MISSMATCH_ANSWER_BASE64,
+                        EFacturaSignatureVerifier::SIGNATURE_MISSMATCH,
+                ],
         ];
     }
 
     #[DataProvider('verificationCases')]
     public function testEmbeddedAnswerVerification(
-        string $answerBase64,
-        string $expectedResult
+            string $answerBase64,
+            string $expectedResult
     ): void {
         $answer = ExtractedAnswer::Create(base64_decode($answerBase64, true), false);
 
@@ -51,15 +49,14 @@ final class EFacturaSignatureVerifierTest extends TestCase
         $this->assertNotEmpty($answer->signature);
 
         $result = EFacturaSignatureVerifier::VerifyContent(
-            $answer->content,
-            $answer->signature
+                $answer->content,
+                $answer->signature
         );
 
         $this->assertSame($expectedResult, $result);
     }
 
-    public function testCertificateAcceptance(): void
-    {
+    public function testCertificateAcceptance(): void {
         $acceptedCertificate = base64_decode(self::ACCEPTED_CERTIFICATE_BASE64, true);
         $invalidCertificate = base64_decode(self::INVALID_CERTIFICATE_BASE64, true);
 

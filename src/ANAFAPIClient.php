@@ -28,8 +28,7 @@ use Throwable;
  * - TVA Status
  * - RO EFactura
  */
-class ANAFAPIClient
-{
+class ANAFAPIClient {
     /**
      * @var float $Timeout Outgoing request timeout in seconds
      */
@@ -43,8 +42,7 @@ class ANAFAPIClient
     private $ErrorCallback = null;
     private array $OAuthConfig;
     /**
-     * @var string $TokenFilePath Path to the file where the access token will be saved/loaded from
-     * Specified in @see ANAFAPIClient::__construct()
+     * @var string $TokenFilePath Path to the file where the access token will be saved/loaded from Specified in @see ANAFAPIClient::__construct()
      */
     private string $TokenFilePath;
     /**
@@ -61,24 +59,23 @@ class ANAFAPIClient
     private bool $LockToken = false;
 
     /**
-     * @param array $OAuthConfig O Auth config for authenticated requests see README.md
-     * @param bool $production If true, the client will use the production API otherwise will use testing API endpoints
-     * @param callable|null $errorCallback The callable should have the following signature:
-     *                                     function (string $message, ?Throwable $ex = null): void
-     * @param string|null $tokenFilePath Path to the file where the access token will be saved/loaded from, if null the file will be called ANAFAccessToken.json in the same folder as this script
+     * @param  array  $OAuthConfig  O Auth config for authenticated requests see README.md
+     * @param  bool  $production  If true, the client will use the production API otherwise will use testing API endpoints
+     * @param  callable|null  $errorCallback  The callable should have the following signature: function (string $message, ?Throwable $ex = null): void
+     * @param  string|null  $tokenFilePath  Path to the file where the access token will be saved/loaded from, if null the file will be called ANAFAccessToken.json in the same folder as this script
      */
     public function __construct(array $OAuthConfig, bool $production, callable|null $errorCallback = null, ?string $tokenFilePath = null) {
         $config = [];
         $config['base_uri'] = 'https://webservicesp.anaf.ro';
         $config['headers'] = [
-            'Content-Type' => 'application/json',
-            'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
         ];
         $this->Production = $production;
         $this->ErrorCallback = $errorCallback;
         $this->OAuthConfig = $OAuthConfig;
         if ($tokenFilePath == null) {
-            $this->TokenFilePath = dirname(__FILE__) . "/ANAFAccessToken.json";
+            $this->TokenFilePath = dirname(__FILE__)."/ANAFAccessToken.json";
         } else {
             $this->TokenFilePath = $tokenFilePath;
         }
@@ -86,15 +83,15 @@ class ANAFAPIClient
         $config = [];
         $config['base_uri'] = 'https://api.anaf.ro';
         $config['headers'] = [
-            'Content-Type' => 'application/json',
-            'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
         ];
         $this->AuthenticatedAPIClient = new Client($config);
     }
 
     /**
      * Check if a company is registered for TVA
-     * @param string $cui
+     * @param  string  $cui
      * @return TVAResponse
      */
     public function CheckTVAStatus(string $cui): TVAResponse {
@@ -111,22 +108,19 @@ class ANAFAPIClient
 
     /**
      * Get company/institution data from ANAF
-     * @param string $cui
+     * @param  string  $cui
      * @return EntityResponse
      */
     public function GetEntity(string $cui): EntityResponse {
         $cui = trim($cui);
         $sanitizedCUI = $this->SanitizeCUI($cui);
         $response = new EntityResponse();
-
         return $this->DoEntityFetch($sanitizedCUI, $response);
     }
 
     /**
-     * Sanitize CUI input for most requests.
-     * Requests to the API should not contain the "RO" prefix and should be numeric.
-     * This method is case-insensitive.
-     * @param string $cui
+     * Sanitize CUI input for most requests. Requests to the API should not contain the "RO" prefix and should be numeric. This method is case-insensitive.
+     * @param  string  $cui
      * @return string|false Will return false if the input contains non-numeric other than  the "RO" prefix
      */
     private function SanitizeCUI(string $cui): string|false {
@@ -140,7 +134,6 @@ class ANAFAPIClient
             $cui = substr($cui, 2);
             return is_numeric($cui) ? $cui : false;
         }
-
         return false;
     }
 
@@ -155,7 +148,7 @@ class ANAFAPIClient
 
     /**
      * Gets the access token from ANAF, should be called from the OAuth callback script
-     * @param string $authCode
+     * @param  string  $authCode
      * @return ?AccessToken
      * @throws IdentityProviderException
      */
@@ -184,7 +177,7 @@ class ANAFAPIClient
 
     /**
      * Saves access token to TokenFilePath
-     * @param AccessToken $token
+     * @param  AccessToken  $token
      * @return void
      * @see ANAFAPIClient::$TokenFilePath
      */
@@ -199,7 +192,7 @@ class ANAFAPIClient
 
     /**
      * Loads the access token from the file specified in TokenFilePath
-     * @param bool $autoRefresh if true, the token will be refreshed if it has expired
+     * @param  bool  $autoRefresh  if true, the token will be refreshed if it has expired
      * @return AccessToken|null
      * @see ANAFAPIClient::$TokenFilePath
      * Note: This will be called automatically by @see ANAFAPIClient::SendANAFRequest() if the token is not already loaded and the request requires it.
@@ -215,7 +208,7 @@ class ANAFAPIClient
             $this->AccessToken = $token;
 
             if ($autoRefresh && $this->TokenWillExpireSoon()) {
-                if (!$this->RefreshAccessToken($token)) {
+                if ( ! $this->RefreshAccessToken($token)) {
                     $this->CallErrorCallback("ANAF token auto-refresh failed! Will not use expired token!");
                     $this->AccessToken = null;
                 }
@@ -229,7 +222,7 @@ class ANAFAPIClient
 
     /**
      * Checks if the current access token will expire soon
-     * @param int $soon Time in seconds to consider "soon" Default value is 24 hours
+     * @param  int  $soon  Time in seconds to consider "soon" Default value is 24 hours
      * @return bool|null Null if the token is not set or does not have an expiration date
      */
     public function TokenWillExpireSoon(int $soon = (3600 * 24)): bool|null {
@@ -245,7 +238,7 @@ class ANAFAPIClient
 
     /**
      * Refresh the access token using the refresh token
-     * @param AccessToken|null $token if null the current access token @see ANAFAPIClient::$AccessToken will be used.
+     * @param  AccessToken|null  $token  if null the current access token @see ANAFAPIClient::$AccessToken will be used.
      * @return bool
      */
     public function RefreshAccessToken(?AccessToken $token = null): bool {
@@ -286,31 +279,31 @@ class ANAFAPIClient
 
     /**
      * All requests to ANAF are made through this method
-     * @param string $Method The URL
-     * @param string|null $body The request body (if this is different from null, the request will be a POST request)
-     * @param array|null $queryParams Query parameters (if teh value is ["ex1"=>"val"] ?ex1=val will be appended to the URL)
-     * @param bool $hasAuth Should be true of the request requires authentication
-     * @param string $contentType Content type header for the outgoing request
-     * @param float|null $timeoutOverride if set, will override the default timeout (ANAFAPIClient::$Timeout)
+     * @param  string  $Method  The URL
+     * @param  string|null  $body  The request body (if this is different from null, the request will be a POST request)
+     * @param  array|null  $queryParams  Query parameters (if teh value is ["ex1"=>"val"] ?ex1=val will be appended to the URL)
+     * @param  bool  $hasAuth  Should be true of the request requires authentication
+     * @param  string  $contentType  Content type header for the outgoing request
+     * @param  float|null  $timeoutOverride  if set, will override the default timeout (ANAFAPIClient::$Timeout)
      * @return ResponseInterface
      * @throws GuzzleException
      */
     private function SendANAFRequest(string $Method, ?string $body = null, array|null $queryParams = null, bool $hasAuth = false, string $contentType = "application/json", float|null $timeoutOverride = null): ResponseInterface {
         $client = $hasAuth ? $this->AuthenticatedAPIClient : $this->PublicAPIClient;
         $options = ["headers" =>
-            [
-                "Content-Type" => $contentType,
-                "Accept" => "*/*",
-                "Cache-Control" => "no-cache",
-            ]
+                [
+                        "Content-Type" => $contentType,
+                        "Accept" => "*/*",
+                        "Cache-Control" => "no-cache",
+                ],
         ];
 
         if ($hasAuth) {
-            if (!$this->HasAccessToken()) {
+            if ( ! $this->HasAccessToken()) {
                 throw new Exception("ANAF API Error: No token");
             }
 
-            $options["headers"]["Authorization"] = "Bearer " . $this->AccessToken->getToken();
+            $options["headers"]["Authorization"] = "Bearer ".$this->AccessToken->getToken();
         }
         $options["query"] = $queryParams;
         $options["timeout"] = $timeoutOverride === null ? $this->Timeout : $timeoutOverride;
@@ -325,13 +318,13 @@ class ANAFAPIClient
 
     /**
      * Base method for fetching company/institution data from ANAF
-     * @param false|string $sanitizedCUI
-     * @param EntityResponse $response
+     * @param  false|string  $sanitizedCUI
+     * @param  EntityResponse  $response
      * @return EntityResponse
      */
     public function DoEntityFetch(false|string $sanitizedCUI, EntityResponse $response): EntityResponse {
         try {
-            if ($sanitizedCUI === false || !self::ValidateCIF($sanitizedCUI)) {
+            if ($sanitizedCUI === false || ! self::ValidateCIF($sanitizedCUI)) {
                 $response->LastError = new ANAFException("CUI invalid", ANAFException::INVALID_INPUT);
                 return $response;
             }
@@ -346,7 +339,7 @@ class ANAFAPIClient
                 $response->Parse();
                 return $response;
             }
-            $response->LastError = new ANAFException("HTTP Error: " . $httpResponse->getStatusCode(), ANAFException::HTTP_ERROR);
+            $response->LastError = new ANAFException("HTTP Error: ".$httpResponse->getStatusCode(), ANAFException::HTTP_ERROR);
         } catch (Throwable $ex) {
             $response->LastError = $ex;
             $this->CallErrorCallback("ANAF API Error", $ex);
@@ -355,10 +348,10 @@ class ANAFAPIClient
     }
 
     /**
-     * @param string $ubl UBL XML content to upload
-     * @param string $sellerCIF CUI of the company which issued the invoice
-     * @param bool $extern If true, the invoice is marked as "extern" (not issued to a romanian company)
-     * @param bool $autoFactura If true, the invoice is marked as "autofactura" (issued by the buyer in the sellers name)
+     * @param  string  $ubl  UBL XML content to upload
+     * @param  string  $sellerCIF  CUI of the company which issued the invoice
+     * @param  bool  $extern  If true, the invoice is marked as "extern" (not issued to a romanian company)
+     * @param  bool  $autoFactura  If true, the invoice is marked as "autofactura" (issued by the buyer in the sellers name)
      * @return UBLUploadResponse
      */
     public function UploadEFactura(string $ubl, string $sellerCIF, bool $extern = false, bool $autoFactura = false): UBLUploadResponse {
@@ -390,7 +383,6 @@ class ANAFAPIClient
             $response->LastError = $ex;
             $this->CallErrorCallback("ANAF API Error", $ex);
         }
-
         return $response;
     }
 
@@ -422,7 +414,6 @@ class ANAFAPIClient
             $this->CallErrorCallback("ANAF API Error", $ex);
             return "ERROR";
         }
-
         return "ERROR_NO_RESPONSE";
     }
 
@@ -444,10 +435,10 @@ class ANAFAPIClient
 
     /**
      * Convert UBL XML to PDF using the ANAF API
-     * @param string $ubl
-     * @param string $metadata
-     * @param bool $authenticated if true the request will use the OAuth2 API endpoint
-     * @param float|null $timeoutOverride if set, will override the default timeout (ANAFAPIClient::$Timeout)
+     * @param  string  $ubl
+     * @param  string  $metadata
+     * @param  bool  $authenticated  if true the request will use the OAuth2 API endpoint
+     * @param  float|null  $timeoutOverride  if set, will override the default timeout (ANAFAPIClient::$Timeout)
      * @return string|false
      */
     public function UBL2PDF(string $ubl, string $metadata, bool $authenticated = true, float|null $timeoutOverride = null): string|false {
@@ -472,7 +463,6 @@ class ANAFAPIClient
             $this->CallErrorCallback("ANAF API Error", $ex);
             return false;
         }
-
         return false;
     }
 
@@ -489,18 +479,18 @@ class ANAFAPIClient
 
     /**
      * Get answer list for a company (authenticated user must have access to the company!)
-     * @param int $cif
-     * @param int $days Number of days to look back
-     * @param string|null $filter
-     * @param bool $usePaginationIfNeeded If true and the answer has LastError code ANAFException::MESSAGE_LIST_TOO_LONG, the method will try to fetch the answers using pagination
-     * @param float|int $endDateOffsetForPagination ANAF API gives an error if the end date is "in the future" based on their internal clock, so end date will be currentTime-$endDateOffsetForPagination. Default is 5 minutes
+     * @param  int  $cif
+     * @param  int  $days  Number of days to look back
+     * @param  string|null  $filter
+     * @param  bool  $usePaginationIfNeeded  If true and the answer has LastError code ANAFException::MESSAGE_LIST_TOO_LONG, the method will try to fetch the answers using pagination
+     * @param  float|int  $endDateOffsetForPagination  ANAF API gives an error if the end date is "in the future" based on their internal clock, so end date will be currentTime-$endDateOffsetForPagination. Default is 5 minutes
      * @return ANAFAnswerListResponse
      * @see ANAFAPIClient::ListAnswersWithPagination()
      */
     public function ListAnswers(int $cif, int $days = 60, string|null $filter = null, bool $usePaginationIfNeeded = false, $endDateOffsetForPagination = 5 * 60): ANAFAnswerListResponse {
         if ($filter != null) {
             $filter = strtoupper($filter);
-            if (!$this->ValidateFilter($filter)) {
+            if ( ! $this->ValidateFilter($filter)) {
                 return ANAFAnswerListResponse::CreateError(new ANAFException("Invalid filter", ANAFException::INVALID_INPUT));
             }
         }
@@ -516,7 +506,7 @@ class ANAFAPIClient
                 //var_dump($httpResponse);
                 $content = $httpResponse->getBody()->getContents();
                 $answer = ANAFAnswerListResponse::Create($content);
-                if ($answer->IsSuccess() || !$usePaginationIfNeeded) {
+                if ($answer->IsSuccess() || ! $usePaginationIfNeeded) {
                     return $answer;
                 }
                 if ($answer->LastError->getCode() == ANAFException::MESSAGE_LIST_TOO_LONG) {
@@ -529,25 +519,22 @@ class ANAFAPIClient
             $this->CallErrorCallback("ANAF API Error", $ex);
             return ANAFAnswerListResponse::CreateError($ex);
         }
-
         return ANAFAnswerListResponse::CreateError(new ANAFException("No response or error", ANAFException::UNKNOWN_ERROR));
     }
 
     /**
-     * Get answer list for a company (authenticated user must have access to the company!)
-     * Uses the paged API end point
-     * Answers will be returned in a unified list
-     * @param int $startTime
-     * @param int $endTime
-     * @param int $cif
-     * @param int|null $specificPage
-     * @param string|null $filter
+     * Get answer list for a company (authenticated user must have access to the company!) Uses the paged API end point Answers will be returned in a unified list
+     * @param  int  $startTime
+     * @param  int  $endTime
+     * @param  int  $cif
+     * @param  int|null  $specificPage
+     * @param  string|null  $filter
      * @return PagedAnswerListResponse
      */
     public function ListAnswersWithPagination(int $startTime, int $endTime, int $cif, int|null $specificPage = null, string|null $filter = null): PagedAnswerListResponse {
         if ($filter != null) {
             $filter = strtoupper($filter);
-            if (!$this->ValidateFilter($filter)) {
+            if ( ! $this->ValidateFilter($filter)) {
                 return PagedAnswerListResponse::CreateError(new ANAFException("Invalid filter", ANAFException::INVALID_INPUT));
             }
         }
@@ -574,20 +561,19 @@ class ANAFAPIClient
             } else {
                 $errors[] = $response;
             }
-            $canFetchNextPage = !$response->IsLastPage();
+            $canFetchNextPage = ! $response->IsLastPage();
             $currentPage++;
         }
-
         return new PagedAnswerListResponse($pages, $errors);
     }
 
     /**
      * Call the paged answer list endpoint with a speicifc page number
-     * @param int $startTime
-     * @param int $endTime
-     * @param int $cif
-     * @param int $pageNumber
-     * @param string|null $filter
+     * @param  int  $startTime
+     * @param  int  $endTime
+     * @param  int  $cif
+     * @param  int  $pageNumber
+     * @param  string|null  $filter
      * @return InternalPagedAnswersResponse
      */
     public function GetAnswerPage(int $startTime, int $endTime, int $cif, int $pageNumber, string|null $filter = null): InternalPagedAnswersResponse {
@@ -610,16 +596,14 @@ class ANAFAPIClient
             $this->CallErrorCallback("ANAF API Error", $ex);
             return InternalPagedAnswersResponse::CreateError($ex);
         }
-
         return InternalPagedAnswersResponse::CreateError(new ANAFException("No response or error", ANAFException::UNKNOWN_ERROR));
 
     }
 
     /**
-     * ATTENTION DOES NOT FUNCTION RELIABLY.
-     * The API randomly returns "nok" for valid invoices.
-     * @param string $ubl
-     * @param bool $authenticated If true, the request will use the OAuth2 API endpoint
+     * ATTENTION DOES NOT FUNCTION RELIABLY. The API randomly returns "nok" for valid invoices.
+     * @param  string  $ubl
+     * @param  bool  $authenticated  If true, the request will use the OAuth2 API endpoint
      * @return ANAFVerifyResponse
      * @deprecated Use at your own risk. Read the comment above.
      */
@@ -642,7 +626,7 @@ class ANAFAPIClient
 
     /**
      * Currently accepted filter chars are: E, T, P, R
-     * @param string $filter
+     * @param  string  $filter
      * @return bool
      */
     private function ValidateFilter(string $filter): bool {
@@ -655,8 +639,8 @@ class ANAFAPIClient
 
     /**
      * Calls ErrorCallback with given params.
-     * @param string $message
-     * @param Throwable|null $ex
+     * @param  string  $message
+     * @param  Throwable|null  $ex
      * @return void
      * @see          ANAFAPIClient::$ErrorCallback
      */
@@ -699,7 +683,7 @@ class ANAFAPIClient
 
     /**
      * Verifies a CUI given the official checksum algorithm
-     * @param string|false $cif
+     * @param  string|false  $cif
      * @return bool
      */
     public static function ValidateCIF(string|false $cif): bool {
@@ -707,12 +691,12 @@ class ANAFAPIClient
             return false;
         }
         /** @noinspection PhpConditionAlreadyCheckedInspection */
-        if (!is_int($cif)) {
+        if ( ! is_int($cif)) {
             $cif = strtoupper($cif);
             if (str_starts_with($cif, 'RO')) {
                 $cif = substr($cif, 2);
             }
-            $cif = (int)trim($cif);
+            $cif = (int) trim($cif);
         }
 
         if (strlen($cif) > 10 || strlen($cif) < 2) {
@@ -720,12 +704,12 @@ class ANAFAPIClient
         }
         $v = 753217532;
         $c1 = $cif % 10;
-        $cif = (int)($cif / 10);
+        $cif = (int) ($cif / 10);
         $t = 0;
         while ($cif > 0) {
             $t += ($cif % 10) * ($v % 10);
-            $cif = (int)($cif / 10);
-            $v = (int)($v / 10);
+            $cif = (int) ($cif / 10);
+            $v = (int) ($v / 10);
         }
         $c2 = $t * 10 % 11;
         if ($c2 == 10) {

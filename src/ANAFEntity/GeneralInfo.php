@@ -8,8 +8,7 @@ use Throwable;
 /**
  * Represents the general information about a company based on the ANAF API response structure
  */
-class GeneralInfo
-{
+class GeneralInfo {
     public string $cui = "";
     public string $data = "";
     public string $denumire = "";
@@ -30,11 +29,10 @@ class GeneralInfo
 
     /**
      * Creates an instance of GeneralInfo and copies fields from the srdClass instance
-     * @param stdClass $parsed
+     * @param  stdClass  $parsed
      * @return GeneralInfo|null
      */
-    public static function CreateFromParsed(stdClass $parsed): ?GeneralInfo
-    {
+    public static function CreateFromParsed(stdClass $parsed): ?GeneralInfo {
         try {
             $parsed = json_decode(json_encode($parsed), true);
             $properties = ["cui", "data", "denumire", "adresa", "nrRegCom", "telefon", "fax", "codPostal", "act", "stare_inregistrare", "cod_CAEN", "iban", "statusRO_e_Factura", "organFiscalCompetent", "forma_de_proprietate", "forma_organizare", "forma_juridica"];

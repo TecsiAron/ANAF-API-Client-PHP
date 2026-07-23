@@ -39,12 +39,10 @@ class ExtractedAnswer extends ANAFResponse {
     public function Parse(): void {
         if ( ! self::IsSupported()) {
             $this->LastError = new ANAFException("ZipArchive not supported", ANAFException::ZIP_NOT_SUPPORTED);
-
             return;
         }
         if ( ! str_starts_with($this->rawResponse, "PK")) {
             $this->LastError = new ANAFException("Invalid zip file", ANAFException::UNEXPECTED_ZIP_FORMAT);
-
             return;
         }
         $zip = new \ZipArchive();
@@ -94,24 +92,20 @@ class ExtractedAnswer extends ANAFResponse {
 
                 if (empty($signatureFileName) || empty($contentFileName)) {
                     $this->LastError = new ANAFException("Missing required files in zip: signature or content", ANAFException::UNEXPECTED_ZIP_FORMAT);
-
                     return;
                 }
                 $explodedFileName = explode("_", $signatureFileName);
                 if (count($explodedFileName) != 2) {
                     $this->LastError = new ANAFException("Invalid signature file name: ".$signatureFileName, ANAFException::UNEXPECTED_ZIP_FORMAT);
-
                     return;
                 }
                 $expectedID = explode(".", $explodedFileName[1])[0];
                 if (empty($expectedID)) {
                     $this->LastError = new ANAFException("Failed to detect index incarcare from signature file name: ".$signatureFileName, ANAFException::UNEXPECTED_ZIP_FORMAT);
-
                     return;
                 }
                 if (strtolower($contentFileName) != "$expectedID.xml") {
                     $this->LastError = new ANAFException("Unexpected content file name: ".$contentFileName, ANAFException::UNEXPECTED_ZIP_FORMAT);
-
                     return;
                 }
                 $this->content = $content;

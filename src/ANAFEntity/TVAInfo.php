@@ -7,18 +7,16 @@ use stdClass;
 /**
  * Represents the TVA information about a company based on the ANAF API response structure
  */
-class TVAInfo
-{
+class TVAInfo {
     public bool $scpTVA = false;
     public array $perioade_TVA = [];
 
     /**
-     * Similar to @param stdClass $parsedData
+     * Similar to @param  stdClass  $parsedData
      * @return TVAInfo
      * @see Entity::CreateFromParsed
      */
-    public static function CreateFromParsed(stdClass $parsedData): TVAInfo
-    {
+    public static function CreateFromParsed(stdClass $parsedData): TVAInfo {
         $tvaInfo = new TVAInfo();
         $tvaInfo->scpTVA = $parsedData->scpTVA ?? false;
         $tvaInfo->perioade_TVA = $parsedData->perioade_TVA ?? [];

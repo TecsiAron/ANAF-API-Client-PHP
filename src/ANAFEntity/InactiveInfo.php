@@ -7,8 +7,7 @@ use stdClass;
 /**
  * Represents the inactive information about a company based on the ANAF API response structure
  */
-class InactiveInfo
-{
+class InactiveInfo {
     public string $dataInactivare = "";
     public string $dataReactivare = "";
     public string $dataPublicare = "";
@@ -16,12 +15,11 @@ class InactiveInfo
     public bool $statusInactivi = false;
 
     /**
-     * Similar to @param stdClass $parsedData
+     * Similar to @param  stdClass  $parsedData
      * @return InactiveInfo
      * @see Entity::CreateFromParsed
      */
-    public static function CreateFromParsed(stdClass $parsedData): InactiveInfo
-    {
+    public static function CreateFromParsed(stdClass $parsedData): InactiveInfo {
         $inactiveInfo = new InactiveInfo();
         $inactiveInfo->dataInactivare = $parsedData->dataInactivare ?? "";
         $inactiveInfo->dataReactivare = $parsedData->dataReactivare ?? "";

@@ -5,8 +5,7 @@ namespace EdituraEDU\ANAF\Responses;
 /**
  * Represents answer structure for @see ANAFAnswerListResponse::$mesaje
  */
-class ANAFAnswer
-{
+class ANAFAnswer {
     public string $data_creare;
     public string $cif;
     public string $id_solicitare;
@@ -14,8 +13,7 @@ class ANAFAnswer
     public string $tip;
     public string $id;
 
-    public static function CreateFromParsed($parsed): ANAFAnswer
-    {
+    public static function CreateFromParsed($parsed): ANAFAnswer {
         $response = new ANAFAnswer();
         $response->data_creare = $parsed->data_creare;
         $response->cif = $parsed->cif;

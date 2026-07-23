@@ -8,8 +8,7 @@ use Throwable;
 /**
  * Represents an address based on the ANAF API response structure
  */
-class Address
-{
+class Address {
     public string $denumire_Strada = "";
     public string $numar_Strada = "";
 
@@ -23,12 +22,11 @@ class Address
     public string $cod_Postal = "";
 
     /**
-     * Similar to @param stdClass $parsed
+     * Similar to @param  stdClass  $parsed
      * @return Address|null
      * @see Entity::CreateFromParsed
      */
-    public static function CreateFromParsed(stdClass $parsed): ?Address
-    {
+    public static function CreateFromParsed(stdClass $parsed): ?Address {
         try {
             $parsed = json_decode(json_encode($parsed), true);
             $properties = ["denumire_Strada", "numar_Strada", "denumire_Localitate", "cod_Localitate", "denumire_Judet", "cod_Judet", "cod_JudetAuto", "tara", "detalii_Adresa", "cod_Postal"];
@@ -39,8 +37,8 @@ class Address
             $result = new Address();
             for ($i = 0; $i < count($properties); $i++) {
                 $property = $properties[$i];
-                if (isset($parsed[$prefix . $property])) {
-                    $result->$property = $parsed[$prefix . $property];
+                if (isset($parsed[$prefix.$property])) {
+                    $result->$property = $parsed[$prefix.$property];
                 }
             }
             return $result;

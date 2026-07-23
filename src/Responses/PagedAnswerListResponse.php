@@ -9,11 +9,9 @@ use Throwable;
  * Pseudo response for unifying multiple paged answer lists into a single response
  * @see ANAFAPIClient::ListAnswersWithPagination()
  */
-class PagedAnswerListResponse extends ANAFAnswerListResponse
-{
+class PagedAnswerListResponse extends ANAFAnswerListResponse {
     /**
-     * Stores a reference to the original responses
-     * NOTE: empty responses (no messages) are not stored
+     * Stores a reference to the original responses NOTE: empty responses (no messages) are not stored
      * @var InternalPagedAnswersResponse[] $Pages
      */
     public array $Pages;
@@ -30,12 +28,11 @@ class PagedAnswerListResponse extends ANAFAnswerListResponse
     public int $PageCount;
 
     /**
-     * @param InternalPagedAnswersResponse[] $responses
-     * @param InternalPagedAnswersResponse[] $errors
+     * @param  InternalPagedAnswersResponse[]  $responses
+     * @param  InternalPagedAnswersResponse[]  $errors
      * @return void
      */
-    public function __construct(array $responses, array $errors)
-    {
+    public function __construct(array $responses, array $errors) {
         $this->ErrorPages = $errors;
         $this->PageCount = count($responses);
         if ($this->PageCount == 0) {
@@ -60,13 +57,11 @@ class PagedAnswerListResponse extends ANAFAnswerListResponse
         }
     }
 
-    public static function Create($rawResponse): PagedAnswerListResponse
-    {
+    public static function Create($rawResponse): PagedAnswerListResponse {
         throw new Exception("This class is not meant to be created from a raw response");
     }
 
-    public static function CreateError(Throwable $error): PagedAnswerListResponse
-    {
+    public static function CreateError(Throwable $error): PagedAnswerListResponse {
         $response = new PagedAnswerListResponse([], []);
         $response->LastError = $error;
         return $response;

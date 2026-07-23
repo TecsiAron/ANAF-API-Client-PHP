@@ -74,7 +74,6 @@ final class EFacturaSignatureVerifier {
                 return true;
             }
         }
-
         return false;
     }
 
@@ -89,7 +88,6 @@ final class EFacturaSignatureVerifier {
         if ($invoiceBytes === false || $signatureXml === false) {
             return self::FILE_READ_ERROR;
         }
-
         return self::VerifyContent($invoiceBytes, $signatureXml);
     }
 
@@ -116,7 +114,7 @@ final class EFacturaSignatureVerifier {
              * The signature uses a default XML namespace, so access its
              * children through that namespace explicitly.
              */
-            $signature  = $xml->children(self::DSIG_NAMESPACE);
+            $signature = $xml->children(self::DSIG_NAMESPACE);
             $signedInfo = $signature->SignedInfo;
 
             if ( ! isset($signedInfo->Reference->DigestValue)
@@ -178,10 +176,7 @@ final class EFacturaSignatureVerifier {
                 return self::INVALID_CERTIFICATE_BLOCK;
             }
 
-            $certificatePem =
-                    "-----BEGIN CERTIFICATE-----\n"
-                    .chunk_split($certificateBase64, 64, "\n")
-                    ."-----END CERTIFICATE-----\n";
+            $certificatePem = "-----BEGIN CERTIFICATE-----\n".chunk_split($certificateBase64, 64, "\n")."-----END CERTIFICATE-----\n";
 
             $publicKey = openssl_pkey_get_public($certificatePem);
 
@@ -210,10 +205,8 @@ final class EFacturaSignatureVerifier {
                 if ( ! self::IsCertificateAccepted($certificateBase64)) {
                     return self::SIGNATURE_MATCH_WITH_UNACCEPTED_CERTIFICATE;
                 }
-
                 return self::SUCCESS;
             }
-
             return self::SIGNATURE_MISSMATCH;
         } finally {
             libxml_clear_errors();
