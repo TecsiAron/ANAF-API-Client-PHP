@@ -18,6 +18,18 @@ class ANAFErrorAnswerTest extends TestCase {
         $this->assertTrue($answer->IsDuplicateUploadError());
     }
 
+    public function testParseEroareWithNamespacedAttribute(): void {
+        $answer = ANAFErrorAnswer::Create("test-eroare", ANAFTestDatastore::EROARE_XML);
+
+        $this->assertTrue($answer->IsSuccess());
+        $this->assertNull($answer->LastError);
+        $this->assertSame(
+                "Factura a mai fost transmisa anterior cu index=9876543210 si data incarcare=2026-01-21",
+                $answer->message
+        );
+        $this->assertTrue($answer->IsDuplicateUploadError());
+    }
+
     public function testValidInvoice(): void {
         $answer = ANAFErrorAnswer::Create("test-2", ANAFTestDatastore::VALID_INVOICE);
         $this->assertFalse($answer->IsSuccess());
@@ -34,6 +46,7 @@ class ANAFErrorAnswerTest extends TestCase {
 
     public function testExpectedErrorFormat(): void {
         $this->assertTrue(ANAFErrorAnswer::IsExpectedErrorFormat(ANAFTestDatastore::ERROR_XML));
+        $this->assertTrue(ANAFErrorAnswer::IsExpectedErrorFormat(ANAFTestDatastore::EROARE_XML));
         $this->assertFalse(ANAFErrorAnswer::IsExpectedErrorFormat(ANAFTestDatastore::VALID_INVOICE));
         $this->assertFalse(ANAFErrorAnswer::IsExpectedErrorFormat("Invalid XML"));
     }

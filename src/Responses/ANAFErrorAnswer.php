@@ -61,31 +61,12 @@ class ANAFErrorAnswer extends ANAFResponse {
                 $this->cif_emitent = (string) $attrs['Cif_emitent'];
             }
 
-            // Caută <Error> sau <Eroare>
-            $errorNode = null;
-            if ( ! empty($namespaces)) {
-                $prefix = array_key_first($namespaces);
-                foreach ($header->children($prefix ?: null) as $child) {
-                    $name = strtolower($child->getName());
-                    if ($name === 'error' || $name === 'eroare') {
-                        $errorNode = $child;
-                        break;
-                    }
-                }
-            } else {
-                foreach ($header->children() as $child) {
-                    $name = strtolower($child->getName());
-                    if ($name === 'error' || $name === 'eroare') {
-                        $errorNode = $child;
-                        break;
-                    }
-                }
-            }
-
-            if ($errorNode) {
-                $errorAttrs = $errorNode->attributes($ns ?? null);
-                if (isset($errorAttrs['errorMessage'])) {
-                    $this->message = (string) $errorAttrs['errorMessage'];
+            // Caută <Error> sau <Eroare>, ignorând namespace-ul.
+            $errorNode = $header->xpath('./*[local-name()="Error" or local-name()="Eroare"]')[0] ?? null;
+            if ($errorNode !== null) {
+                $errorMessage = $errorNode->xpath('./@*[local-name()="errorMessage"]')[0] ?? null;
+                if ($errorMessage !== null) {
+                    $this->message = (string) $errorMessage;
                     if (preg_match('/index=([0-9]+)\s+si\s+data incarcare=([0-9\-]+)/i', $this->message, $m)) {
                         if (empty($this->index_incarcare)) {
                             $this->index_incarcare = $m[1];
@@ -158,26 +139,8 @@ class ANAFErrorAnswer extends ANAFResponse {
             }
             $namespaces = $parsedXML->getDocNamespaces(true);
             $header = $parsedXML;
-            $errorNode = null;
-            if ( ! empty($namespaces)) {
-                $prefix = array_key_first($namespaces);
-                foreach ($header->children($prefix ?: null) as $child) {
-                    $name = strtolower($child->getName());
-                    if ($name === 'error' || $name === 'eroare') {
-                        $errorNode = $child;
-                        break;
-                    }
-                }
-            } else {
-                foreach ($header->children() as $child) {
-                    $name = strtolower($child->getName());
-                    if ($name === 'error' || $name === 'eroare') {
-                        $errorNode = $child;
-                        break;
-                    }
-                }
-            }
-            return ! is_null($errorNode);
+            $errorNodes = $header->xpath('./*[local-name()="Error" or local-name()="Eroare"]');
+            return ! empty($errorNodes);
         } catch (Throwable $ex) {
             return false;
         }
