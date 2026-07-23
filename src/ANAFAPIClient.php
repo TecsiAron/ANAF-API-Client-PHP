@@ -390,10 +390,9 @@ class ANAFAPIClient {
      * Download Answer from ANAF To obtain the ID, use ListAnswers
      * @param  string  $id
      * @return string either an error message (starts with "ERROR_") or zip file content
-     * @deprecated will be removed/made private in future versions, use DownloadAndExtractAnswer instead
      * @see ANAFAPIClient::ListAnswers()
      */
-    public function DownloadAnswer(string $id): string {
+    private function DownloadAnswer(string $id): string {
         $modeName = $this->Production ? "prod" : "test";
         $method = "/$modeName/FCTEL/rest/descarcare?id=$id";
 
