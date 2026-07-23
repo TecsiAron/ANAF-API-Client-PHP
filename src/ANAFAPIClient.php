@@ -397,14 +397,12 @@ class ANAFAPIClient
     /**
      * Download Answer from ANAF
      * To obtain the ID, use ListAnswers
-     * NOTE: ANAFAnswer::tip can be used to determine if the answer is an error or a valid answer
      * @param string $id
-     * @param bool $extractAndVerifyContents if true, the method will try to parse XML to an ANAFErrorAnswer object
-     * @return string starting with "ERROR_" for errors, the zip file content for valid answers
-     * @see ANAFAnswer::$tip
+     * @return string either an error message (starts with "ERROR_") or zip file content
      * @see ANAFAPIClient::ListAnswers()
      */
-    public function DownloadAnswer(string $id, bool $extractAndVerifyContents = false): string {
+    public function DownloadAnswer(string $id): string
+    {
         $modeName = $this->Production ? "prod" : "test";
         $method = "/$modeName/FCTEL/rest/descarcare?id=$id";
 
@@ -416,28 +414,6 @@ class ANAFAPIClient
                 $content = $httpResponse->getBody()->getContents();
 
                 if (str_starts_with($content, "PK")) {
-                    if ($extractAndVerifyContents && self::HasSuggestedExtensionSupport()) {
-                        $extractedAnswer = self::ExtractAnswer($content);
-
-                        if (!$extractedAnswer->IsSuccess() || empty($extractedAnswer->content)) {
-                            $this->CallErrorCallback("ANAF API Error: Answer extraction failed silently!");
-                            return "ERROR_UNZIP_FAILED_SILENT";
-                        }
-                        if(ANAFErrorAnswer::IsExpectedErrorFormat($extractedAnswer->content)) {
-                            //todo: ANAFErrorAnswer is inteded for use with (new) CallBackManager
-                            $errorAnswer = ANAFErrorAnswer::Create($id, $extractedAnswer->content);
-                            if ($errorAnswer->HasError()) {
-                                $this->CallErrorCallback("ANAF API Client Error: Found possible response with an internal error message, but parsing failed!", $errorAnswer->LastError);
-                            }
-                            else{
-                                $this->CallErrorCallback("ANAF API Client Found an error response for answer $id: \n". $errorAnswer->message);
-                            }
-                        }
-                    } else if ($extractAndVerifyContents && !self::HasSuggestedExtensionSupport()) {
-                        $composerJsonPath = dirname(__FILE__, 2) . "/composer.json";
-                        $this->CallErrorCallback("ANAF API Error: Answer extraction requested but one ore more required extensions are not available. Check $composerJsonPath for required/suggested extensions.");
-                        return "ERROR_UNZIP_NOT_SUPPORTED";
-                    }
                     return $content;
                 }
                 return "ERROR_BAD_CONTENT";

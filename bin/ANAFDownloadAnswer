@@ -32,7 +32,7 @@ $cliApp->Parse();
 
 $configFilePath = $configOption->HasValue() ? $configOption->GetValue() : __DIR__ . "/../bin-config.json";
 $anaf = new \EdituraEDU\ANAF\ANAFBinHelper($configFilePath);
-$response = $anaf->DownloadAnswer($idOption->GetValue(), true);
+$response = $anaf->DownloadAnswer($idOption->GetValue());
 
 if (is_string($response)) {
     if ($outputOption->HasValue()) {
