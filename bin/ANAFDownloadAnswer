@@ -1,0 +1,58 @@
+#!/usr/bin/env php
+<?php
+
+use EdituraEDU\CLI\CLIApp;
+use EdituraEDU\CLI\CLIOption;
+
+require __DIR__ . '/../vendor/autoload.php';
+
+$configOption = new CLIOption(
+    "config",
+    "c",
+    "Path to the configuration file",
+    \EdituraEDU\CLI\CLIOptionType::STRING
+);
+$idOption = new CLIOption(
+    "id",
+    "i",
+    "Answer ID obtained from ListAnswers",
+    \EdituraEDU\CLI\CLIOptionType::STRING,
+    true
+);
+$outputOption = new CLIOption(
+    "output",
+    "o",
+    "Path to the output file",
+    \EdituraEDU\CLI\CLIOptionType::STRING
+);
+
+$optionList = [$configOption, $idOption, $outputOption];
+$cliApp = new CLIApp("ANAFDownloadAnswer", "Downloads an answer from ANAF", "1.0.0", $optionList);
+$cliApp->Parse();
+
+$configFilePath = $configOption->HasValue() ? $configOption->GetValue() : __DIR__ . "/../bin-config.json";
+$anaf = new \EdituraEDU\ANAF\ANAFBinHelper($configFilePath);
+$response = $anaf->DownloadAndExtractAnswer($idOption->GetValue(), false);
+
+$output = null;
+$errorAnswer = $response->Error;
+$output = implode(PHP_EOL, [
+        "Extraction error: ".($response->HasError() ? "yes" : "no"),
+        "Index incarcare: ".($response->index_incarcare ?? "unknown"),
+        "Well-formed ANAF error: ".($response->IsWellFormedError ? "yes" : "no"),
+        "Duplicate upload error: ".($errorAnswer?->IsDuplicateUploadError() ? "yes" : "no"),
+        "Error answer message: ".($errorAnswer?->message ?? "none"),
+        "Signature verification ran: ".($response->RanSignatureVerification ? "yes" : "no"),
+        "Signature verification result: ".($response->SignatureVerificationResult?->value ?? "none"),
+        "Processing error: ".($response->LastError?->getMessage() ?? "none"),
+        "Processing error code: ".($response->LastError?->getCode() ?? "none"),
+        "Writing to file: ".($outputOption->HasValue() ? $outputOption->GetValue() : "no"),
+]);
+
+$output .= PHP_EOL;
+if ($outputOption->HasValue() && $response->IsSuccess() && !empty($response->rawResponse)) {
+    if (file_put_contents($outputOption->GetValue(), $response->rawResponse) === false) {
+        echo "[ERROR] Failed to write output file: " . $outputOption->GetValue();
+    }
+}
+echo $output;

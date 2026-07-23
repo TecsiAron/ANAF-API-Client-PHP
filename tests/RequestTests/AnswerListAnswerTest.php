@@ -6,17 +6,15 @@ use DateInterval;
 use DateTime;
 use Throwable;
 
-class AnswerListAnswerTest extends RequestTestBase
-{
+class AnswerListAnswerTest extends RequestTestBase {
 
-    public function testEmptyResponse()
-    {
+    public function testEmptyResponse() {
         try {
             $client = $this->createClient();
             $response = $client->ListAnswers($this->cif, 1);
             $localParsed = json_decode($response->rawResponse);
         } catch (Throwable $ex) {
-            $this->fail("Exception thrown: " . $ex->getMessage());
+            $this->fail("Exception thrown: ".$ex->getMessage());
         }
         $this->assertTrue(json_last_error() == JSON_ERROR_NONE, "Invalid JSON response");
         $this->assertTrue($response->IsSuccess(), "Response is not successful");
@@ -35,8 +33,7 @@ class AnswerListAnswerTest extends RequestTestBase
         }
     }
 
-    public function testValidResponseCheck()
-    {
+    public function testValidResponseCheck() {
         if (getenv("ANAF_EMPTY_LIST_ONLY") == "true") {
             $this->markTestSkipped("ANAF_EMPTY_ONLY is set, skipping");
         }
@@ -49,7 +46,7 @@ class AnswerListAnswerTest extends RequestTestBase
             sleep(1);
             $listAnswer = $client->ListAnswers($this->cif, 1);
         } catch (Throwable $ex) {
-            $this->fail("Exception thrown: " . $ex->getMessage());
+            $this->fail("Exception thrown: ".$ex->getMessage());
         }
         $this->assertNotNull($listAnswer, "No answer found");
         $this->assertTrue($listAnswer->IsSuccess(), "Failed to list answers");
@@ -57,8 +54,7 @@ class AnswerListAnswerTest extends RequestTestBase
         $this->assertGreaterThan(0, count($listAnswer->mesaje), "No messages found");
     }
 
-    public function testAnswersListWithPages()
-    {
+    public function testAnswersListWithPages() {
         $client = $this->createClient();
         $answers = $client->ListAnswers($this->cif, 10);
         $this->assertTrue($answers->IsSuccess());

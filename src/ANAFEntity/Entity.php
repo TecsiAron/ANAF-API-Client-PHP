@@ -1,13 +1,13 @@
 <?php
 
 namespace EdituraEDU\ANAF\ANAFEntity;
+
 use stdClass;
 
 /**
  * Represents the comprehensive response structure for a company/institution from the ANAF API
  */
-class Entity
-{
+class Entity {
     /**
      * @var GeneralInfo|null General information about the company nullable only for error handling!
      * It should never be null in a valid response!
@@ -40,11 +40,10 @@ class Entity
 
     /**
      * Used to convert the parsed data (json) from the ANAF API to an Entity object
-     * @param stdClass $parsedData
+     * @param  stdClass  $parsedData
      * @return Entity
      */
-    public static function CreateFromParsed(stdClass $parsedData): Entity
-    {
+    public static function CreateFromParsed(stdClass $parsedData): Entity {
         $entity = new Entity();
         $entity->date_generale = isset($parsedData->date_generale) ? GeneralInfo::CreateFromParsed($parsedData->date_generale) : null;
         $entity->inregistrare_scop_Tva = isset($parsedData->inregistrare_scop_Tva) ? TVAInfo::CreateFromParsed($parsedData->inregistrare_scop_Tva) : null;
@@ -57,13 +56,10 @@ class Entity
     }
 
     /**
-     * Try to extract Bucharest's sector from the address
-     * Will return null if the address is not set or if the address does not contain a sector.
-     * (Looks for the word "sector" followed by a digit, case-insensitive, surrounded by spaces or punctuation)
+     * Try to extract Bucharest's sector from the address Will return null if the address is not set or if the address does not contain a sector. (Looks for the word "sector" followed by a digit, case-insensitive, surrounded by spaces or punctuation)
      * @return int|null
      */
-    public function GetSector(): ?int
-    {
+    public function GetSector(): ?int {
         if ($this->date_generale == null) {
             return null;
         }
@@ -76,7 +72,7 @@ class Entity
         $toSearch = strtolower($toSearch);
 
         if (preg_match('/\bsector\b\s*(\d)(?=\s|\p{P}|\z)/u', $toSearch, $matches)) {
-            return (int)$matches[1]; // Cast the captured digit to an integer and return it
+            return (int) $matches[1]; // Cast the captured digit to an integer and return it
         }
         return null;
     }
@@ -85,8 +81,7 @@ class Entity
      * Check if CIF is "radiat" (closed?)
      * @return bool
      */
-    public function IsRadiat(): bool
-    {
+    public function IsRadiat(): bool {
         return str_starts_with(strtolower($this->date_generale->stare_inregistrare), "radi");
     }
 

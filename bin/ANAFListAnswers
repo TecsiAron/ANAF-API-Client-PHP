@@ -1,0 +1,47 @@
+#!/usr/bin/env php
+<?php
+
+use EdituraEDU\CLI\CLIApp;
+use EdituraEDU\CLI\CLIOption;
+
+require __DIR__ . '/../vendor/autoload.php';
+$configOption = new CLIOption("config", "c", "Path to the configuration file", \EdituraEDU\CLI\CLIOptionType::STRING, false);
+$startTimeOption = new CLIOption("startTime", "s", "Expected format: dd-mm-YYYY", \EdituraEDU\CLI\CLIOptionType::STRING, true);
+$endTimeOption = new CLIOption("endTime", "e", "Expected format: dd-mm-YYYY", \EdituraEDU\CLI\CLIOptionType::STRING, true);
+$cifOption = new CLIOption("cif", "i", "Company identification number (CIF)", \EdituraEDU\CLI\CLIOptionType::NUMBER, true);
+$specificPageOption = new CLIOption("specificPage", "p", "Optional page number to request", \EdituraEDU\CLI\CLIOptionType::NUMBER);
+$filterOption = new CLIOption("filter", "f", "Optional message filter. Accepted values: E, T, P, R", \EdituraEDU\CLI\CLIOptionType::STRING);
+$optionList= [$configOption, $startTimeOption, $endTimeOption, $cifOption, $specificPageOption, $filterOption];
+$cliApp = new CLIApp("ANAFListAnswers", "Lists answers from ANAF", "1.0.0", $optionList);
+$cliApp->Parse();
+$configFilePath = $configOption->HasValue() ? $configOption->GetValue() : __DIR__ . "/../bin-config.json";
+$startDate = \DateTimeImmutable::createFromFormat('!d-m-Y', $startTimeOption->GetValue());
+$endDate = \DateTimeImmutable::createFromFormat('!d-m-Y', $endTimeOption->GetValue());
+
+if ($startDate === false || $startDate->format('d-m-Y') !== $startTimeOption->GetValue()) {
+    throw new \InvalidArgumentException("Invalid startTime. Expected format: dd-mm-YYYY");
+}
+
+if ($endDate === false || $endDate->format('d-m-Y') !== $endTimeOption->GetValue()) {
+    throw new \InvalidArgumentException("Invalid endTime. Expected format: dd-mm-YYYY");
+}
+
+$anaf = new \EdituraEDU\ANAF\ANAFBinHelper($configFilePath);
+$filter=null;
+if($filterOption->HasValue())
+{
+    $filter=\EdituraEDU\ANAF\AnswerFilter::tryFrom($filterOption->GetValue());
+    if($filter===null)
+    {
+        echo "Invalid filter value. Accepted values: E, T, P, R";
+    }
+}
+$response = $anaf->ListAnswersWithPagination(
+    $startDate->getTimestamp(),
+    $endDate->getTimestamp(),
+    (int)$cifOption->GetValue(),
+    $specificPageOption->HasValue() ? (int)$specificPageOption->GetValue() : null,
+    $filter
+);
+
+echo json_encode($response, JSON_PRETTY_PRINT);

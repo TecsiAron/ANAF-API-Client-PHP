@@ -9,16 +9,14 @@ use Throwable;
  * Response to the paged answers API endpoint
  * @see ANAFAPIClient::GetAnswerPage()
  */
-class InternalPagedAnswersResponse extends ANAFAnswerListResponse
-{
+class InternalPagedAnswersResponse extends ANAFAnswerListResponse {
     public int $numar_inregistrari_in_pagina = 0;
     public int $numar_total_inregistrari_per_pagina = 0;
     public int $numar_total_inregistrari = 0;
     public int $numar_total_pagini = 0;
     public int $index_pagina_curenta = 0;
 
-    public function Parse(): void
-    {
+    public function Parse(): void {
         $pattern = '/Pagina solicitata \d+ este mai mare decat numarul total de pagini \d+/';
         try {
             $parsed = $this->CommonParseJSON($this->rawResponse);
@@ -26,12 +24,18 @@ class InternalPagedAnswersResponse extends ANAFAnswerListResponse
             $this->LastError = $th;
             return;
         }
+        if ($parsed === null) {
+            if (! $this->HasError()) {
+                $this->InternalCreateError("Internal error parsing response");
+            }
+            return;
+        }
         if (str_starts_with(strtolower($parsed->titlu), "lista mesaje")
-            && isset($parsed->eroare)
-            && !isset($parsed->mesaje)
-            && !isset($parsed->serial)
-            && !isset($parsed->cui)
-            && preg_match($pattern, $parsed->eroare)) {
+                && isset($parsed->eroare)
+                && ! isset($parsed->mesaje)
+                && ! isset($parsed->serial)
+                && ! isset($parsed->cui)
+                && preg_match($pattern, $parsed->eroare)) {
             $parsed->mesaje = [];
             $parsed->serial = "";
             $parsed->cui = "";
@@ -48,12 +52,10 @@ class InternalPagedAnswersResponse extends ANAFAnswerListResponse
     }
 
     /**
-     * Check if the current page is the last page
-     * Will always return true if the response is not successful
+     * Check if the current page is the last page Will always return true if the response is not successful
      * @return bool
      */
-    public function IsLastPage(): bool
-    {
+    public function IsLastPage(): bool {
         if ($this->IsSuccess()) {
             return $this->index_pagina_curenta >= $this->numar_total_pagini;
         }
@@ -61,20 +63,17 @@ class InternalPagedAnswersResponse extends ANAFAnswerListResponse
     }
 
     /**
-     * Create an error response
-     * For internal use!
-     * @param Throwable $error
+     * Create an error response For internal use!
+     * @param  Throwable  $error
      * @return InternalPagedAnswersResponse
      */
-    public static function CreateError(Throwable $error): InternalPagedAnswersResponse
-    {
+    public static function CreateError(Throwable $error): InternalPagedAnswersResponse {
         $result = new InternalPagedAnswersResponse();
         $result->LastError = $error;
         return $result;
     }
 
-    public static function Create($rawResponse): InternalPagedAnswersResponse
-    {
+    public static function Create($rawResponse): InternalPagedAnswersResponse {
         $result = new InternalPagedAnswersResponse();
         $result->rawResponse = $rawResponse;
         $result->Parse();

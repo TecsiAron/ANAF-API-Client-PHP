@@ -1,0 +1,12 @@
+{
+  "oauth":{
+    "clientId":  "",
+    "clientSecret" : "",
+    "redirectUri" : "",
+    "urlAuthorize" : "",
+    "urlAccessToken" : "",
+    "urlResourceOwnerDetails" : ""
+  },
+  "production": false,
+  "token_file_path": ""
+}

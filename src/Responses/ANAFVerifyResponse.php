@@ -7,8 +7,7 @@ use Throwable;
 /**
  * Represents the response structure for @see \EdituraEDU\ANAF\ANAFAPIClient::VerifyXML
  */
-class ANAFVerifyResponse extends ANAFResponse
-{
+class ANAFVerifyResponse extends ANAFResponse {
     public string $stare;
     public array $Messages;
     public string $trace_id;
@@ -17,8 +16,7 @@ class ANAFVerifyResponse extends ANAFResponse
      * Check if the response is OK
      * @return bool
      */
-    public function IsOK(): bool
-    {
+    public function IsOK(): bool {
         if ($this->HasError()) {
             return false;
         }
@@ -30,13 +28,12 @@ class ANAFVerifyResponse extends ANAFResponse
 
     /**
      * Similar to
-     * @param mixed $parsed
+     * @param  mixed  $parsed
      * @return void
      */
-    private function CopyFromParsed(mixed $parsed): void
-    {
+    private function CopyFromParsed(mixed $parsed): void {
         $this->stare = $parsed->stare;
-        if (!isset($parsed->Messages) || $parsed->Messages == null) {
+        if ( ! isset($parsed->Messages) || $parsed->Messages == null) {
             $this->Messages = [];
         } else {
             $this->Messages = $parsed->Messages;
@@ -45,12 +42,14 @@ class ANAFVerifyResponse extends ANAFResponse
     }
 
 
-    public function Parse(): void
-    {
+    public function Parse(): void {
         try {
             $parsed = $this->CommonParseJSON($this->rawResponse);
-            if ($parsed == null && !$this->HasError()) {
-                $this->InternalCreateError("Internal error parsing response");
+            if ($parsed === null) {
+                if (! $this->HasError()) {
+                    $this->InternalCreateError("Internal error parsing response");
+                }
+                return;
             }
             $this->CopyFromParsed($parsed);
         } catch (Throwable $ex) {
@@ -58,16 +57,14 @@ class ANAFVerifyResponse extends ANAFResponse
         }
     }
 
-    public static function Create($rawResponse): ANAFVerifyResponse
-    {
+    public static function Create($rawResponse): ANAFVerifyResponse {
         $response = new ANAFVerifyResponse();
         $response->rawResponse = $rawResponse;
         $response->Parse();
         return $response;
     }
 
-    public static function CreateError(Throwable $error): ANAFVerifyResponse
-    {
+    public static function CreateError(Throwable $error): ANAFVerifyResponse {
         $response = new ANAFVerifyResponse();
         $response->LastError = $error;
         return $response;
