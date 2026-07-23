@@ -1,3 +1,37 @@
+# v3.0.0-beta
+
+## BREAKING CHANGES
+
+- Addressing dependency security advisories raised the minimum PHP version to 8.1 at runtime; PHP 8.2 or newer is required for development and tests.
+- `ANAFAPIClient::DownloadAnswer()` is no longer public. Use `ANAFAPIClient::DownloadAndExtractAnswer()` to download and parse an answer ZIP, optionally verifying its signature.
+- Original zip file content is now accessible trough `ExtractedAnswer->rawResponse`, and the extracted invoice content is accessible through `ExtractedAnswer->rawResponse`.
+- The `$filter` parameter of `ANAFAPIClient::ListAnswers()`, `ListAnswersWithPagination()`, and `GetAnswerPage()` now accepts `?AnswerFilter` (enum) instead of `?string`.
+- `ext-zip` and `ext-readline` are now required at runtime.
+
+## Added
+
+- Added `ExtractedAnswer` for extracting ANAF answer ZIP files, exposing the invoice content, signature, upload index, parsing/other errors, and signature-verification state.
+- Added `ANAFErrorAnswer` for parsing XML error answers, including a helper method to detect duplicate-upload errors.
+- Added the `AnswerFilter` enum for the supported answer-list filters.
+- Added e-Factura signature verification through `EFacturaSignatureVerifier` and the `SignatureVerificationResult` enum.
+- Added the current trusted ANAF/MF certificates used during signature verification.
+- Added CLI tools: `vendor/bin/ANAFListAnswers`, `vendor/bin/ANAFDownloadAnswer`, and `vendor/bin/ANAFVerifyAnswer`.
+- Added `ANAFBinHelper` and `bin-config.sample.json` for configuring the CLI tools.
+- Added explicit `ANAFException` codes for XML answer parsing, ZIP extraction, and temporary-file errors.
+- Added `ANAFAPIClient::HasSuggestedExtensionSupport()` to detect whether answer extraction and signature verification are supported by the current PHP environment.
+- New suggested extensions:
+  - libxml (for error answer parsing and signature verification) 
+  - openssl (for signature verification)
+  - dom (for signature verification)
+
+## Changed
+
+- `DownloadAndExtractAnswer()` replaces `DownloadAnswer()` and now handles downloaded ZIP validation, extraction, error answers, cleanup of temporary files, and optional signature verification.
+- Answer ZIP extraction validates the expected content/signature files and extracts `index_incarcare` from the signature filename.
+- Signature verification reports distinct results for unsupported environments, invalid signature data, digest/signature mismatches, and untrusted certificates.
+- Suggested extensions are documented in Composer: `ext-libxml`, `ext-openssl`, and `ext-dom`.
+- Added `tecsiaron/cli-app` as a runtime dependency and registered the CLI binaries with Composer.
+
 # v2.0.5  
 - Fixed PHP 8.4 warnings
   
