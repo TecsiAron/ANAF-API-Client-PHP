@@ -2,7 +2,6 @@
 <?php
 
 use EdituraEDU\ANAF\Responses\ExtractedAnswer;
-use EdituraEDU\ANAF\Signature\EFacturaSignatureVerifier;
 use EdituraEDU\CLI\CLIApp;
 use EdituraEDU\CLI\CLIOption;
 
@@ -31,14 +30,16 @@ if ($rawAnswer === false) {
     throw new \RuntimeException('Failed to read input file: ' . $inputPath);
 }
 
-$answer = ExtractedAnswer::Create($rawAnswer);
+$answer = ExtractedAnswer::Create($rawAnswer, true);
 
 if (!$answer->IsSuccess()) {
     echo $answer->LastError?->getMessage() . PHP_EOL;
     exit(1);
 }
+if($answer->RanSignatureVerification) {
+    echo $answer->SignatureVerificationResult, PHP_EOL;
+    exit(0);
+}
+echo "Signature verification did not run!", PHP_EOL;
+exit(2);
 
-echo EFacturaSignatureVerifier::VerifyContent(
-    $answer->content,
-    $answer->signature
-), PHP_EOL;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace EdituraEDU\ANAF\Tests\Signature;
 
-use EdituraEDU\ANAF\ANAFAPIClient;
+use EdituraEDU\ANAF\Responses\ExtractedAnswer;
 use EdituraEDU\ANAF\Signature\EFacturaSignatureVerifier;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -44,7 +44,7 @@ final class EFacturaSignatureVerifierTest extends TestCase
         string $answerBase64,
         string $expectedResult
     ): void {
-        $answer = ANAFAPIClient::ExtractAnswer(base64_decode($answerBase64, true));
+        $answer = ExtractedAnswer::Create(base64_decode($answerBase64, true), false);
 
         $this->assertTrue($answer->IsSuccess());
         $this->assertNotEmpty($answer->content);

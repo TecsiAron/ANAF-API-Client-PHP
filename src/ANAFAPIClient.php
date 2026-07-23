@@ -428,15 +428,6 @@ class ANAFAPIClient
     }
 
     /**
-     * Helper method, shortcut for @param string $rawAnswerContent
-     * @return ExtractedAnswer
-     * @see ExtractedAnswer::Create()
-     */
-    public static function ExtractAnswer(string $rawAnswerContent): ExtractedAnswer {
-        return ExtractedAnswer::Create($rawAnswerContent);
-    }
-
-    /**
      * Convert UBL XML to PDF using the ANAF API
      * @param string $ubl
      * @param string $metadata

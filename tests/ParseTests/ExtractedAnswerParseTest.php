@@ -2,7 +2,7 @@
 
 namespace EdituraEDU\ANAF\Tests\ParseTests;
 
-use EdituraEDU\ANAF\ANAFAPIClient;
+use EdituraEDU\ANAF\Responses\ExtractedAnswer;
 use PHPUnit\Framework\TestCase;
 
 class ExtractedAnswerParseTest extends TestCase
@@ -11,7 +11,7 @@ class ExtractedAnswerParseTest extends TestCase
 
     public function testExtractAnswer()
     {
-        $answer=ANAFAPIClient::ExtractAnswer(base64_decode(self::VALID_ZIP_BASE64));
+        $answer=ExtractedAnswer::Create(base64_decode(self::VALID_ZIP_BASE64), false);
         $this->assertNotNull($answer);
         $this->assertTrue($answer->IsSuccess());
         $this->assertNotEmpty($answer->content);

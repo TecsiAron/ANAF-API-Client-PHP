@@ -2,10 +2,10 @@
 
 namespace EdituraEDU\ANAF\Responses;
 
+use EdituraEDU\ANAF\Signature\EFacturaSignatureVerifier;
 use Throwable;
 
-class ExtractedAnswer extends ANAFResponse
-{
+class ExtractedAnswer extends ANAFResponse {
 
     public string|null $content = null;
     public string|null $signature = null;
@@ -14,9 +14,11 @@ class ExtractedAnswer extends ANAFResponse
     public bool $IsWellFormedError = false;
     public ANAFErrorAnswer|null $Error = null;
     private ?string $TempFileName = null;
+    private bool $VerifySignature = true;
+    public bool $RanSignatureVerification = false;
+    public string|null $SignatureVerificationResult = null;
 
-    private function DeleteTempFile(): void
-    {
+    private function DeleteTempFile(): void {
         if ($this->TempFileName === null) {
             return;
         }
@@ -30,19 +32,19 @@ class ExtractedAnswer extends ANAFResponse
         }
     }
 
-    public static function IsSupported(): bool
-    {
+    public static function IsSupported(): bool {
         return class_exists('\ZipArchive');
     }
 
-    public function Parse(): void
-    {
-        if (!self::IsSupported()) {
+    public function Parse(): void {
+        if ( ! self::IsSupported()) {
             $this->LastError = new ANAFException("ZipArchive not supported", ANAFException::ZIP_NOT_SUPPORTED);
+
             return;
         }
-        if (!str_starts_with($this->rawResponse, "PK")) {
+        if ( ! str_starts_with($this->rawResponse, "PK")) {
             $this->LastError = new ANAFException("Invalid zip file", ANAFException::UNEXPECTED_ZIP_FORMAT);
+
             return;
         }
         $zip = new \ZipArchive();
@@ -66,7 +68,7 @@ class ExtractedAnswer extends ANAFResponse
             } catch (Throwable $ex) {
                 $prevException = $ex;
             }
-            if (!$written) {
+            if ( ! $written) {
                 $this->LastError = new ANAFException("Failed to write temporary file", ANAFException::FAILED_TO_WRITE_TEMP_FILE, $prevException);
                 return;
             }
@@ -74,7 +76,7 @@ class ExtractedAnswer extends ANAFResponse
             if ($zip->open($this->TempFileName)) {
                 $zipOpened = true;
                 if ($zip->numFiles != 2) {
-                    $this->LastError = new ANAFException("Unexpected number of files in zip: " . $zip->numFiles, ANAFException::UNEXPECTED_ZIP_FORMAT);
+                    $this->LastError = new ANAFException("Unexpected number of files in zip: ".$zip->numFiles, ANAFException::UNEXPECTED_ZIP_FORMAT);
                     return;
                 }
 
@@ -92,25 +94,33 @@ class ExtractedAnswer extends ANAFResponse
 
                 if (empty($signatureFileName) || empty($contentFileName)) {
                     $this->LastError = new ANAFException("Missing required files in zip: signature or content", ANAFException::UNEXPECTED_ZIP_FORMAT);
+
                     return;
                 }
                 $explodedFileName = explode("_", $signatureFileName);
                 if (count($explodedFileName) != 2) {
-                    $this->LastError = new ANAFException("Invalid signature file name: " . $signatureFileName, ANAFException::UNEXPECTED_ZIP_FORMAT);
+                    $this->LastError = new ANAFException("Invalid signature file name: ".$signatureFileName, ANAFException::UNEXPECTED_ZIP_FORMAT);
+
                     return;
                 }
                 $expectedID = explode(".", $explodedFileName[1])[0];
                 if (empty($expectedID)) {
-                    $this->LastError = new ANAFException("Failed to detect index incarcare from signature file name: " . $signatureFileName, ANAFException::UNEXPECTED_ZIP_FORMAT);
+                    $this->LastError = new ANAFException("Failed to detect index incarcare from signature file name: ".$signatureFileName, ANAFException::UNEXPECTED_ZIP_FORMAT);
+
                     return;
                 }
                 if (strtolower($contentFileName) != "$expectedID.xml") {
-                    $this->LastError = new ANAFException("Unexpected content file name: " . $contentFileName, ANAFException::UNEXPECTED_ZIP_FORMAT);
+                    $this->LastError = new ANAFException("Unexpected content file name: ".$contentFileName, ANAFException::UNEXPECTED_ZIP_FORMAT);
+
                     return;
                 }
                 $this->content = $content;
                 $this->signature = $signature;
                 $this->index_incarcare = $expectedID;
+                if ($this->VerifySignature) {
+                    $this->SignatureVerificationResult = EFacturaSignatureVerifier::VerifyContent($this->content, $this->signature);
+                    $this->RanSignatureVerification = true;
+                }
             } else {
                 $this->LastError = new ANAFException("Failed to open zip file");
             }
@@ -122,16 +132,15 @@ class ExtractedAnswer extends ANAFResponse
         }
     }
 
-    public static function Create($rawResponse): self
-    {
+    public static function Create(string $rawResponse, bool $verifySignature): self {
         $response = new ExtractedAnswer();
         $response->rawResponse = $rawResponse;
+        $response->VerifySignature = $verifySignature;
         $response->Parse();
         return $response;
     }
 
-    public static function CreateError(Throwable $error): self
-    {
+    public static function CreateError(Throwable $error): self {
         $result = new ExtractedAnswer();
         $result->LastError = $error;
         return $result;
