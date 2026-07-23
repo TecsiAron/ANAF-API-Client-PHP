@@ -23,7 +23,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFAPIClient\u003A\u003ASanitizeCUI\u0028\u0029",
             "name": "SanitizeCUI",
-            "summary": "Sanitize\u0020CUI\u0020input\u0020for\u0020most\u0020requests.",
+            "summary": "Sanitize\u0020CUI\u0020input\u0020for\u0020most\u0020requests.\u0020Requests\u0020to\u0020the\u0020API\u0020should\u0020not\u0020contain\u0020the\u0020\u0022RO\u0022\u0020prefix\u0020and\u0020should\u0020be\u0020numeric.\u0020This\u0020method\u0020is\u0020case\u002Dinsensitive.",
             "url": "classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_SanitizeCUI"
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFAPIClient\u003A\u003AGetLoginURL\u0028\u0029",
@@ -83,8 +83,13 @@ Search.appendIndex(
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFAPIClient\u003A\u003ADownloadAnswer\u0028\u0029",
             "name": "DownloadAnswer",
-            "summary": "Download\u0020Answer\u0020from\u0020ANAF\nTo\u0020obtain\u0020the\u0020ID,\u0020use\u0020ListAnswers",
+            "summary": "Download\u0020Answer\u0020from\u0020ANAF\u0020To\u0020obtain\u0020the\u0020ID,\u0020use\u0020ListAnswers",
             "url": "classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_DownloadAnswer"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\ANAFAPIClient\u003A\u003ADownloadAndExtractAnswer\u0028\u0029",
+            "name": "DownloadAndExtractAnswer",
+            "summary": "Uses\u0020DownloadAnswer\u0020to\u0020get\u0020the\u0020zip\u0020file\u0020and\u0020then\u0020extracts\u0020it\u0020to\u0020check\u0020for\u0020errors,\u0020optionally\u0020verifies\u0020the\u0020signature\u0020of\u0020the\u0020answer\u0029",
+            "url": "classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_DownloadAndExtractAnswer"
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFAPIClient\u003A\u003AUBL2PDF\u0028\u0029",
             "name": "UBL2PDF",
@@ -103,7 +108,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFAPIClient\u003A\u003AListAnswersWithPagination\u0028\u0029",
             "name": "ListAnswersWithPagination",
-            "summary": "Get\u0020answer\u0020list\u0020for\u0020a\u0020company\u0020\u0028authenticated\u0020user\u0020must\u0020have\u0020access\u0020to\u0020the\u0020company\u0021\u0029\nUses\u0020the\u0020paged\u0020API\u0020end\u0020point\nAnswers\u0020will\u0020be\u0020returned\u0020in\u0020a\u0020unified\u0020list",
+            "summary": "Get\u0020answer\u0020list\u0020for\u0020a\u0020company\u0020\u0028authenticated\u0020user\u0020must\u0020have\u0020access\u0020to\u0020the\u0020company\u0021\u0029\u0020Uses\u0020the\u0020paged\u0020API\u0020end\u0020point\u0020Answers\u0020will\u0020be\u0020returned\u0020in\u0020a\u0020unified\u0020list",
             "url": "classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_ListAnswersWithPagination"
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFAPIClient\u003A\u003AGetAnswerPage\u0028\u0029",
@@ -113,18 +118,18 @@ Search.appendIndex(
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFAPIClient\u003A\u003AVerifyXML\u0028\u0029",
             "name": "VerifyXML",
-            "summary": "ATTENTION\u0020DOES\u0020NOT\u0020FUNCTION\u0020RELIABLY.",
+            "summary": "ATTENTION\u0020DOES\u0020NOT\u0020FUNCTION\u0020RELIABLY.\u0020The\u0020API\u0020randomly\u0020returns\u0020\u0022nok\u0022\u0020for\u0020valid\u0020invoices.",
             "url": "classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_VerifyXML"
-        },                {
-            "fqsen": "\\EdituraEDU\\ANAF\\ANAFAPIClient\u003A\u003AValidateFilter\u0028\u0029",
-            "name": "ValidateFilter",
-            "summary": "Currently\u0020accepted\u0020filter\u0020chars\u0020are\u003A\u0020E,\u0020T,\u0020P,\u0020R",
-            "url": "classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_ValidateFilter"
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFAPIClient\u003A\u003ACallErrorCallback\u0028\u0029",
             "name": "CallErrorCallback",
             "summary": "Calls\u0020ErrorCallback\u0020with\u0020given\u0020params.",
             "url": "classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_CallErrorCallback"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\ANAFAPIClient\u003A\u003AHasSuggestedExtensionSupport\u0028\u0029",
+            "name": "HasSuggestedExtensionSupport",
+            "summary": "Check\u0020if\u0020the\u0020client\u0020has\u0020support\u0020for\u0020answer\u0020extraction\u0020\u0028libxml,\u0020openssl,\u0020dom\u0029",
+            "url": "classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_HasSuggestedExtensionSupport"
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFAPIClient\u003A\u003AHasAccessToken\u0028\u0029",
             "name": "HasAccessToken",
@@ -186,6 +191,26 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/EdituraEDU-ANAF-ANAFAPIClient.html#property_LockToken"
         },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\ANAFBinHelper",
+            "name": "ANAFBinHelper",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-ANAFBinHelper.html"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\ANAFBinHelper\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-ANAFBinHelper.html#method___construct"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\ANAFBinHelper\u003A\u003ALogOutput\u0028\u0029",
+            "name": "LogOutput",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-ANAFBinHelper.html#method_LogOutput"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\ANAFBinHelper\u003A\u003AVerifyConfig\u0028\u0029",
+            "name": "VerifyConfig",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-ANAFBinHelper.html#method_VerifyConfig"
+        },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFEntity\\Address",
             "name": "Address",
             "summary": "Represents\u0020an\u0020address\u0020based\u0020on\u0020the\u0020ANAF\u0020API\u0020response\u0020structure",
@@ -193,7 +218,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFEntity\\Address\u003A\u003ACreateFromParsed\u0028\u0029",
             "name": "CreateFromParsed",
-            "summary": "Similar\u0020to\u0020\u0040param\u0020stdClass\u0020\u0024parsed",
+            "summary": "Similar\u0020to\u0020\u0040param\u0020\u0020stdClass\u0020\u0020\u0024parsed",
             "url": "classes/EdituraEDU-ANAF-ANAFEntity-Address.html#method_CreateFromParsed"
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFEntity\\Address\u003A\u003A\u0024denumire_Strada",
@@ -258,7 +283,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFEntity\\Entity\u003A\u003AGetSector\u0028\u0029",
             "name": "GetSector",
-            "summary": "Try\u0020to\u0020extract\u0020Bucharest\u0027s\u0020sector\u0020from\u0020the\u0020address\nWill\u0020return\u0020null\u0020if\u0020the\u0020address\u0020is\u0020not\u0020set\u0020or\u0020if\u0020the\u0020address\u0020does\u0020not\u0020contain\u0020a\u0020sector.",
+            "summary": "Try\u0020to\u0020extract\u0020Bucharest\u0027s\u0020sector\u0020from\u0020the\u0020address\u0020Will\u0020return\u0020null\u0020if\u0020the\u0020address\u0020is\u0020not\u0020set\u0020or\u0020if\u0020the\u0020address\u0020does\u0020not\u0020contain\u0020a\u0020sector.\u0020\u0028Looks\u0020for\u0020the\u0020word\u0020\u0022sector\u0022\u0020followed\u0020by\u0020a\u0020digit,\u0020case\u002Dinsensitive,\u0020surrounded\u0020by\u0020spaces\u0020or\u0020punctuation\u0029",
             "url": "classes/EdituraEDU-ANAF-ANAFEntity-Entity.html#method_GetSector"
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFEntity\\Entity\u003A\u003AIsRadiat\u0028\u0029",
@@ -403,7 +428,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFEntity\\InactiveInfo\u003A\u003ACreateFromParsed\u0028\u0029",
             "name": "CreateFromParsed",
-            "summary": "Similar\u0020to\u0020\u0040param\u0020stdClass\u0020\u0024parsedData",
+            "summary": "Similar\u0020to\u0020\u0040param\u0020\u0020stdClass\u0020\u0020\u0024parsedData",
             "url": "classes/EdituraEDU-ANAF-ANAFEntity-InactiveInfo.html#method_CreateFromParsed"
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFEntity\\InactiveInfo\u003A\u003A\u0024dataInactivare",
@@ -438,7 +463,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFEntity\\RTVAInfo\u003A\u003ACreateFromParsed\u0028\u0029",
             "name": "CreateFromParsed",
-            "summary": "Similar\u0020to\u0020\u0040param\u0020stdClass\u0020\u0024parsedData",
+            "summary": "Similar\u0020to\u0020\u0040param\u0020\u0020stdClass\u0020\u0020\u0024parsedData",
             "url": "classes/EdituraEDU-ANAF-ANAFEntity-RTVAInfo.html#method_CreateFromParsed"
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFEntity\\RTVAInfo\u003A\u003A\u0024dataInceputTvaInc",
@@ -478,7 +503,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFEntity\\SplitTVAInfo\u003A\u003ACreateFromParsed\u0028\u0029",
             "name": "CreateFromParsed",
-            "summary": "Similar\u0020to\u0020\u0040param\u0020stdClass\u0020\u0024parsedData",
+            "summary": "Similar\u0020to\u0020\u0040param\u0020\u0020stdClass\u0020\u0020\u0024parsedData",
             "url": "classes/EdituraEDU-ANAF-ANAFEntity-SplitTVAInfo.html#method_CreateFromParsed"
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFEntity\\SplitTVAInfo\u003A\u003A\u0024dataInceputSplitTVA",
@@ -503,7 +528,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFEntity\\TVAInfo\u003A\u003ACreateFromParsed\u0028\u0029",
             "name": "CreateFromParsed",
-            "summary": "Similar\u0020to\u0020\u0040param\u0020stdClass\u0020\u0024parsedData",
+            "summary": "Similar\u0020to\u0020\u0040param\u0020\u0020stdClass\u0020\u0020\u0024parsedData",
             "url": "classes/EdituraEDU-ANAF-ANAFEntity-TVAInfo.html#method_CreateFromParsed"
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\ANAFEntity\\TVAInfo\u003A\u003A\u0024scpTVA",
@@ -515,6 +540,31 @@ Search.appendIndex(
             "name": "perioade_TVA",
             "summary": "",
             "url": "classes/EdituraEDU-ANAF-ANAFEntity-TVAInfo.html#property_perioade_TVA"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\AnswerFilter",
+            "name": "AnswerFilter",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-AnswerFilter.html"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\AnswerFilter\u003A\u003AERORI_FACTURA",
+            "name": "ERORI_FACTURA",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-AnswerFilter.html#enumcase_ERORI_FACTURA"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\AnswerFilter\u003A\u003AFACTURA_TRIMISA",
+            "name": "FACTURA_TRIMISA",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-AnswerFilter.html#enumcase_FACTURA_TRIMISA"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\AnswerFilter\u003A\u003AFACTURA_PRIMITA",
+            "name": "FACTURA_PRIMITA",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-AnswerFilter.html#enumcase_FACTURA_PRIMITA"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\AnswerFilter\u003A\u003AALTE_MESAJE",
+            "name": "ALTE_MESAJE",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-AnswerFilter.html#enumcase_ALTE_MESAJE"
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\Responses\\ANAFAnswer",
             "name": "ANAFAnswer",
@@ -568,7 +618,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\Responses\\ANAFAnswerListResponse\u003A\u003ACreateError\u0028\u0029",
             "name": "CreateError",
-            "summary": "Create\u0020an\u0020error\u0020response\nFor\u0020internal\u0020use\u0021",
+            "summary": "Create\u0020an\u0020error\u0020response\u0020For\u0020internal\u0020use\u0021",
             "url": "classes/EdituraEDU-ANAF-Responses-ANAFAnswerListResponse.html#method_CreateError"
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\Responses\\ANAFAnswerListResponse\u003A\u003AParse\u0028\u0029",
@@ -600,6 +650,66 @@ Search.appendIndex(
             "name": "mesaje",
             "summary": "",
             "url": "classes/EdituraEDU-ANAF-Responses-ANAFAnswerListResponse.html#property_mesaje"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\ANAFErrorAnswer",
+            "name": "ANAFErrorAnswer",
+            "summary": "Used\u0020for\u0020error\u0020answers\u0020found\u0020during\u0020DownloadAnswer",
+            "url": "classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\ANAFErrorAnswer\u003A\u003AParse\u0028\u0029",
+            "name": "Parse",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#method_Parse"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\ANAFErrorAnswer\u003A\u003AIsDuplicateUploadError\u0028\u0029",
+            "name": "IsDuplicateUploadError",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#method_IsDuplicateUploadError"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\ANAFErrorAnswer\u003A\u003ACreate\u0028\u0029",
+            "name": "Create",
+            "summary": "Creeaz\u0103\u0020un\u0020obiect\u0020de\u0020tip\u0020ANAFDownloadedFileError\u0020dintr\u002Dun\u0020r\u0103spuns\u0020XML.",
+            "url": "classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#method_Create"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\ANAFErrorAnswer\u003A\u003ACreateError\u0028\u0029",
+            "name": "CreateError",
+            "summary": "Creeaz\u0103\u0020un\u0020obiect\u0020de\u0020tip\u0020ANAFDownloadedFileError\u0020dintr\u002Do\u0020excep\u021Bie.",
+            "url": "classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#method_CreateError"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\ANAFErrorAnswer\u003A\u003AIsSupported\u0028\u0029",
+            "name": "IsSupported",
+            "summary": "Checks\u0020for\u0020SimpleXML\u0020and\u0020libxml\u0020support\u0020in\u0020the\u0020current\u0020PHP\u0020environment.",
+            "url": "classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#method_IsSupported"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\ANAFErrorAnswer\u003A\u003AIsExpectedErrorFormat\u0028\u0029",
+            "name": "IsExpectedErrorFormat",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#method_IsExpectedErrorFormat"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\ANAFErrorAnswer\u003A\u003A\u0024AnswerID",
+            "name": "AnswerID",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#property_AnswerID"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\ANAFErrorAnswer\u003A\u003A\u0024message",
+            "name": "message",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#property_message"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\ANAFErrorAnswer\u003A\u003A\u0024index_incarcare",
+            "name": "index_incarcare",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#property_index_incarcare"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\ANAFErrorAnswer\u003A\u003A\u0024data_incarcare",
+            "name": "data_incarcare",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#property_data_incarcare"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\ANAFErrorAnswer\u003A\u003A\u0024cif_emitent",
+            "name": "cif_emitent",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#property_cif_emitent"
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\Responses\\ANAFException",
             "name": "ANAFException",
@@ -675,6 +785,36 @@ Search.appendIndex(
             "name": "MESSAGE_LIST_TOO_LONG",
             "summary": "",
             "url": "classes/EdituraEDU-ANAF-Responses-ANAFException.html#constant_MESSAGE_LIST_TOO_LONG"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\ANAFException\u003A\u003AERROR_ANSWER_PARSE_FAILED",
+            "name": "ERROR_ANSWER_PARSE_FAILED",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Responses-ANAFException.html#constant_ERROR_ANSWER_PARSE_FAILED"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\ANAFException\u003A\u003AEXPECTED_ERROR_GOT_VALID_ANSWER",
+            "name": "EXPECTED_ERROR_GOT_VALID_ANSWER",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Responses-ANAFException.html#constant_EXPECTED_ERROR_GOT_VALID_ANSWER"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\ANAFException\u003A\u003AERROR_ANSWER_NOT_SUPPORTED",
+            "name": "ERROR_ANSWER_NOT_SUPPORTED",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Responses-ANAFException.html#constant_ERROR_ANSWER_NOT_SUPPORTED"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\ANAFException\u003A\u003AZIP_NOT_SUPPORTED",
+            "name": "ZIP_NOT_SUPPORTED",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Responses-ANAFException.html#constant_ZIP_NOT_SUPPORTED"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\ANAFException\u003A\u003AUNEXPECTED_ZIP_FORMAT",
+            "name": "UNEXPECTED_ZIP_FORMAT",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Responses-ANAFException.html#constant_UNEXPECTED_ZIP_FORMAT"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\ANAFException\u003A\u003AFAILED_TO_WRITE_TEMP_FILE",
+            "name": "FAILED_TO_WRITE_TEMP_FILE",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Responses-ANAFException.html#constant_FAILED_TO_WRITE_TEMP_FILE"
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\Responses\\ANAFResponse",
             "name": "ANAFResponse",
@@ -786,6 +926,81 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/EdituraEDU-ANAF-Responses-EntityResponse.html#property_Entity"
         },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\ExtractedAnswer",
+            "name": "ExtractedAnswer",
+            "summary": "Represents\u0020the\u0020base\u0020structure\u0020for\u0020some\u0020ANAF\u0020API\u0020responses",
+            "url": "classes/EdituraEDU-ANAF-Responses-ExtractedAnswer.html"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\ExtractedAnswer\u003A\u003ADeleteTempFile\u0028\u0029",
+            "name": "DeleteTempFile",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Responses-ExtractedAnswer.html#method_DeleteTempFile"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\ExtractedAnswer\u003A\u003AIsSupported\u0028\u0029",
+            "name": "IsSupported",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Responses-ExtractedAnswer.html#method_IsSupported"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\ExtractedAnswer\u003A\u003AParse\u0028\u0029",
+            "name": "Parse",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Responses-ExtractedAnswer.html#method_Parse"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\ExtractedAnswer\u003A\u003ACreate\u0028\u0029",
+            "name": "Create",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Responses-ExtractedAnswer.html#method_Create"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\ExtractedAnswer\u003A\u003ACreateError\u0028\u0029",
+            "name": "CreateError",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Responses-ExtractedAnswer.html#method_CreateError"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\ExtractedAnswer\u003A\u003A\u0024content",
+            "name": "content",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Responses-ExtractedAnswer.html#property_content"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\ExtractedAnswer\u003A\u003A\u0024signature",
+            "name": "signature",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Responses-ExtractedAnswer.html#property_signature"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\ExtractedAnswer\u003A\u003A\u0024index_incarcare",
+            "name": "index_incarcare",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Responses-ExtractedAnswer.html#property_index_incarcare"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\ExtractedAnswer\u003A\u003A\u0024IsWellFormedError",
+            "name": "IsWellFormedError",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Responses-ExtractedAnswer.html#property_IsWellFormedError"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\ExtractedAnswer\u003A\u003A\u0024Error",
+            "name": "Error",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Responses-ExtractedAnswer.html#property_Error"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\ExtractedAnswer\u003A\u003A\u0024TempFileName",
+            "name": "TempFileName",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Responses-ExtractedAnswer.html#property_TempFileName"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\ExtractedAnswer\u003A\u003A\u0024VerifySignature",
+            "name": "VerifySignature",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Responses-ExtractedAnswer.html#property_VerifySignature"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\ExtractedAnswer\u003A\u003A\u0024RanSignatureVerification",
+            "name": "RanSignatureVerification",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Responses-ExtractedAnswer.html#property_RanSignatureVerification"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Responses\\ExtractedAnswer\u003A\u003A\u0024SignatureVerificationResult",
+            "name": "SignatureVerificationResult",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Responses-ExtractedAnswer.html#property_SignatureVerificationResult"
+        },                {
             "fqsen": "\\EdituraEDU\\ANAF\\Responses\\InternalPagedAnswersResponse",
             "name": "InternalPagedAnswersResponse",
             "summary": "Response\u0020to\u0020the\u0020paged\u0020answers\u0020API\u0020endpoint",
@@ -798,12 +1013,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\Responses\\InternalPagedAnswersResponse\u003A\u003AIsLastPage\u0028\u0029",
             "name": "IsLastPage",
-            "summary": "Check\u0020if\u0020the\u0020current\u0020page\u0020is\u0020the\u0020last\u0020page\nWill\u0020always\u0020return\u0020true\u0020if\u0020the\u0020response\u0020is\u0020not\u0020successful",
+            "summary": "Check\u0020if\u0020the\u0020current\u0020page\u0020is\u0020the\u0020last\u0020page\u0020Will\u0020always\u0020return\u0020true\u0020if\u0020the\u0020response\u0020is\u0020not\u0020successful",
             "url": "classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#method_IsLastPage"
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\Responses\\InternalPagedAnswersResponse\u003A\u003ACreateError\u0028\u0029",
             "name": "CreateError",
-            "summary": "Create\u0020an\u0020error\u0020response\nFor\u0020internal\u0020use\u0021",
+            "summary": "Create\u0020an\u0020error\u0020response\u0020For\u0020internal\u0020use\u0021",
             "url": "classes/EdituraEDU-ANAF-Responses-InternalPagedAnswersResponse.html#method_CreateError"
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\Responses\\InternalPagedAnswersResponse\u003A\u003ACreate\u0028\u0029",
@@ -853,12 +1068,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\Responses\\PagedAnswerListResponse\u003A\u003ACreateError\u0028\u0029",
             "name": "CreateError",
-            "summary": "Create\u0020an\u0020error\u0020response\nFor\u0020internal\u0020use\u0021",
+            "summary": "Create\u0020an\u0020error\u0020response\u0020For\u0020internal\u0020use\u0021",
             "url": "classes/EdituraEDU-ANAF-Responses-PagedAnswerListResponse.html#method_CreateError"
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\Responses\\PagedAnswerListResponse\u003A\u003A\u0024Pages",
             "name": "Pages",
-            "summary": "Stores\u0020a\u0020reference\u0020to\u0020the\u0020original\u0020responses\nNOTE\u003A\u0020empty\u0020responses\u0020\u0028no\u0020messages\u0029\u0020are\u0020not\u0020stored",
+            "summary": "Stores\u0020a\u0020reference\u0020to\u0020the\u0020original\u0020responses\u0020NOTE\u003A\u0020empty\u0020responses\u0020\u0028no\u0020messages\u0029\u0020are\u0020not\u0020stored",
             "url": "classes/EdituraEDU-ANAF-Responses-PagedAnswerListResponse.html#property_Pages"
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\Responses\\PagedAnswerListResponse\u003A\u003A\u0024ErrorPages",
@@ -898,7 +1113,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\Responses\\UBLUploadResponse\u003A\u003AisJson\u0028\u0029",
             "name": "isJson",
-            "summary": "Used\u0020to\u0020check\u0020if\u0020API\u0020response\u0020is\u0020JSON\nAnswers\u0020that\u0020are\u0020JSON\u0020are\u0020errors",
+            "summary": "Used\u0020to\u0020check\u0020if\u0020API\u0020response\u0020is\u0020JSON\u0020Answers\u0020that\u0020are\u0020JSON\u0020are\u0020errors",
             "url": "classes/EdituraEDU-ANAF-Responses-UBLUploadResponse.html#method_isJson"
         },                {
             "fqsen": "\\EdituraEDU\\ANAF\\Responses\\UBLUploadResponse\u003A\u003AisErrorResponse\u0028\u0029",
@@ -936,6 +1151,111 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/EdituraEDU-ANAF-Responses-UBLUploadResponse.html#property_IndexIncarcare"
         },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Signature\\EFacturaSignatureVerifier",
+            "name": "EFacturaSignatureVerifier",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Signature-EFacturaSignatureVerifier.html"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Signature\\EFacturaSignatureVerifier\u003A\u003AIsSupported\u0028\u0029",
+            "name": "IsSupported",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Signature-EFacturaSignatureVerifier.html#method_IsSupported"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Signature\\EFacturaSignatureVerifier\u003A\u003AIsCertificateAccepted\u0028\u0029",
+            "name": "IsCertificateAccepted",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Signature-EFacturaSignatureVerifier.html#method_IsCertificateAccepted"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Signature\\EFacturaSignatureVerifier\u003A\u003AVerifyInvoicesFile\u0028\u0029",
+            "name": "VerifyInvoicesFile",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Signature-EFacturaSignatureVerifier.html#method_VerifyInvoicesFile"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Signature\\EFacturaSignatureVerifier\u003A\u003AVerifyContent\u0028\u0029",
+            "name": "VerifyContent",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Signature-EFacturaSignatureVerifier.html#method_VerifyContent"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Signature\\EFacturaSignatureVerifier\u003A\u003AnormalizeBase64\u0028\u0029",
+            "name": "normalizeBase64",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Signature-EFacturaSignatureVerifier.html#method_normalizeBase64"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Signature\\EFacturaSignatureVerifier\u003A\u003AnormalizeCertificate\u0028\u0029",
+            "name": "normalizeCertificate",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Signature-EFacturaSignatureVerifier.html#method_normalizeCertificate"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Signature\\EFacturaSignatureVerifier\u003A\u003ADSIG_NAMESPACE",
+            "name": "DSIG_NAMESPACE",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Signature-EFacturaSignatureVerifier.html#constant_DSIG_NAMESPACE"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Signature\\SignatureVerificationResult",
+            "name": "SignatureVerificationResult",
+            "summary": "",
+            "url": "classes/EdituraEDU-ANAF-Signature-SignatureVerificationResult.html"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Signature\\SignatureVerificationResult\u003A\u003ASuccess",
+            "name": "Success",
+            "summary": "Verification\u0020completed\u0020successfully.",
+            "url": "classes/EdituraEDU-ANAF-Signature-SignatureVerificationResult.html#enumcase_Success"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Signature\\SignatureVerificationResult\u003A\u003AFileReadError",
+            "name": "FileReadError",
+            "summary": "One\u0020or\u0020both\u0020invoice\/signature\u0020files\u0020could\u0020not\u0020be\u0020read.",
+            "url": "classes/EdituraEDU-ANAF-Signature-SignatureVerificationResult.html#enumcase_FileReadError"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Signature\\SignatureVerificationResult\u003A\u003AInvalidSignatureXml",
+            "name": "InvalidSignatureXml",
+            "summary": "The\u0020signature\u0020content\u0020is\u0020not\u0020valid\u0020XML\u0020or\u0020does\u0020not\u0020have\u0020a\u0020Signature\u0020root\u0020element.",
+            "url": "classes/EdituraEDU-ANAF-Signature-SignatureVerificationResult.html#enumcase_InvalidSignatureXml"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Signature\\SignatureVerificationResult\u003A\u003AInvalidSignatureNamespace",
+            "name": "InvalidSignatureNamespace",
+            "summary": "The\u0020signature\u0020XML\u0020does\u0020not\u0020use\u0020the\u0020expected\u0020XML\u0020Digital\u0020Signature\u0020namespace.",
+            "url": "classes/EdituraEDU-ANAF-Signature-SignatureVerificationResult.html#enumcase_InvalidSignatureNamespace"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Signature\\SignatureVerificationResult\u003A\u003AMissingSignatureData",
+            "name": "MissingSignatureData",
+            "summary": "Required\u0020SignedInfo,\u0020SignatureValue,\u0020or\u0020X509Certificate\u0020data\u0020is\u0020missing.",
+            "url": "classes/EdituraEDU-ANAF-Signature-SignatureVerificationResult.html#enumcase_MissingSignatureData"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Signature\\SignatureVerificationResult\u003A\u003ADigestMismatch",
+            "name": "DigestMismatch",
+            "summary": "The\u0020digest\u0020in\u0020the\u0020signature\u0020does\u0020not\u0020match\u0020the\u0020SHA\u002D256\u0020digest\u0020of\u0020the\u0020invoice.",
+            "url": "classes/EdituraEDU-ANAF-Signature-SignatureVerificationResult.html#enumcase_DigestMismatch"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Signature\\SignatureVerificationResult\u003A\u003AInvalidCanonicalData",
+            "name": "InvalidCanonicalData",
+            "summary": "SignedInfo\u0020could\u0020not\u0020be\u0020imported\u0020into\u0020DOM\u0020or\u0020canonicalized.",
+            "url": "classes/EdituraEDU-ANAF-Signature-SignatureVerificationResult.html#enumcase_InvalidCanonicalData"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Signature\\SignatureVerificationResult\u003A\u003AInvalidCertificateBlock",
+            "name": "InvalidCertificateBlock",
+            "summary": "The\u0020embedded\u0020certificate\u0020is\u0020empty\u0020or\u0020cannot\u0020be\u0020loaded\u0020as\u0020a\u0020public\u0020key.",
+            "url": "classes/EdituraEDU-ANAF-Signature-SignatureVerificationResult.html#enumcase_InvalidCertificateBlock"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Signature\\SignatureVerificationResult\u003A\u003AInvalidSignatureValue",
+            "name": "InvalidSignatureValue",
+            "summary": "The\u0020SignatureValue\u0020is\u0020not\u0020valid\u0020base64\u0020data.",
+            "url": "classes/EdituraEDU-ANAF-Signature-SignatureVerificationResult.html#enumcase_InvalidSignatureValue"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Signature\\SignatureVerificationResult\u003A\u003ASignatureMismatch",
+            "name": "SignatureMismatch",
+            "summary": "The\u0020cryptographic\u0020signature\u0020does\u0020not\u0020validate\u0020against\u0020the\u0020canonicalized\u0020SignedInfo.",
+            "url": "classes/EdituraEDU-ANAF-Signature-SignatureVerificationResult.html#enumcase_SignatureMismatch"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Signature\\SignatureVerificationResult\u003A\u003ASignatureMatchWithUnacceptedCertificate",
+            "name": "SignatureMatchWithUnacceptedCertificate",
+            "summary": "The\u0020signature\u0020matches,\u0020but\u0020its\u0020certificate\u0020is\u0020not\u0020in\u0020the\u0020accepted\u0020list.",
+            "url": "classes/EdituraEDU-ANAF-Signature-SignatureVerificationResult.html#enumcase_SignatureMatchWithUnacceptedCertificate"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Signature\\SignatureVerificationResult\u003A\u003ANotSupported",
+            "name": "NotSupported",
+            "summary": "One\u0020or\u0020more\u0020required\u0020PHP\u0020extensions\u0020are\u0020not\u0020available.",
+            "url": "classes/EdituraEDU-ANAF-Signature-SignatureVerificationResult.html#enumcase_NotSupported"
+        },                {
             "fqsen": "\\",
             "name": "\\",
             "summary": "",
@@ -960,5 +1280,10 @@ Search.appendIndex(
             "name": "Responses",
             "summary": "",
             "url": "namespaces/edituraedu-anaf-responses.html"
+        },                {
+            "fqsen": "\\EdituraEDU\\ANAF\\Signature",
+            "name": "Signature",
+            "summary": "",
+            "url": "namespaces/edituraedu-anaf-signature.html"
         }            ]
 );

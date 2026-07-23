@@ -101,8 +101,11 @@
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    ANAFResponse
+    ANAFErrorAnswer
 
+        <span class="phpdocumentor-element__extends">
+        extends <a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html"><abbr title="\EdituraEDU\ANAF\Responses\ANAFResponse">ANAFResponse</abbr></a>
+    </span>
     
             <div class="phpdocumentor-element__package">
             in package
@@ -117,33 +120,32 @@
 <div class="phpdocumentor-label-line">
 
 
-    <div class="phpdocumentor-label phpdocumentor-label--success"><span>Abstract</span><span>Yes</span></div>
-
 </div>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="Responses/ANAFResponse.php"><a href="files/responses-anafresponse.html"><abbr title="Responses/ANAFResponse.php">ANAFResponse.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="Responses/ANAFErrorAnswer.php"><a href="files/responses-anaferroranswer.html"><abbr title="Responses/ANAFErrorAnswer.php">ANAFErrorAnswer.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">12</span>
+    <span class="phpdocumentor-element-found-in__line">14</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">Represents the base structure for some ANAF API responses</p>
+            <p class="phpdocumentor-summary">Used for error answers found during DownloadAnswer</p>
 
 
 
 
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
                     <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">TODO</span>
+                <span class="phpdocumentor-tag__name">see</span>
             </dt>
                             <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>make *Response classes extend this class</p>
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/EdituraEDU-ANAF-ANAFAPIClient.html#method_DownloadAnswer"><abbr title="\EdituraEDU\ANAF\ANAFAPIClient::DownloadAnswer()">ANAFAPIClient::DownloadAnswer()</abbr></a></span>
+                                                                    <section class="phpdocumentor-description"><p>credit to https://github.com/octapopa</p>
 </section>
 
                                     </dd>
@@ -153,7 +155,7 @@
     
 <h3 id="toc">
     Table of Contents
-    <a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h3>
 
@@ -167,14 +169,44 @@
 
 <h4 id="toc-properties">
     Properties
-    <a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#property_AnswerID">$AnswerID</a>
+    <span>
+                        &nbsp;: string            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#property_cif_emitent">$cif_emitent</a>
+    <span>
+                        &nbsp;: string|null            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#property_data_incarcare">$data_incarcare</a>
+    <span>
+                        &nbsp;: string|null            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#property_index_incarcare">$index_incarcare</a>
+    <span>
+                        &nbsp;: string|null            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#property_LastError">$LastError</a>
     <span>
                         &nbsp;: <abbr title="\Throwable">Throwable</abbr>|null            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#property_message">$message</a>
+    <span>
+                        &nbsp;: string|null            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -187,18 +219,38 @@
 
 <h4 id="toc-methods">
     Methods
-    <a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#method_CreateError">CreateError()</a>
+    <a class="" href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#method_Create">Create()</a>
     <span>
-                                &nbsp;: <a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html"><abbr title="\EdituraEDU\ANAF\Responses\ANAFResponse">ANAFResponse</abbr></a>    </span>
+                                &nbsp;: <a href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html"><abbr title="\EdituraEDU\ANAF\Responses\ANAFErrorAnswer">ANAFErrorAnswer</abbr></a>    </span>
 </dt>
+<dd>Creează un obiect de tip ANAFDownloadedFileError dintr-un răspuns XML.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#method_CreateError">CreateError()</a>
+    <span>
+                                &nbsp;: <a href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html"><abbr title="\EdituraEDU\ANAF\Responses\ANAFErrorAnswer">ANAFErrorAnswer</abbr></a>    </span>
+</dt>
+<dd>Creează un obiect de tip ANAFDownloadedFileError dintr-o excepție.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#method_HasError">HasError()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#method_IsDuplicateUploadError">IsDuplicateUploadError()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#method_IsExpectedErrorFormat">IsExpectedErrorFormat()</a>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
@@ -210,7 +262,14 @@
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#method_Parse">Parse()</a>
+    <a class="" href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#method_IsSupported">IsSupported()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+<dd>Checks for SimpleXML and libxml support in the current PHP environment.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#method_Parse">Parse()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
@@ -238,9 +297,157 @@
     <section class="phpdocumentor-properties">
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
-            <a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_AnswerID">
+        $AnswerID
+        <a href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#property_AnswerID" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="Responses/ANAFErrorAnswer.php"><a href="files/responses-anaferroranswer.html"><abbr title="Responses/ANAFErrorAnswer.php">ANAFErrorAnswer.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">15</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">string</span>
+    <span class="phpdocumentor-signature__name">$AnswerID</span>
+    </code>
+
+    
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_cif_emitent">
+        $cif_emitent
+        <a href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#property_cif_emitent" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="Responses/ANAFErrorAnswer.php"><a href="files/responses-anaferroranswer.html"><abbr title="Responses/ANAFErrorAnswer.php">ANAFErrorAnswer.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">21</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">string|null</span>
+    <span class="phpdocumentor-signature__name">$cif_emitent</span>
+     = <span class="phpdocumentor-signature__default-value">null</span></code>
+
+    
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_data_incarcare">
+        $data_incarcare
+        <a href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#property_data_incarcare" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="Responses/ANAFErrorAnswer.php"><a href="files/responses-anaferroranswer.html"><abbr title="Responses/ANAFErrorAnswer.php">ANAFErrorAnswer.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">19</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">string|null</span>
+    <span class="phpdocumentor-signature__name">$data_incarcare</span>
+     = <span class="phpdocumentor-signature__default-value">null</span></code>
+
+    
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_index_incarcare">
+        $index_incarcare
+        <a href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#property_index_incarcare" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="Responses/ANAFErrorAnswer.php"><a href="files/responses-anaferroranswer.html"><abbr title="Responses/ANAFErrorAnswer.php">ANAFErrorAnswer.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">17</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">string|null</span>
+    <span class="phpdocumentor-signature__name">$index_incarcare</span>
+     = <span class="phpdocumentor-signature__default-value">null</span></code>
+
+    
+    
+    
+
+        
+        
+
+</article>
                     <article
         class="
             phpdocumentor-element
@@ -268,6 +475,43 @@
         <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__type"><abbr title="\Throwable">Throwable</abbr>|null</span>
     <span class="phpdocumentor-signature__name">$LastError</span>
+     = <span class="phpdocumentor-signature__default-value">null</span></code>
+
+    
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_message">
+        $message
+        <a href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#property_message" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="Responses/ANAFErrorAnswer.php"><a href="files/responses-anaferroranswer.html"><abbr title="Responses/ANAFErrorAnswer.php">ANAFErrorAnswer.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">16</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">string|null</span>
+    <span class="phpdocumentor-signature__name">$message</span>
      = <span class="phpdocumentor-signature__default-value">null</span></code>
 
     
@@ -320,31 +564,88 @@
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
         class="phpdocumentor-element
             -method
             -public
-                        -abstract            -static                    "
+                                    -static                    "
 >
-    <h4 class="phpdocumentor-element__name" id="method_CreateError">
-        CreateError()
-        <a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#method_CreateError" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_Create">
+        Create()
+        <a href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#method_Create" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="Responses/ANAFResponse.php"><a href="files/responses-anafresponse.html"><abbr title="Responses/ANAFResponse.php">ANAFResponse.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="Responses/ANAFErrorAnswer.php"><a href="files/responses-anaferroranswer.html"><abbr title="Responses/ANAFErrorAnswer.php">ANAFErrorAnswer.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">18</span>
+    <span class="phpdocumentor-element-found-in__line">97</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Creează un obiect de tip ANAFDownloadedFileError dintr-un răspuns XML.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-    <span class="phpdocumentor-signature__abstract">abstract</span>        <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">CreateError</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><abbr title="\Throwable">Throwable</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$error</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html"><abbr title="\EdituraEDU\ANAF\Responses\ANAFResponse">ANAFResponse</abbr></a></span></code>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">Create</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$rawResponse</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html"><abbr title="\EdituraEDU\ANAF\Responses\ANAFErrorAnswer">ANAFErrorAnswer</abbr></a></span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$id</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$rawResponse</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html"><abbr title="\EdituraEDU\ANAF\Responses\ANAFErrorAnswer">ANAFErrorAnswer</abbr></a></span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                    -static                    "
+>
+    <h4 class="phpdocumentor-element__name" id="method_CreateError">
+        CreateError()
+        <a href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#method_CreateError" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="Responses/ANAFErrorAnswer.php"><a href="files/responses-anaferroranswer.html"><abbr title="Responses/ANAFErrorAnswer.php">ANAFErrorAnswer.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">110</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Creează un obiect de tip ANAFDownloadedFileError dintr-o excepție.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">CreateError</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><abbr title="\Throwable">Throwable</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$error</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html"><abbr title="\EdituraEDU\ANAF\Responses\ANAFErrorAnswer">ANAFErrorAnswer</abbr></a></span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -367,7 +668,7 @@
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html"><abbr title="\EdituraEDU\ANAF\Responses\ANAFResponse">ANAFResponse</abbr></a></span>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html"><abbr title="\EdituraEDU\ANAF\Responses\ANAFErrorAnswer">ANAFErrorAnswer</abbr></a></span>
             </section>
 
 </article>
@@ -399,6 +700,92 @@
     
     
     
+    
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_IsDuplicateUploadError">
+        IsDuplicateUploadError()
+        <a href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#method_IsDuplicateUploadError" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="Responses/ANAFErrorAnswer.php"><a href="files/responses-anaferroranswer.html"><abbr title="Responses/ANAFErrorAnswer.php">ANAFErrorAnswer.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">87</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">IsDuplicateUploadError</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                    -static                    "
+>
+    <h4 class="phpdocumentor-element__name" id="method_IsExpectedErrorFormat">
+        IsExpectedErrorFormat()
+        <a href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#method_IsExpectedErrorFormat" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="Responses/ANAFErrorAnswer.php"><a href="files/responses-anaferroranswer.html"><abbr title="Responses/ANAFErrorAnswer.php">ANAFErrorAnswer.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">126</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">IsExpectedErrorFormat</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$rawContent</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$rawContent</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
     
 
         
@@ -451,24 +838,63 @@
         class="phpdocumentor-element
             -method
             -public
-                        -abstract                                "
+                                    -static                    "
 >
-    <h4 class="phpdocumentor-element__name" id="method_Parse">
-        Parse()
-        <a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#method_Parse" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_IsSupported">
+        IsSupported()
+        <a href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#method_IsSupported" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="Responses/ANAFResponse.php"><a href="files/responses-anafresponse.html"><abbr title="Responses/ANAFResponse.php">ANAFResponse.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="Responses/ANAFErrorAnswer.php"><a href="files/responses-anaferroranswer.html"><abbr title="Responses/ANAFErrorAnswer.php">ANAFErrorAnswer.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">16</span>
+    <span class="phpdocumentor-element-found-in__line">122</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Checks for SimpleXML and libxml support in the current PHP environment.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">IsSupported</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_Parse">
+        Parse()
+        <a href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#method_Parse" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="Responses/ANAFErrorAnswer.php"><a href="files/responses-anaferroranswer.html"><abbr title="Responses/ANAFErrorAnswer.php">ANAFErrorAnswer.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">24</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-    <span class="phpdocumentor-signature__abstract">abstract</span>                <span class="phpdocumentor-signature__name">Parse</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">Parse</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -602,15 +1028,20 @@
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                                            <li><a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#toc-properties">Properties</a></li>
-                                                            <li><a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#toc-methods">Methods</a></li>
+                                                            <li><a href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#toc-properties">Properties</a></li>
+                                                            <li><a href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#toc-methods">Methods</a></li>
                                     </ul>
             </li>
             
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
+                                                    <li class=""><a href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#property_AnswerID">$AnswerID</a></li>
+                                                    <li class=""><a href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#property_cif_emitent">$cif_emitent</a></li>
+                                                    <li class=""><a href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#property_data_incarcare">$data_incarcare</a></li>
+                                                    <li class=""><a href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#property_index_incarcare">$index_incarcare</a></li>
                                                     <li class=""><a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#property_LastError">$LastError</a></li>
+                                                    <li class=""><a href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#property_message">$message</a></li>
                                                     <li class=""><a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#property_rawResponse">$rawResponse</a></li>
                                             </ul>
                 </li>
@@ -618,10 +1049,14 @@
                         <li class="phpdocumentor-on-this-page-section__title">Methods</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                            <li class=""><a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#method_CreateError">CreateError()</a></li>
+                                            <li class=""><a href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#method_Create">Create()</a></li>
+                                            <li class=""><a href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#method_CreateError">CreateError()</a></li>
                                             <li class=""><a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#method_HasError">HasError()</a></li>
+                                            <li class=""><a href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#method_IsDuplicateUploadError">IsDuplicateUploadError()</a></li>
+                                            <li class=""><a href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#method_IsExpectedErrorFormat">IsExpectedErrorFormat()</a></li>
                                             <li class=""><a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#method_IsSuccess">IsSuccess()</a></li>
-                                            <li class=""><a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#method_Parse">Parse()</a></li>
+                                            <li class=""><a href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#method_IsSupported">IsSupported()</a></li>
+                                            <li class=""><a href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#method_Parse">Parse()</a></li>
                                             <li class=""><a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#method_CommonParseJSON">CommonParseJSON()</a></li>
                                             <li class=""><a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#method_InternalCreateError">InternalCreateError()</a></li>
                                     </ul>
@@ -643,7 +1078,7 @@
     </section>
 </section>
         </div>
-        <a href="classes/EdituraEDU-ANAF-Responses-ANAFResponse.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/EdituraEDU-ANAF-Responses-ANAFErrorAnswer.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 
