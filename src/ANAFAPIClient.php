@@ -480,23 +480,17 @@ class ANAFAPIClient {
      * Get answer list for a company (authenticated user must have access to the company!)
      * @param  int  $cif
      * @param  int  $days  Number of days to look back
-     * @param  string|null  $filter
+     * @param  AnswerFilter|null  $filter
      * @param  bool  $usePaginationIfNeeded  If true and the answer has LastError code ANAFException::MESSAGE_LIST_TOO_LONG, the method will try to fetch the answers using pagination
      * @param  float|int  $endDateOffsetForPagination  ANAF API gives an error if the end date is "in the future" based on their internal clock, so end date will be currentTime-$endDateOffsetForPagination. Default is 5 minutes
      * @return ANAFAnswerListResponse
      * @see ANAFAPIClient::ListAnswersWithPagination()
      */
-    public function ListAnswers(int $cif, int $days = 60, string|null $filter = null, bool $usePaginationIfNeeded = false, $endDateOffsetForPagination = 5 * 60): ANAFAnswerListResponse {
-        if ($filter != null) {
-            $filter = strtoupper($filter);
-            if ( ! $this->ValidateFilter($filter)) {
-                return ANAFAnswerListResponse::CreateError(new ANAFException("Invalid filter", ANAFException::INVALID_INPUT));
-            }
-        }
+    public function ListAnswers(int $cif, int $days = 60, ?AnswerFilter $filter = null, bool $usePaginationIfNeeded = false, $endDateOffsetForPagination = 5 * 60): ANAFAnswerListResponse {
         $modeName = $this->Production ? "prod" : "test";
         $method = "/$modeName/FCTEL/rest/listaMesajeFactura?zile=$days&cif=$cif";
         if ($filter != null) {
-            $method .= "&filtru=$filter";
+            $method .= "&filtru={$filter->value}";
         }
         try {
             $httpResponse = $this->SendANAFRequest($method, null, null, true);
@@ -527,16 +521,10 @@ class ANAFAPIClient {
      * @param  int  $endTime
      * @param  int  $cif
      * @param  int|null  $specificPage
-     * @param  string|null  $filter
+     * @param  AnswerFilter|null  $filter
      * @return PagedAnswerListResponse
      */
-    public function ListAnswersWithPagination(int $startTime, int $endTime, int $cif, int|null $specificPage = null, string|null $filter = null): PagedAnswerListResponse {
-        if ($filter != null) {
-            $filter = strtoupper($filter);
-            if ( ! $this->ValidateFilter($filter)) {
-                return PagedAnswerListResponse::CreateError(new ANAFException("Invalid filter", ANAFException::INVALID_INPUT));
-            }
-        }
+    public function ListAnswersWithPagination(int $startTime, int $endTime, int $cif, int|null $specificPage = null, ?AnswerFilter $filter = null): PagedAnswerListResponse {
         if ($specificPage != null) {
             $response = $this->GetAnswerPage($startTime, $endTime, $cif, $specificPage, $filter);
             if ($response->IsSuccess()) {
@@ -572,16 +560,16 @@ class ANAFAPIClient {
      * @param  int  $endTime
      * @param  int  $cif
      * @param  int  $pageNumber
-     * @param  string|null  $filter
+     * @param  AnswerFilter|null  $filter
      * @return InternalPagedAnswersResponse
      */
-    public function GetAnswerPage(int $startTime, int $endTime, int $cif, int $pageNumber, string|null $filter = null): InternalPagedAnswersResponse {
+    public function GetAnswerPage(int $startTime, int $endTime, int $cif, int $pageNumber, ?AnswerFilter $filter = null): InternalPagedAnswersResponse {
         $modeName = $this->Production ? "prod" : "test";
         $actualStart = $startTime * 1000;
         $actualEnd = $endTime * 1000;
         $method = "/$modeName/FCTEL/rest/listaMesajePaginatieFactura?startTime=$actualStart&endTime=$actualEnd&cif=$cif&pagina=$pageNumber";
         if ($filter != null) {
-            $method .= "&filtru=$filter";
+            $method .= "&filtru={$filter->value}";
         }
         try {
             $httpResponse = $this->SendANAFRequest($method, null, null, true);
@@ -621,19 +609,6 @@ class ANAFAPIClient {
 
         $this->CallErrorCallback("ANAF VERIFY ERROR: NO RESPONSE OR ERROR");
         return ANAFVerifyResponse::CreateError(new ANAFException("No response or error", ANAFException::UNKNOWN_ERROR));
-    }
-
-    /**
-     * Currently accepted filter chars are: E, T, P, R
-     * @param  string  $filter
-     * @return bool
-     */
-    private function ValidateFilter(string $filter): bool {
-        if (strlen($filter) != 1) {
-            return false;
-        }
-        $acceptedFilters = ["E", "T", "P", "R"];
-        return in_array($filter, $acceptedFilters);
     }
 
     /**
