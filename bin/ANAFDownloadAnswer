@@ -1,0 +1,57 @@
+#!/usr/bin/env php
+<?php
+
+use EdituraEDU\CLI\CLIApp;
+use EdituraEDU\CLI\CLIOption;
+
+require __DIR__ . '/../vendor/autoload.php';
+
+$configOption = new CLIOption(
+    "config",
+    "c",
+    "Path to the configuration file",
+    \EdituraEDU\CLI\CLIOptionType::STRING
+);
+$idOption = new CLIOption(
+    "id",
+    "i",
+    "Answer ID obtained from ListAnswers",
+    \EdituraEDU\CLI\CLIOptionType::STRING,
+    true
+);
+$outputOption = new CLIOption(
+    "output",
+    "o",
+    "Path to the output file",
+    \EdituraEDU\CLI\CLIOptionType::STRING
+);
+
+$optionList = [$configOption, $idOption, $outputOption];
+$cliApp = new CLIApp("ANAFDownloadAnswer", "Downloads an answer from ANAF", "1.0.0", $optionList);
+$cliApp->Parse();
+
+$configFilePath = $configOption->HasValue() ? $configOption->GetValue() : __DIR__ . "/../bin-config.json";
+$anaf = new \EdituraEDU\ANAF\ANAFBinHelper($configFilePath);
+$response = $anaf->DownloadAnswer($idOption->GetValue(), true);
+
+if (is_string($response)) {
+    if ($outputOption->HasValue()) {
+        if (file_put_contents($outputOption->GetValue(), $response) === false) {
+            throw new \RuntimeException("Failed to write output file: " . $outputOption->GetValue());
+        }
+        exit;
+    }
+
+    echo $response;
+    exit;
+}
+
+$encodedResponse = json_encode($response, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+if ($outputOption->HasValue()) {
+    if (file_put_contents($outputOption->GetValue(), $encodedResponse . PHP_EOL) === false) {
+        throw new \RuntimeException("Failed to write output file: " . $outputOption->GetValue());
+    }
+    exit;
+}
+
+echo $encodedResponse, PHP_EOL;
