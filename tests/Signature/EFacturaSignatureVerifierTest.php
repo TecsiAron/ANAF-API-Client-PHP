@@ -6,6 +6,7 @@ namespace EdituraEDU\ANAF\Tests\Signature;
 
 use EdituraEDU\ANAF\Responses\ExtractedAnswer;
 use EdituraEDU\ANAF\Signature\EFacturaSignatureVerifier;
+use EdituraEDU\ANAF\Signature\SignatureVerificationResult;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -24,15 +25,15 @@ final class EFacturaSignatureVerifierTest extends TestCase {
         return [
                 'valid answer' => [
                         self::VALID_ANSWER_BASE64,
-                        EFacturaSignatureVerifier::SUCCESS,
+                        SignatureVerificationResult::Success,
                 ],
                 'digest mismatch' => [
                         self::DIGEST_MISSMATCH_ANSWER_BASE64,
-                        EFacturaSignatureVerifier::DIGEST_MISSMATCH,
+                        SignatureVerificationResult::DigestMismatch,
                 ],
                 'signature mismatch' => [
                         self::SIGNATURE_MISSMATCH_ANSWER_BASE64,
-                        EFacturaSignatureVerifier::SIGNATURE_MISSMATCH,
+                        SignatureVerificationResult::SignatureMismatch,
                 ],
         ];
     }
@@ -40,7 +41,7 @@ final class EFacturaSignatureVerifierTest extends TestCase {
     #[DataProvider('verificationCases')]
     public function testEmbeddedAnswerVerification(
             string $answerBase64,
-            string $expectedResult
+            SignatureVerificationResult $expectedResult
     ): void {
         $answer = ExtractedAnswer::Create(base64_decode($answerBase64, true), false);
 

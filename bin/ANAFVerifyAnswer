@@ -37,9 +37,8 @@ if (!$answer->IsSuccess()) {
     exit(1);
 }
 if($answer->RanSignatureVerification) {
-    echo $answer->SignatureVerificationResult, PHP_EOL;
+    echo $answer->SignatureVerificationResult?->value, PHP_EOL;
     exit(0);
 }
 echo "Signature verification did not run!", PHP_EOL;
 exit(2);
-

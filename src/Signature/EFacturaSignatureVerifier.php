@@ -7,44 +7,6 @@ use SimpleXMLElement;
 final class EFacturaSignatureVerifier {
     private const DSIG_NAMESPACE = 'http://www.w3.org/2000/09/xmldsig#';
 
-    /** Verification completed successfully. */
-    public const SUCCESS = 'SUCCESS';
-
-    /** One or both invoice/signature files could not be read. */
-    public const FILE_READ_ERROR = 'FILE_READ_ERROR';
-
-    /** The signature content is not valid XML or does not have a Signature root element. */
-    public const INVALID_SIGNATURE_XML = 'INVALID_SIGNATURE_XML';
-
-    /** The signature XML does not use the expected XML Digital Signature namespace. */
-    public const INVALID_SIGNATURE_NAMESPACE = 'INVALID_SIGNATURE_NAMESPACE';
-
-    /** Required SignedInfo, SignatureValue, or X509Certificate data is missing. */
-    public const MISSING_SIGNATURE_DATA = 'MISSING_SIGNATURE_DATA';
-
-    /** The digest in the signature does not match the SHA-256 digest of the invoice. */
-    public const DIGEST_MISSMATCH = 'DIGEST_MISMATCH';
-
-    /** SignedInfo could not be imported into DOM or canonicalized. */
-    public const INVALID_CANONICAL_DATA = 'INVALID_CANONICAL_DATA';
-
-    /** The embedded certificate is empty or cannot be loaded as a public key. */
-    public const INVALID_CERTIFICATE_BLOCK = 'INVALID_CERTIFICATE_BLOCK';
-
-    /** The SignatureValue is not valid base64 data. */
-    public const INVALID_SIGNATURE_VALUE = 'INVALID_SIGNATURE_VALUE';
-
-    /** The cryptographic signature does not validate against the canonicalized SignedInfo. */
-    public const SIGNATURE_MISSMATCH = 'SIGNATURE_MISMATCH';
-
-    /** The cryptographic signature validates, but the certificate is not in the accepted list. IMPORTANT: Should be treated as a warning/flag for manual verification since ANAF can change certificates and new certificates will be issued with time (Expecting new certs for 2028+). */
-    public const SIGNATURE_MATCH_WITH_UNACCEPTED_CERTIFICATE = 'SIGNATURE_MATCH_WITH_UNACCEPTED_CERTIFICATE';
-
-    /**
-     * One or more required PHP extensions are not available (openssl, libxml, SimpleXML).
-     */
-    public const NOT_SUPPORTED = 'NOT_SUPPORTED';
-
     public static function IsSupported(): bool {
         return function_exists('simplexml_load_string')
                 && function_exists('libxml_use_internal_errors')
@@ -77,23 +39,23 @@ final class EFacturaSignatureVerifier {
         return false;
     }
 
-    public static function VerifyInvoicesFile(string $invoicePath, string $signaturePath): string {
+    public static function VerifyInvoicesFile(string $invoicePath, string $signaturePath): SignatureVerificationResult {
         if ( ! self::IsSupported()) {
-            return self::NOT_SUPPORTED;
+            return SignatureVerificationResult::NotSupported;
         }
 
         $invoiceBytes = file_get_contents($invoicePath);
         $signatureXml = file_get_contents($signaturePath);
 
         if ($invoiceBytes === false || $signatureXml === false) {
-            return self::FILE_READ_ERROR;
+            return SignatureVerificationResult::FileReadError;
         }
         return self::VerifyContent($invoiceBytes, $signatureXml);
     }
 
-    public static function VerifyContent(string $invoiceBytes, string $signatureXml): string {
+    public static function VerifyContent(string $invoiceBytes, string $signatureXml): SignatureVerificationResult {
         if ( ! self::IsSupported()) {
-            return self::NOT_SUPPORTED;
+            return SignatureVerificationResult::NotSupported;
         }
 
         libxml_use_internal_errors(true);
@@ -101,13 +63,13 @@ final class EFacturaSignatureVerifier {
             $xml = simplexml_load_string($signatureXml, SimpleXMLElement::class, LIBXML_NONET);
 
             if ($xml === false || $xml->getName() !== 'Signature') {
-                return self::INVALID_SIGNATURE_XML;
+                return SignatureVerificationResult::InvalidSignatureXml;
             }
 
             $namespaces = $xml->getDocNamespaces();
 
             if (($namespaces[''] ?? null) !== self::DSIG_NAMESPACE) {
-                return self::INVALID_SIGNATURE_NAMESPACE;
+                return SignatureVerificationResult::InvalidSignatureNamespace;
             }
 
             /*
@@ -120,7 +82,7 @@ final class EFacturaSignatureVerifier {
             if ( ! isset($signedInfo->Reference->DigestValue)
                     || ! isset($signature->SignatureValue)
                     || ! isset($signature->KeyInfo->X509Data->X509Certificate)) {
-                return self::MISSING_SIGNATURE_DATA;
+                return SignatureVerificationResult::MissingSignatureData;
             }
 
             /*
@@ -143,7 +105,7 @@ final class EFacturaSignatureVerifier {
                             hash('sha256', $invoiceBytes, true)
                     )
             ) {
-                return self::DIGEST_MISSMATCH;
+                return SignatureVerificationResult::DigestMismatch;
             }
 
             /*
@@ -152,13 +114,13 @@ final class EFacturaSignatureVerifier {
             $signedInfoDom = dom_import_simplexml($signedInfo);
 
             if ($signedInfoDom === false) {
-                return self::INVALID_CANONICAL_DATA;
+                return SignatureVerificationResult::InvalidCanonicalData;
             }
 
             $canonicalSignedInfo = $signedInfoDom->C14N(false, false);
 
             if ($canonicalSignedInfo === false) {
-                return self::INVALID_CANONICAL_DATA;
+                return SignatureVerificationResult::InvalidCanonicalData;
             }
 
             /*
@@ -173,7 +135,7 @@ final class EFacturaSignatureVerifier {
             );
 
             if ($certificateBase64 === '') {
-                return self::INVALID_CERTIFICATE_BLOCK;
+                return SignatureVerificationResult::InvalidCertificateBlock;
             }
 
             $certificatePem = "-----BEGIN CERTIFICATE-----\n".chunk_split($certificateBase64, 64, "\n")."-----END CERTIFICATE-----\n";
@@ -181,7 +143,7 @@ final class EFacturaSignatureVerifier {
             $publicKey = openssl_pkey_get_public($certificatePem);
 
             if ($publicKey === false) {
-                return self::INVALID_CERTIFICATE_BLOCK;
+                return SignatureVerificationResult::InvalidCertificateBlock;
             }
 
             $signatureBytes = base64_decode(
@@ -192,7 +154,7 @@ final class EFacturaSignatureVerifier {
             );
 
             if ($signatureBytes === false) {
-                return self::INVALID_SIGNATURE_VALUE;
+                return SignatureVerificationResult::InvalidSignatureValue;
             }
 
             /*
@@ -203,11 +165,11 @@ final class EFacturaSignatureVerifier {
 
             if ($matches) {
                 if ( ! self::IsCertificateAccepted($certificateBase64)) {
-                    return self::SIGNATURE_MATCH_WITH_UNACCEPTED_CERTIFICATE;
+                    return SignatureVerificationResult::SignatureMatchWithUnacceptedCertificate;
                 }
-                return self::SUCCESS;
+                return SignatureVerificationResult::Success;
             }
-            return self::SIGNATURE_MISSMATCH;
+            return SignatureVerificationResult::SignatureMismatch;
         } finally {
             libxml_clear_errors();
         }

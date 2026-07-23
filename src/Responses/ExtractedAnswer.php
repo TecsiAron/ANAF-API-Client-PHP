@@ -3,6 +3,7 @@
 namespace EdituraEDU\ANAF\Responses;
 
 use EdituraEDU\ANAF\Signature\EFacturaSignatureVerifier;
+use EdituraEDU\ANAF\Signature\SignatureVerificationResult;
 use Throwable;
 
 class ExtractedAnswer extends ANAFResponse {
@@ -16,7 +17,7 @@ class ExtractedAnswer extends ANAFResponse {
     private ?string $TempFileName = null;
     private bool $VerifySignature = true;
     public bool $RanSignatureVerification = false;
-    public string|null $SignatureVerificationResult = null;
+    public SignatureVerificationResult|null $SignatureVerificationResult = null;
 
     private function DeleteTempFile(): void {
         if ($this->TempFileName === null) {
