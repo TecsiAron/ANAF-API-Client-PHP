@@ -20,7 +20,9 @@
     "suggest": {
         "ext-libxml": "*",
         "ext-simplexml": "*",
-        "ext-zip": ">=1.1.0"
+        "ext-zip": ">=1.1.0",
+        "ext-openssl": "*",
+        "ext-dom": "*"
     },
     "autoload": {
         "psr-4": {
