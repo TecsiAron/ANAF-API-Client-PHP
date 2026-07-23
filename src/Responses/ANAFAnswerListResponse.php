@@ -55,8 +55,10 @@ class ANAFAnswerListResponse extends ANAFResponse {
         try {
             $parsed = $this->CommonParseJSON($this->rawResponse);
             //var_dump($parsed);
-            if ($parsed == null && ! $this->HasError()) {
-                $this->InternalCreateError("Internal error parsing response");
+            if ($parsed === null) {
+                if (! $this->HasError()) {
+                    $this->InternalCreateError("Internal error parsing response");
+                }
                 return;
             }
             if (strtolower($parsed->titlu) == "lista mesaje"

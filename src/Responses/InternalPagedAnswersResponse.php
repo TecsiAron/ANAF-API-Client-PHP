@@ -24,6 +24,12 @@ class InternalPagedAnswersResponse extends ANAFAnswerListResponse {
             $this->LastError = $th;
             return;
         }
+        if ($parsed === null) {
+            if (! $this->HasError()) {
+                $this->InternalCreateError("Internal error parsing response");
+            }
+            return;
+        }
         if (str_starts_with(strtolower($parsed->titlu), "lista mesaje")
                 && isset($parsed->eroare)
                 && ! isset($parsed->mesaje)

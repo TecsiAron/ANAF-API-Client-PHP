@@ -45,8 +45,11 @@ class ANAFVerifyResponse extends ANAFResponse {
     public function Parse(): void {
         try {
             $parsed = $this->CommonParseJSON($this->rawResponse);
-            if ($parsed == null && ! $this->HasError()) {
-                $this->InternalCreateError("Internal error parsing response");
+            if ($parsed === null) {
+                if (! $this->HasError()) {
+                    $this->InternalCreateError("Internal error parsing response");
+                }
+                return;
             }
             $this->CopyFromParsed($parsed);
         } catch (Throwable $ex) {
