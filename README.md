@@ -43,3 +43,5 @@ Documentatie: https://tecsiaron.github.io/ANAF-API-Client-PHP/
 - Conversie UBL in PDF prin API ANAF  
 - Listare raspunsuri din SPV  
 - Descarcare raspuns din SPV   
+- Extragere xml din raspunsul zip (si facutra si semantura)  
+- Verificare semantura  
