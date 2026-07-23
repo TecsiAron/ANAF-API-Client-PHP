@@ -395,14 +395,13 @@ class ANAFAPIClient
     }
 
     /**
-     * Download Answer from ANAF
-     * To obtain the ID, use ListAnswers
-     * @param string $id
+     * Download Answer from ANAF To obtain the ID, use ListAnswers
+     * @param  string  $id
      * @return string either an error message (starts with "ERROR_") or zip file content
+     * @deprecated will be removed/made private in future versions, use DownloadAndExtractAnswer instead
      * @see ANAFAPIClient::ListAnswers()
      */
-    public function DownloadAnswer(string $id): string
-    {
+    public function DownloadAnswer(string $id): string {
         $modeName = $this->Production ? "prod" : "test";
         $method = "/$modeName/FCTEL/rest/descarcare?id=$id";
 
@@ -425,6 +424,22 @@ class ANAFAPIClient
         }
 
         return "ERROR_NO_RESPONSE";
+    }
+
+    /**
+     * Uses DownloadAnswer to get the zip file and then extracts it to check for errors, optionally verifies the signature of the answer)
+     * @param  string  $id
+     * @param  bool  $verifySignature
+     * @return \EdituraEDU\ANAF\Responses\ExtractedAnswer
+     */
+    public function DownloadAndExtractAnswer(string $id, bool $verifySignature): ExtractedAnswer {
+        $zipContent = $this->DownloadAnswer($id);
+        if ( ! str_starts_with($zipContent, "PK") && $zipContent != "ERROR") {
+            $this->CallErrorCallback("ANAF API Error: Downloaded answer is not a valid zip file");
+            $errorReason = str_starts_with($zipContent, "ERROR_") ? $zipContent : "ERROR_UNKNOWN";
+            return ExtractedAnswer::CreateError(new ANAFException("Downloaded answer is not a valid zip file: ".$errorReason, ANAFException::UNEXPECTED_ZIP_FORMAT));
+        }
+        return ExtractedAnswer::Create($zipContent, $verifySignature);
     }
 
     /**
