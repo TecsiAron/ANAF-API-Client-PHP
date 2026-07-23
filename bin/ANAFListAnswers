@@ -27,12 +27,21 @@ if ($endDate === false || $endDate->format('d-m-Y') !== $endTimeOption->GetValue
 }
 
 $anaf = new \EdituraEDU\ANAF\ANAFBinHelper($configFilePath);
+$filter=null;
+if($filterOption->HasValue())
+{
+    $filter=\EdituraEDU\ANAF\AnswerFilter::tryFrom($filterOption->GetValue());
+    if($filter===null)
+    {
+        echo "Invalid filter value. Accepted values: E, T, P, R";
+    }
+}
 $response = $anaf->ListAnswersWithPagination(
     $startDate->getTimestamp(),
     $endDate->getTimestamp(),
     (int)$cifOption->GetValue(),
     $specificPageOption->HasValue() ? (int)$specificPageOption->GetValue() : null,
-    $filterOption->HasValue() ? $filterOption->GetValue() : null
+    $filter
 );
 
 echo json_encode($response, JSON_PRETTY_PRINT);
