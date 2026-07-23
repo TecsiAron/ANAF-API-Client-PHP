@@ -11,6 +11,8 @@ class ExtractedAnswer extends ANAFResponse
     public string|null $signature = null;
 
     public string|null $index_incarcare = null;
+    public bool $IsWellFormedError = false;
+    public ANAFErrorAnswer|null $Error = null;
     private ?string $TempFileName = null;
 
     private function DeleteTempFile(): void
