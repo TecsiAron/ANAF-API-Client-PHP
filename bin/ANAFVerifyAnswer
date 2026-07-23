@@ -1,0 +1,44 @@
+#!/usr/bin/env php
+<?php
+
+use EdituraEDU\ANAF\Responses\ExtractedAnswer;
+use EdituraEDU\ANAF\Signature\EFacturaSignatureVerifier;
+use EdituraEDU\CLI\CLIApp;
+use EdituraEDU\CLI\CLIOption;
+
+require __DIR__ . '/../vendor/autoload.php';
+
+$inputOption = new CLIOption(
+    'input',
+    'i',
+    'Path to the downloaded ANAF answer ZIP file',
+    \EdituraEDU\CLI\CLIOptionType::STRING,
+    true
+);
+
+$cliApp = new CLIApp(
+    'ANAFVerifyAnswer',
+    'Extracts and verifies an ANAF e-Factura answer',
+    '1.0.0',
+    [$inputOption]
+);
+$cliApp->Parse();
+
+$inputPath = $inputOption->GetValue();
+$rawAnswer = file_get_contents($inputPath);
+
+if ($rawAnswer === false) {
+    throw new \RuntimeException('Failed to read input file: ' . $inputPath);
+}
+
+$answer = ExtractedAnswer::Create($rawAnswer);
+
+if (!$answer->IsSuccess()) {
+    echo $answer->LastError?->getMessage() . PHP_EOL;
+    exit(1);
+}
+
+echo EFacturaSignatureVerifier::VerifyContent(
+    $answer->content,
+    $answer->signature
+), PHP_EOL;

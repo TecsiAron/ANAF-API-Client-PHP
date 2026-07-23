@@ -47,6 +47,7 @@
     },
     "bin": [
         "bin/ANAFListAnswers",
-        "bin/ANAFDownloadAnswer"
+        "bin/ANAFDownloadAnswer",
+        "bin/ANAFVerifyAnswer"
     ]
 }
