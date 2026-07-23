@@ -14,5 +14,9 @@ class ExtractedAnswerParseTest extends TestCase {
         $this->assertTrue($answer->IsSuccess());
         $this->assertNotEmpty($answer->content);
         $this->assertNotEmpty($answer->signature);
+        $this->assertFalse($answer->RanSignatureVerification);
+        $this->assertTrue($answer->IsWellFormedError);
+        $this->assertNotNull($answer->Error);
+        $this->assertTrue($answer->Error->IsDuplicateUploadError());
     }
 }
