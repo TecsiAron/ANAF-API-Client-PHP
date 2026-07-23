@@ -8,8 +8,7 @@ final class EFacturaSignatureVerifier {
     private const DSIG_NAMESPACE = 'http://www.w3.org/2000/09/xmldsig#';
 
     public static function IsSupported(): bool {
-        return function_exists('simplexml_load_string')
-                && function_exists('libxml_use_internal_errors')
+        return function_exists('libxml_use_internal_errors')
                 && function_exists('dom_import_simplexml')
                 && function_exists('openssl_pkey_get_public')
                 && function_exists('openssl_verify');

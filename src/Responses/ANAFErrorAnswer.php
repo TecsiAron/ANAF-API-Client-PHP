@@ -139,7 +139,7 @@ class ANAFErrorAnswer extends ANAFResponse {
      * @return bool
      */
     public static function IsSupported(): bool {
-        return function_exists('simplexml_load_string') && function_exists('libxml_use_internal_errors');
+        return function_exists('libxml_use_internal_errors');
     }
 
     public static function IsExpectedErrorFormat(string $rawContent): bool {

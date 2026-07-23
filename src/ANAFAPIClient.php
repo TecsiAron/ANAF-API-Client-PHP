@@ -13,6 +13,7 @@ use EdituraEDU\ANAF\Responses\InternalPagedAnswersResponse;
 use EdituraEDU\ANAF\Responses\PagedAnswerListResponse;
 use EdituraEDU\ANAF\Responses\TVAResponse;
 use EdituraEDU\ANAF\Responses\UBLUploadResponse;
+use EdituraEDU\ANAF\Signature\EFacturaSignatureVerifier;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
@@ -633,11 +634,11 @@ class ANAFAPIClient {
     }
 
     /**
-     * Check if the client has support for suggested extensions (ZIP, SimpleXML, and libxml right now)
+     * Check if the client has support for answer extraction (libxml, openssl, dom)
      * @return bool
      */
-    private static function HasSuggestedExtensionSupport(): bool {
-        return ExtractedAnswer::IsSupported() && ANAFErrorAnswer::IsSupported();
+    public static function HasSuggestedExtensionSupport(): bool {
+        return ANAFErrorAnswer::IsSupported() && EFacturaSignatureVerifier::IsSupported();
     }
 
     /**

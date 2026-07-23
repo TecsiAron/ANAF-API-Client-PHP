@@ -15,11 +15,11 @@
         "league/oauth2-client": "^2.7",
         "php": ">=8.1",
         "ext-simplexml": "*",
-        "tecsiaron/cli-app": "^0.2.0"
+        "tecsiaron/cli-app": "^0.2.0",
+        "ext-zip": ">=1.1.0"
     },
     "suggest": {
         "ext-libxml": "*",
-        "ext-zip": ">=1.1.0",
         "ext-openssl": "*",
         "ext-dom": "*"
     },
