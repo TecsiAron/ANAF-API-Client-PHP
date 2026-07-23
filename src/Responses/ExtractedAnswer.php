@@ -109,6 +109,10 @@ class ExtractedAnswer extends ANAFResponse {
                     $this->LastError = new ANAFException("Unexpected content file name: ".$contentFileName, ANAFException::UNEXPECTED_ZIP_FORMAT);
                     return;
                 }
+                if(ANAFErrorAnswer::IsSupported() && ANAFErrorAnswer::IsExpectedErrorFormat($content)) {
+                    $this->IsWellFormedError = true;
+                    $this->Error = ANAFErrorAnswer::Create($expectedID, $content);
+                }
                 $this->content = $content;
                 $this->signature = $signature;
                 $this->index_incarcare = $expectedID;
